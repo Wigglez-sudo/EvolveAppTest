@@ -1,7 +1,7 @@
 /* Evolve service worker — v3.31 security-hardening test build.
    Network-first for navigations, tightly-scoped caching for shell assets, and
    Google Fonts-only cross-origin caching. Bump CACHE whenever shell files change. */
-const CACHE = "evolve-v3-63";
+const CACHE = "evolve-v3-64";
 const SHELL = [
   "./", "./index.html", "./styles.css", "./data.js", "./food-packs.js", "./app.js",
   "./manifest.json", "./icon-192.png", "./icon-512.png", "./apple-touch-icon.png", "./favicon.png"
