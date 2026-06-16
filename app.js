@@ -5636,10 +5636,11 @@ function openImport(){
     let raw=$("#im_code").value;
     raw=raw.replace(/^\s*EVOLVE\d*\s*:\s*/i,"").replace(/\s+/g,""); /* drop optional EVOLVE1: tag (any case) + any stray spaces/line breaks */
     try{
-      const obj=JSON.parse(decodeURIComponent(escape(atob(raw))));
+      if(!raw || raw.length>MAX_IMPORT_BYTES*1.4) throw new Error("bad-size");
+      const decoded=decodeB64Utf8(raw);
+      const obj=normalizeStoredData(safeParseJsonText(decoded,MAX_IMPORT_BYTES,"Backup code"));
       if(!obj||typeof obj!=="object"||!("workouts" in obj)) throw new Error("bad");
-      DATA=Object.assign(JSON.parse(JSON.stringify(DEFAULT_DATA)),obj);
-      migrate(DATA); save(); closeModal(); updateHeader(); switchTab("stats"); toast("Data restored ✓");
+      DATA=obj; save(); closeModal(); updateHeader(); switchTab("stats"); toast("Data restored ✓");
     }catch(e){ toast("That code didn't work — check you copied all of it"); }
   });
 }

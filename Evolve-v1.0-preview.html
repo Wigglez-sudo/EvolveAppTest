@@ -9,6 +9,7 @@
 <meta name="apple-mobile-web-app-title" content="Evolve">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="theme-color" content="#0C0D11">
+<meta name="referrer" content="no-referrer">
 <link rel="manifest" href="manifest.json">
 <link rel="icon" type="image/png" sizes="64x64" href="favicon.png">
 <link rel="icon" type="image/png" sizes="192x192" href="icon-192.png">
@@ -272,12 +273,12 @@ select.input{appearance:none;background-image:url("data:image/svg+xml;utf8,<svg 
 
 /* muscle group tiles */
 .mg-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
-.mg{position:relative;border-radius:var(--r);padding:18px 16px;min-height:104px;overflow:hidden;
+.mg{position:relative;border-radius:var(--r);padding:18px 16px;min-height:116px;overflow:hidden;
   border:1px solid var(--line2);display:flex;flex-direction:column;justify-content:flex-end;
   background:var(--surface);transition:transform .12s}
 .mg:active{transform:scale(.97)}
 .mg .nm{font-family:var(--font-disp);font-size:30px;letter-spacing:.02em;position:relative;z-index:2}
-.mg .ct{font-size:11px;color:var(--muted);letter-spacing:.08em;text-transform:uppercase;position:relative;z-index:2}
+.mg .ct{font-size:12px;color:var(--text);letter-spacing:.04em;text-transform:uppercase;position:relative;z-index:2;font-weight:700;opacity:.7}
 .mg .glow{position:absolute;inset:0;opacity:.55}
 .mega-card{position:relative;width:100%;text-align:left;margin-top:14px;border-radius:var(--r);padding:18px 18px;overflow:hidden;
   border:1px solid var(--line2);background:linear-gradient(120deg,rgba(255,106,44,.16),rgba(47,230,168,.14));transition:transform .12s}
@@ -641,9 +642,10 @@ svg.chart{width:100%;height:auto;display:block}
   background:rgba(16,18,24,.78);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);
   border:1px solid var(--line2);border-radius:26px;box-shadow:0 18px 44px rgba(0,0,0,.55);
   display:flex;padding:7px}
-#nav button{flex:1;min-width:0;display:flex;flex-direction:column;align-items:center;gap:2px;color:var(--muted2);
-  font-size:9px;font-weight:700;letter-spacing:.02em;padding:8px 0 7px;border-radius:16px;transition:background .2s,color .2s;white-space:nowrap}
-#nav button svg{width:21px;height:21px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+#nav button{flex:1;min-width:0;display:flex;flex-direction:column;align-items:center;gap:3px;color:var(--muted2);
+  font-family:var(--font-disp),Inter,-apple-system,sans-serif;font-size:10px;font-weight:800;letter-spacing:.03em;
+  padding:9px 4px 8px;border-radius:16px;transition:background .2s,color .2s;white-space:nowrap}
+#nav button svg{width:22px;height:22px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
 #nav button.on{color:var(--text);background:rgba(255,255,255,.08)}
 #nav button.on svg{stroke:var(--strength)}
 #nav button.fuelTab.on svg{stroke:var(--fuel)}
@@ -699,7 +701,7 @@ hr{border:none;border-top:1px solid var(--line);margin:16px 0}
 
 /* v3.31 — floating "+" Add-food button (Fuel tab only) */
 #fuelFab{position:fixed;z-index:119;right:max(22px,calc((100vw - 560px)/2 + 22px));
-  bottom:calc(90px + var(--safe-b));width:56px;height:56px;border-radius:50%;
+  bottom:calc(106px + var(--safe-b));width:56px;height:56px;border-radius:50%;
   background:var(--grad-fuel,linear-gradient(135deg,#2FE6A8,#16b98a));color:#04241a;
   font-size:30px;font-weight:700;line-height:1;display:flex;align-items:center;justify-content:center;
   border:none;box-shadow:0 10px 26px rgba(0,0,0,.5),0 0 0 4px var(--ink);
@@ -775,6 +777,14 @@ hr{border:none;border-top:1px solid var(--line);margin:16px 0}
 .update-banner .btn{flex:0 0 auto;background:rgba(255,255,255,.95);color:#111}
 .update-banner .upd-x{flex:0 0 auto;background:none;border:none;color:rgba(255,255,255,.85);font-size:14px;cursor:pointer;padding:4px}
 @keyframes upd-in{from{transform:translateY(16px);opacity:0}to{transform:translateY(0);opacity:1}}
+/* install ("add to home screen") banner — sits above update banner so they never overlap */
+.install-banner{position:fixed;left:14px;right:14px;bottom:calc(162px + var(--safe-b));max-width:560px;margin:0 auto;z-index:200;
+  display:flex;align-items:center;gap:10px;padding:12px 14px;border-radius:16px;
+  background:linear-gradient(135deg,var(--ink2),var(--surface2));color:#fff;border:1px solid var(--line2);
+  box-shadow:0 14px 40px rgba(0,0,0,.5);animation:upd-in .3s ease}
+.install-banner span{flex:1;font-size:13.5px;font-weight:600;line-height:1.3}
+.install-banner .btn{flex:0 0 auto}
+.install-banner .upd-x{flex:0 0 auto;background:none;border:none;color:rgba(255,255,255,.7);font-size:14px;cursor:pointer;padding:4px}
 
 /* v1.0 — coach generated-workout card */
 .cw-card{width:100%;max-width:100%}
@@ -819,9 +829,17 @@ hr{border:none;border-top:1px solid var(--line);margin:16px 0}
 .fp-sub{font-size:12.5px;color:var(--muted);margin-top:2px}
 .fp-act{display:flex;align-items:center;flex:0 0 auto}
 
+/* ---------- SECURITY NOTICE CARDS ---------- */
+.notice-card{background:rgba(255,255,255,.045);border:1px solid var(--line2);border-radius:16px;padding:14px 15px;box-shadow:0 8px 24px rgba(0,0,0,.18)}
+.notice-title{font-size:14px;font-weight:800;color:var(--text);margin-bottom:6px}
+.notice-body{font-size:13px;line-height:1.55;color:var(--muted)}
+.notice-amber{background:linear-gradient(180deg,rgba(255,200,87,.12),rgba(255,255,255,.035));border-color:rgba(255,200,87,.35)}
+.notice-blue{background:linear-gradient(180deg,rgba(90,169,255,.12),rgba(255,255,255,.035));border-color:rgba(90,169,255,.35)}
+
 </style>
 </head>
 <body>
+<noscript><div style="padding:16px;background:#101218;color:#F3F4F8;border-bottom:1px solid #272B38;font-family:Inter,sans-serif">Evolve needs JavaScript enabled to run.</div></noscript>
 
 <!-- SPLASH -->
 <div id="splash">
@@ -899,7 +917,6 @@ hr{border:none;border-top:1px solid var(--line);margin:16px 0}
   <button data-tab="fuel" class="fuelTab"><svg viewBox="0 0 24 24"><path d="M12 3c0 3-2 4-2 7a4 4 0 008 0c0-4-3-6-3-9M12 21a6 6 0 01-6-6"/></svg>Fuel</button>
   <button data-tab="stats"><svg viewBox="0 0 24 24"><path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/></svg>Progress</button>
   <button data-tab="more"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19 12a7 7 0 00-.1-1l2-1.5-2-3.4-2.3 1a7 7 0 00-1.7-1l-.3-2.6h-4l-.3 2.6a7 7 0 00-1.7 1l-2.3-1-2 3.4 2 1.5a7 7 0 000 2l-2 1.5 2 3.4 2.3-1a7 7 0 001.7 1l.3 2.6h4l.3-2.6a7 7 0 001.7-1l2.3 1 2-3.4-2-1.5a7 7 0 00.1-1z"/></svg>More</button>
-  <button data-tab="coach"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><circle cx="9" cy="10" r="1.2" fill="currentColor" stroke="none"/><circle cx="15" cy="10" r="1.2" fill="currentColor" stroke="none"/><path d="M9 15c1 1 5 1 6 0"/></svg>Coach</button>
 </nav>
 <button id="fuelFab" class="hidden" aria-label="Add food">＋</button>
 
@@ -912,6 +929,7 @@ hr{border:none;border-top:1px solid var(--line);margin:16px 0}
 <div id="kbdDone"><button type="button">Done</button></div>
 <script>
 /* ===== Evolve data — exercise & food database (rarely changes) =====
+   Security-hardening test build note: this file is reference data only.
    Loaded BEFORE app.js. Pure reference data + the tiny lookup maps. */
 "use strict";
 
@@ -2080,9 +2098,63 @@ const GOALS={lose:{adj:-500,l:"Lose weight"},maintain:{adj:0,l:"Maintain"},gain:
   });}); }
 
   /* ---- in-memory cache of installed pack foods (built once, on boot) ------ */
-  var _packFoods = [];          /* flat array in app food format */
-  var _installed = {};          /* id -> {id,name,count,bytes,version} */
-  var _ready = false;
+var _packFoods = [];          /* flat array in app food format */
+var _installed = {};          /* id -> {id,name,count,bytes,version} */
+var _ready = false;
+var MAX_MANIFEST_BYTES = 512 * 1024;
+var MAX_PACK_BYTES = 12 * 1024 * 1024;
+var MAX_PACK_ITEMS = 12000;
+
+function isPlainObject(v){ return !!v && typeof v === "object" && !Array.isArray(v) && Object.getPrototypeOf(v) === Object.prototype; }
+function safeText(v, max){
+  return String(v == null ? "" : v).replace(/\s+/g, " ").trim().slice(0, max || 120);
+}
+function safeNumber(v, fallback){
+  var n = Number(v);
+  return Number.isFinite(n) ? n : (fallback == null ? 0 : fallback);
+}
+function validateShop(shop){
+  if(!isPlainObject(shop)) return null;
+  var id = safeText(shop.id, 40).toLowerCase();
+  var file = safeText(shop.file, 80);
+  if(!/^[a-z0-9-]+$/.test(id)) return null;
+  if(!/^[a-z0-9-]+\.json$/i.test(file)) return null;
+  return {
+    id: id,
+    name: safeText(shop.name || id, 80),
+    file: file,
+    count: Math.max(0, Math.round(safeNumber(shop.count, 0))),
+    bytes: Math.max(0, Math.round(safeNumber(shop.bytes, 0))),
+    version: safeText(shop.version || "", 40)
+  };
+}
+function validateItem(it){
+  if(!isPlainObject(it)) return null;
+  var name = safeText(it.n, 90);
+  if(!name) return null;
+  var kcal = safeNumber(it.kcal, NaN), p = safeNumber(it.p, NaN), c = safeNumber(it.c, NaN), f = safeNumber(it.f, NaN);
+  if(!Number.isFinite(kcal) || kcal < 0 || kcal > 900) return null;
+  if(!Number.isFinite(p) || p < 0 || p > 100) return null;
+  if(!Number.isFinite(c) || c < 0 || c > 100) return null;
+  if(!Number.isFinite(f) || f < 0 || f > 100) return null;
+  var out = {
+    n: name,
+    b: safeText(it.b || "", 60),
+    shop: safeText(it.shop || "", 40),
+    cat: APP_CATEGORIES[safeText(it.cat || "", 60)] ? safeText(it.cat || "", 60) : "Misc & extras",
+    kcal: Math.round(kcal),
+    p: Math.round(p * 10) / 10,
+    c: Math.round(c * 10) / 10,
+    f: Math.round(f * 10) / 10
+  };
+  if(it.serve && isPlainObject(it.serve)){
+    var grams = safeNumber(it.serve.grams, NaN);
+    if(Number.isFinite(grams) && grams > 0 && grams <= 2000){
+      out.serve = { unit: safeText(it.serve.unit || "", 24), grams: Math.round(grams) };
+    }
+  }
+  return out;
+}
 
   /* category whitelist — shop foods must map onto an existing app category.
      Anything unknown falls back to "Misc & extras". Kept in sync with data.js. */
@@ -2135,29 +2207,45 @@ const GOALS={lose:{adj:-500,l:"Lose weight"},maintain:{adj:0,l:"Maintain"},gain:
   function isPackInstalled(id){ return !!_installed[id]; }
 
   /* fetch the manifest of available shops (network — only called on the screen) */
-  function loadManifest(){
-    return fetch(MANIFEST_URL, {cache:"no-store"}).then(function(r){
-      if(!r.ok) throw new Error("manifest "+r.status);
-      return r.json();
-    }).then(function(m){
-      if(!m || !Array.isArray(m.shops)) throw new Error("bad manifest");
-      return m;
-    });
-  }
+function loadManifest(){
+  return fetch(MANIFEST_URL, {cache:"no-store", credentials:"same-origin"}).then(function(r){
+    if(!r.ok) throw new Error("manifest "+r.status);
+    var len = +(r.headers.get("content-length") || 0);
+    if(len && len > MAX_MANIFEST_BYTES) throw new Error("manifest too large");
+    return r.json();
+  }).then(function(m){
+    if(!m || !Array.isArray(m.shops)) throw new Error("bad manifest");
+    var shops = m.shops.map(validateShop).filter(Boolean);
+    if(!shops.length) throw new Error("empty manifest");
+    return {
+      version: safeText(m.version || "", 40),
+      generated: safeText(m.generated || "", 64),
+      total: Math.max(0, Math.round(safeNumber(m.total, 0))),
+      attribution: safeText(m.attribution || "", 240),
+      shops: shops
+    };
+  });
+}
 
   /* download one shop's pack and store it; resolves with the installed summary */
-  function downloadPack(shop){
-    if(!shop || !shop.id || !shop.file) return Promise.reject(new Error("bad shop"));
-    var url = FOOD_DB_BASE + shop.file;
-    return fetch(url, {cache:"no-store"}).then(function(r){
-      if(!r.ok) throw new Error("download "+r.status);
-      return r.json();
-    }).then(function(items){
-      if(!Array.isArray(items)) throw new Error("bad pack file");
-      var rec = { id:shop.id, name:shop.name||shop.id, version:shop.version||"", bytes:shop.bytes||0, items:items };
-      return idbPut(rec).then(function(){ return rebuild(); }).then(function(){ return _installed[shop.id]; });
-    });
-  }
+function downloadPack(shop){
+  shop = validateShop(shop);
+  if(!shop) return Promise.reject(new Error("bad shop"));
+  var url = FOOD_DB_BASE + shop.file;
+  return fetch(url, {cache:"no-store", credentials:"same-origin"}).then(function(r){
+    if(!r.ok) throw new Error("download "+r.status);
+    var len = +(r.headers.get("content-length") || 0);
+    if(len && len > MAX_PACK_BYTES) throw new Error("pack too large");
+    return r.json();
+  }).then(function(items){
+    if(!Array.isArray(items)) throw new Error("bad pack file");
+    if(items.length > MAX_PACK_ITEMS) throw new Error("pack too large");
+    var clean = items.map(validateItem).filter(Boolean);
+    if(!clean.length) throw new Error("pack had no valid foods");
+    var rec = { id:shop.id, name:shop.name||shop.id, version:shop.version||"", bytes:shop.bytes||0, items:clean };
+    return idbPut(rec).then(function(){ return rebuild(); }).then(function(){ return _installed[shop.id]; });
+  });
+}
 
   /* remove an installed pack */
   function removePack(id){ return idbDel(id).then(function(){ return rebuild(); }); }
@@ -2293,11 +2381,18 @@ const KEY="evolve_v1";
 const PROFILE_PHOTO_KEY="evolve_profile_photo_v1"; /* separate local-only photo; deliberately not included in backup codes */
 const PROGRESS_PHOTOS_KEY="evolve_progress_photos_v1"; /* v3.31: local-only progress gallery; never in backups */
 const COACH_KEY_KEY="evolve_coach_key_v1"; /* v3.31: OpenRouter API key — local-only, never in any backup, never sent anywhere except OpenRouter */
+const COACH_KEY_MODE_KEY="evolve_coach_key_mode_v1"; /* device|session */
+const COACH_KEY_SESSION_KEY="evolve_coach_key_session_v1"; /* session-only storage for the Coach key */
+const MAX_STATE_BYTES=4.5*1024*1024;
+const MAX_IMPORT_BYTES=4*1024*1024;
+const MAX_IMAGE_FILE_BYTES=15*1024*1024;
+const MAX_PROGRESS_PHOTOS=60;
+const SECURITY_NOTICE_VERSION="2026-06-security-test-2";
 const DEFAULT_DATA = {
   profile:null, /* {name,sex,age,heightCm,weightKg,activity,goal,goalWeightKg} */
   targets:null, /* {calories,protein,carbs,fat,water} */
   prefs:{energy:"kcal", addExercise:true, showAchievements:true, showHelpBars:true, liftUnit:"kg", bodyUnit:"kg", gymEquip:"machine_cardio", env:"gym", rmFormula:"epley", theme:"ember", mealTimes:false, targetMode:"auto",
-    restDefault:90, restBeep:true, restFlash:true, keepAwake:true, waterUnit:"ml", waterStep:250, startTab:"home", headingFont:"modern",
+    restDefault:90, restBeep:true, restFlash:true, keepAwake:true, waterUnit:"ml", waterStep:250, startTab:"home", headingFont:"classic",
     coachConsent:false, coachModel:"openrouter/free"},
   customFoods:[], /* {name,kcal,p,c,f} per 100g, user-added */
   favFoods:[],  /* GLOBAL favourite food names */
@@ -2315,10 +2410,52 @@ const DEFAULT_DATA = {
   statResets:{}, /* per-stat user resets: key -> {start, since} (prs: {since}) */
   meta:{lastBackup:null, created:null, backupReminder:"weekly", backupNotifications:false, backupNotifyLast:null, driveEnabled:false, driveClientId:"", driveFileId:null, lastDriveBackup:null}
 };
+function isPlainObject(v){ return !!v && typeof v==="object" && !Array.isArray(v) && Object.getPrototypeOf(v)===Object.prototype; }
+function safeJsonValue(v, depth){
+  if(depth>40) throw new Error("Data nesting is too deep");
+  if(Array.isArray(v)) return v.slice(0,50000).map(x=>safeJsonValue(x,depth+1));
+  if(isPlainObject(v)){
+    const out={};
+    Object.keys(v).forEach(k=>{
+      if(k==="__proto__" || k==="prototype" || k==="constructor") return;
+      out[k]=safeJsonValue(v[k],depth+1);
+    });
+    return out;
+  }
+  return v;
+}
+function safeParseJsonText(raw, maxBytes, label){
+  if(typeof raw!=="string" || !raw) throw new Error((label||"JSON")+" is empty");
+  if(raw.length>maxBytes) throw new Error((label||"JSON")+" is too large");
+  return safeJsonValue(JSON.parse(raw),0);
+}
+function blankData(){ const d=JSON.parse(JSON.stringify(DEFAULT_DATA)); d.meta.created=todayISO(); return d; }
+function mergeKnownDataKeys(clean){
+  if(!isPlainObject(clean)) throw new Error("Bad data root");
+  const out=JSON.parse(JSON.stringify(DEFAULT_DATA));
+  Object.keys(out).forEach(k=>{ if(Object.prototype.hasOwnProperty.call(clean,k)) out[k]=clean[k]; });
+  return out;
+}
+function normalizeStoredData(obj){
+  const d=mergeKnownDataKeys(safeJsonValue(obj,0));
+  migrate(d);
+  if(!d.meta.created) d.meta.created=todayISO();
+  return d;
+}
+function safeInlineImageSrc(src, fallback){
+  const s=String(src||"").trim();
+  if(!s) return fallback||"";
+  if(/^(?:\.\/)?(?:icon-192\.png|icon-512\.png|apple-touch-icon\.png)$/i.test(s)) return s.replace(/^\.\//,"");
+  if(/^data:image\/(?:png|jpeg|jpg|webp);base64,[a-z0-9+/=\s]+$/i.test(s) && s.length<=2500000) return s;
+  return fallback||"";
+}
 let DATA = load();
 function load(){
-  try{const raw=localStorage.getItem(KEY); if(raw){const d=Object.assign(JSON.parse(JSON.stringify(DEFAULT_DATA)),JSON.parse(raw)); migrate(d); return d;}}catch(e){}
-  const d=JSON.parse(JSON.stringify(DEFAULT_DATA)); d.meta.created=todayISO(); return d;
+  try{
+    const raw=localStorage.getItem(KEY);
+    if(raw) return normalizeStoredData(safeParseJsonText(raw,MAX_STATE_BYTES,"Stored app data"));
+  }catch(e){}
+  return blankData();
 }
 function migrate(d){
   if(!Array.isArray(d.favExercises)) d.favExercises=[];
@@ -2330,7 +2467,16 @@ function migrate(d){
   if(d.prefs.targetMode!=="manual") d.prefs.targetMode="auto"; /* auto = formula targets; manual = user-set calories & macros */
   /* v3.22 — new preference defaults (kept here so existing users carry over untouched) */
   if(!(Number(d.prefs.restDefault)>0)) d.prefs.restDefault=90;       /* default rest-timer length (seconds) */
-  if(!d.prefs.headingFont) d.prefs.headingFont="modern";             /* v3.31: heading font style */
+  if(!d.prefs.headingFont) d.prefs.headingFont="classic";            /* v3.31: heading font style (1.0: Classic default) */
+  /* 1.0 — adopt Classic (Bebas) as the app's display font globally. Existing
+     installs still on the OLD "modern" default are moved to "classic" ONCE
+     (guarded by a flag) so the change reaches them; a deliberate later choice
+     of any font sticks and is never re-flipped. */
+  if(!d.meta || typeof d.meta!=="object") d.meta={};
+  if(!d.meta.classicFontApplied){
+    if(d.prefs.headingFont==="modern") d.prefs.headingFont="classic";
+    d.meta.classicFontApplied=true;
+  }
   if(typeof d.prefs.coachConsent!=="boolean") d.prefs.coachConsent=false; /* v3.31: AI Coach privacy consent */
   if(!d.prefs.coachModel) d.prefs.coachModel="openrouter/free";
   /* v3.31: retire model slugs OpenRouter has dropped, and move the old default to the free router */
@@ -2355,9 +2501,15 @@ function migrate(d){
   if(typeof d.meta.driveClientId!=="string") d.meta.driveClientId="";
   if(typeof d.meta.driveFileId!=="string") d.meta.driveFileId=null;
   if(typeof d.meta.lastDriveBackup!=="string") d.meta.lastDriveBackup=null;
+  if(typeof d.meta.securityNoticeSeen!=="string") d.meta.securityNoticeSeen="";
 }
 
-function save(){try{localStorage.setItem(KEY,JSON.stringify(DATA));}catch(e){toast("Storage full or blocked");}}
+function save(){
+  try{
+    DATA=normalizeStoredData(DATA);
+    localStorage.setItem(KEY,JSON.stringify(DATA));
+  }catch(e){toast("Storage full, blocked, or data was invalid");}
+}
 
 /* ===================== THEMES ===================== */
 const THEMES={
@@ -2399,16 +2551,16 @@ applyTheme((DATA.prefs&&DATA.prefs.theme)||"ember");
 
 /* v3.31 — heading font styles, switchable in Settings → Preferences */
 const HEADING_FONTS={
-  modern:{label:"Modern",   stack:'"Inter",-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif', spacing:"-0.01em", sample:"Clean & legible"},
-  bold:  {label:"Bold",     stack:'"Archivo","Inter",sans-serif',                                          spacing:"-0.02em", sample:"Strong & sporty"},
-  classic:{label:"Classic", stack:'"Bebas Neue","Inter",sans-serif',                                        spacing:"0.02em",  sample:"Tall gym poster"}
+  modern:{label:"Modern",   stack:'"Inter",-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif', spacing:"-0.01em", sample:"Clean, rounded sans-serif — the most legible option."},
+  bold:  {label:"Bold",     stack:'"Archivo","Inter",sans-serif',                                          spacing:"-0.02em", sample:"Wide, heavy and sporty — strong without shouting."},
+  classic:{label:"Classic", stack:'"Bebas Neue","Inter",sans-serif',                                        spacing:"0.02em",  sample:"Tall, condensed gym-poster capitals (default)."}
 };
 function applyHeadingFont(id){
   const f=HEADING_FONTS[id]||HEADING_FONTS.modern; const r=document.documentElement.style;
   r.setProperty("--font-disp",f.stack);
   r.setProperty("--font-disp-spacing",f.spacing);
 }
-applyHeadingFont((DATA.prefs&&DATA.prefs.headingFont)||"modern");
+applyHeadingFont((DATA.prefs&&DATA.prefs.headingFont)||"classic");
 
 /* ===================== DATE HELPERS (device clock) ===================== */
 function todayISO(d){d=d||new Date();return d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0");}
@@ -2538,14 +2690,15 @@ function getProfilePhoto(){
   try{return localStorage.getItem(PROFILE_PHOTO_KEY)||"";}catch(e){return "";}
 }
 function setProfilePhoto(v){
-  try{localStorage.setItem(PROFILE_PHOTO_KEY,v);return true;}catch(e){return false;}
+  try{ const safe=safeInlineImageSrc(v,""); if(!safe) return false; localStorage.setItem(PROFILE_PHOTO_KEY,safe); return true; }catch(e){return false;}
 }
 function clearProfilePhoto(){
   try{localStorage.removeItem(PROFILE_PHOTO_KEY);}catch(e){}
 }
 function profileAvatarHTML(){
-  const src=getProfilePhoto()||"icon-192.png";
-  return `<img src="${esc(src)}" alt="${getProfilePhoto()?"Profile photo":"Evolve logo"}">`;
+  const raw=getProfilePhoto();
+  const src=safeInlineImageSrc(raw,"icon-192.png")||"icon-192.png";
+  return `<img src="${esc(src)}" alt="${raw?"Profile photo":"Evolve logo"}">`;
 }
 function openProfilePhotoPrivacy(){
   openModal(`<h3>Profile picture privacy</h3>
@@ -2564,6 +2717,7 @@ function chooseProfilePhoto(){
     const file=input.files&&input.files[0]; input.remove();
     if(!file)return;
     if(!/^image\//.test(file.type||"")){toast("Choose an image file");return;}
+    if(file.size && file.size>MAX_IMAGE_FILE_BYTES){toast("That image is too large");return;}
     resizeAndSaveProfilePhoto(file);
   },{once:true});
   input.click();
@@ -2595,12 +2749,31 @@ function resizeAndSaveProfilePhoto(file){
 
 /* v3.31 — progress photos: local-only, never backed up, like the profile photo */
 function getProgressPhotos(){
-  try{const raw=localStorage.getItem(PROGRESS_PHOTOS_KEY); return raw?JSON.parse(raw):[];}catch(e){return [];}
+  try{
+    const raw=localStorage.getItem(PROGRESS_PHOTOS_KEY);
+    const arr=raw?safeParseJsonText(raw,MAX_STATE_BYTES/2,"Progress photos"):[];
+    if(!Array.isArray(arr)) return [];
+    return arr.map(p=>({
+      id:+p.id||Date.now(),
+      date:typeof p.date==="string"?p.date:todayISO(),
+      img:safeInlineImageSrc(p.img,"")
+    })).filter(p=>p.img).slice(0,MAX_PROGRESS_PHOTOS);
+  }catch(e){return [];}
 }
 function setProgressPhotos(arr){
-  try{localStorage.setItem(PROGRESS_PHOTOS_KEY,JSON.stringify(arr)); return true;}catch(e){return false;}
+  try{
+    const safe=(Array.isArray(arr)?arr:[]).map(p=>({
+      id:+(p&&p.id)||Date.now(),
+      date:(p&&typeof p.date==="string")?p.date:todayISO(),
+      img:safeInlineImageSrc(p&&p.img,"")
+    })).filter(p=>p.img).slice(0,MAX_PROGRESS_PHOTOS);
+    localStorage.setItem(PROGRESS_PHOTOS_KEY,JSON.stringify(safe));
+    return true;
+  }catch(e){return false;}
 }
 function addProgressPhotoFromFile(file, after){
+  if(!file || !/^image\//.test(file.type||"")){ toast("Choose an image file"); return; }
+  if(file.size && file.size>MAX_IMAGE_FILE_BYTES){ toast("That image is too large"); return; }
   const reader=new FileReader();
   reader.onerror=()=>toast("Couldn't read that photo");
   reader.onload=()=>{
@@ -2901,8 +3074,10 @@ function lineChart(points,color,opts){
 /* ===================== NAVIGATION ===================== */
 function switchTab(tab){
   document.querySelectorAll(".screen").forEach(s=>s.classList.remove("active"));
-  $("#view-"+tab).classList.add("active");
-  document.querySelectorAll("#nav button").forEach(b=>b.classList.toggle("on",b.dataset.tab===tab));
+  const vEl=$("#view-"+tab); if(vEl) vEl.classList.add("active");
+  /* Coach lives under More, Cardio under Train — keep the parent nav button highlighted */
+  var navTab = tab==="coach"?"more" : tab==="cardio"?"train" : tab;
+  document.querySelectorAll("#nav button").forEach(b=>b.classList.toggle("on",b.dataset.tab===navTab));
   window.scrollTo(0,0);
   if(tab==="home")renderHome();
   if(tab==="train")renderTrain();
@@ -4029,7 +4204,7 @@ function openRoutineDayExercises(dayIdx){
 }
 
 /* ===================== AI COACH (OpenRouter, user's own key) — v3.31 =====================
-   Privacy: the API key lives ONLY in localStorage on this device (COACH_KEY_KEY),
+   Privacy: the API key can be kept for this session only or remembered on this device,
    is never written to any backup (encrypted or CSV) and is never sent anywhere except
    OpenRouter. A summary of the user's training/nutrition is sent to OpenRouter ONLY when
    the user actively asks the Coach something, and only after they've given consent. */
@@ -4047,7 +4222,7 @@ const COACH_MODELS=[
 let coachLiveModels=null;
 async function fetchCoachModels(){
   try{
-    const res=await fetch("https://openrouter.ai/api/v1/models");
+    const res=await fetch("https://openrouter.ai/api/v1/models",{cache:"no-store",credentials:"omit",referrerPolicy:"no-referrer"});
     if(!res.ok) throw new Error("models fetch failed");
     const data=await res.json();
     const free=(data.data||[]).filter(m=>{
@@ -4068,8 +4243,43 @@ async function fetchCoachModels(){
   }catch(e){ return null; }
 }
 function coachModelList(){ return coachLiveModels||COACH_MODELS; }
-function getCoachKey(){ try{return localStorage.getItem(COACH_KEY_KEY)||"";}catch(e){return "";} }
-function setCoachKey(k){ try{ if(k)localStorage.setItem(COACH_KEY_KEY,k); else localStorage.removeItem(COACH_KEY_KEY); return true;}catch(e){return false;} }
+function getCoachKeyMode(){
+  try{
+    const mode=localStorage.getItem(COACH_KEY_MODE_KEY);
+    if(mode==="device" || mode==="session") return mode;
+    if(localStorage.getItem(COACH_KEY_KEY)) return "device";
+  }catch(e){}
+  return "session";
+}
+function setCoachKeyMode(mode){
+  try{ localStorage.setItem(COACH_KEY_MODE_KEY, mode==="device"?"device":"session"); return true; }catch(e){ return false; }
+}
+function getCoachKey(){
+  try{
+    if(getCoachKeyMode()==="device") return localStorage.getItem(COACH_KEY_KEY)||"";
+    return sessionStorage.getItem(COACH_KEY_SESSION_KEY)||"";
+  }catch(e){
+    try{return localStorage.getItem(COACH_KEY_KEY)||"";}catch(_){return "";}
+  }
+}
+function setCoachKey(k, mode){
+  try{
+    const m=(mode||getCoachKeyMode())==="device"?"device":"session";
+    if(m==="device"){
+      if(k)localStorage.setItem(COACH_KEY_KEY,k); else localStorage.removeItem(COACH_KEY_KEY);
+      try{sessionStorage.removeItem(COACH_KEY_SESSION_KEY);}catch(e){}
+    }else{
+      if(k)sessionStorage.setItem(COACH_KEY_SESSION_KEY,k); else sessionStorage.removeItem(COACH_KEY_SESSION_KEY);
+      try{localStorage.removeItem(COACH_KEY_KEY);}catch(e){}
+    }
+    setCoachKeyMode(m);
+    return true;
+  }catch(e){return false;}
+}
+function clearCoachKeyEverywhere(){
+  try{localStorage.removeItem(COACH_KEY_KEY);}catch(e){}
+  try{sessionStorage.removeItem(COACH_KEY_SESSION_KEY);}catch(e){}
+}
 function coachReady(){ return DATA.prefs.coachConsent===true && !!getCoachKey(); }
 
 /* build a compact, on-device summary of the user's training to give the model context */
@@ -4099,6 +4309,9 @@ async function coachAsk(messages){
   const key=getCoachKey(); if(!key) throw new Error("No API key set");
   const res=await fetch("https://openrouter.ai/api/v1/chat/completions",{
     method:"POST",
+    cache:"no-store",
+    credentials:"omit",
+    referrerPolicy:"no-referrer",
     headers:{ "Authorization":"Bearer "+key, "Content-Type":"application/json",
       "HTTP-Referer":"https://wigglez-sudo.github.io/", "X-Title":"Evolve" },
     body:JSON.stringify({ model:DATA.prefs.coachModel||"deepseek/deepseek-chat-v3-0324:free", messages })
@@ -4132,7 +4345,7 @@ function openCoachConsent(onAgree){
         <li>Don't include anything you wouldn't want a third-party AI service to process.</li>
         <li>The Coach can be wrong. It is not medical advice.</li>
       </ul>
-      <p class="tiny muted">You can revoke consent and delete your key any time in the Coach tab.</p>
+      <p class="tiny muted">You can revoke consent and delete your key any time in Coach settings.</p>
     </div>
     <button class="btn str block" id="coach_agree">I understand — enable AI Coach</button>
     <button class="btn ghost block" id="coach_decline" style="margin-top:10px">Not now</button>`);
@@ -4142,31 +4355,53 @@ function openCoachConsent(onAgree){
 function openCoachKeySetup(onDone){
   function modelOptions(){
     const list=coachModelList().slice();
-    /* make sure the currently-selected model is always an option */
     if(!list.some(m=>m.id===DATA.prefs.coachModel)) list.unshift({id:DATA.prefs.coachModel,name:DATA.prefs.coachModel});
     return list.map(m=>`<option value="${esc(m.id)}" ${DATA.prefs.coachModel===m.id?"selected":""}>${esc(m.name)}</option>`).join("");
   }
+  function modeNote(mode){
+    return mode==="device"
+      ? "Convenient, but less strict: the key stays in browser storage on this device until you delete it."
+      : "Safer: the key lives only for this browser session and is cleared when the session ends.";
+  }
   function paint(){
+    const mode=getCoachKeyMode();
     openModal(`<h3>Connect OpenRouter</h3>
-      <p class="muted tiny" style="line-height:1.5;margin-bottom:12px">The Coach uses <b>OpenRouter</b>, which gives access to many AI models with one key — including free ones. Create a free key at <b>openrouter.ai/keys</b>, then paste it below. It's stored only on this device.</p>
+      <p class="muted tiny" style="line-height:1.5;margin-bottom:12px">The Coach uses <b>OpenRouter</b>, which gives access to many AI models with one key — including free ones. Create a free key at <b>openrouter.ai/keys</b>, then paste it below.</p>
+      <div class="notice-card notice-amber" style="margin-bottom:12px"><div class="notice-title">🔐 Test-build privacy hardening</div><div class="notice-body">Choose whether your key is kept <b>for this session only</b> or remembered <b>on this device</b>. Session-only is the safer option.</div></div>
       <div class="field"><label>OpenRouter API key</label><input class="input" id="coach_key" type="password" placeholder="sk-or-..." value="${esc(getCoachKey())}" autocomplete="off"></div>
+      <div class="field"><label>Key storage</label>
+        <div class="seg scroll" id="coach_key_mode">
+          <button data-v="session" class="${mode==="session"?"on":""}">This session only</button>
+          <button data-v="device" class="${mode==="device"?"on":""}">Remember on this device</button>
+        </div>
+        <div class="tiny muted" id="coach_key_mode_note" style="margin-top:8px;line-height:1.5">${modeNote(mode)}</div>
+      </div>
       <div class="field"><label>Model</label><select class="input" id="coach_model">${modelOptions()}</select>
         <div class="tiny muted" style="margin-top:6px">Free models change often. <button class="linklike" id="coach_refresh" style="font-size:12px">↻ Load current free models</button></div>
         <div class="tiny muted" style="margin-top:4px">Tip: “Auto” always works but uses a little credit. If a free model says it's unavailable, refresh and pick another.</div></div>
       <button class="btn str block" id="coach_savekey">Save</button>
-      ${getCoachKey()?`<button class="btn ghost block" id="coach_delkey" style="margin-top:10px">Delete key from this device</button>`:""}`);
+      ${getCoachKey()?`<button class="btn ghost block" id="coach_delkey" style="margin-top:10px">Delete key</button>`:""}`);
+    $("#coach_key_mode").querySelectorAll("button").forEach(btn=>btn.addEventListener("click",()=>{
+      $("#coach_key_mode").querySelectorAll("button").forEach(b=>b.classList.toggle("on", b===btn));
+      $("#coach_key_mode_note").textContent=modeNote(btn.dataset.v);
+    }));
     $("#coach_refresh").addEventListener("click",async ()=>{
       const r=$("#coach_refresh"); r.textContent="Loading…";
-      DATA.prefs.coachModel=$("#coach_model").value; /* keep current pick */
+      DATA.prefs.coachModel=$("#coach_model").value;
       const got=await fetchCoachModels();
       if(got){ paint(); toast("Loaded "+(got.length)+" models"); } else { r.textContent="Couldn't load — try again"; }
     });
     $("#coach_savekey").addEventListener("click",()=>{
-      const k=$("#coach_key").value.trim(); DATA.prefs.coachModel=$("#coach_model").value; save();
-      if(!setCoachKey(k)){toast("Couldn't save key");return;}
-      closeModal(); toast(k?"Coach connected":"Key cleared"); if(onDone)onDone();
+      const k=$("#coach_key").value.trim();
+      const modeBtn=$("#coach_key_mode .on");
+      const mode=modeBtn?modeBtn.dataset.v:"session";
+      DATA.prefs.coachModel=$("#coach_model").value; save();
+      if(!setCoachKey(k, mode)){toast("Couldn't save key");return;}
+      closeModal();
+      toast(k?(mode==="device"?"Coach key saved on this device":"Coach key saved for this session"):"Key cleared");
+      if(onDone)onDone();
     });
-    const del=$("#coach_delkey"); if(del)del.addEventListener("click",()=>{ setCoachKey(""); closeModal(); toast("Key deleted"); if(onDone)onDone(); });
+    const del=$("#coach_delkey"); if(del)del.addEventListener("click",()=>{ clearCoachKeyEverywhere(); closeModal(); toast("Key deleted"); if(onDone)onDone(); });
   }
   paint();
 }
@@ -4175,6 +4410,8 @@ function openCoachKeySetup(onDone){
 let coachChat=[]; /* {role, content} visible conversation (excludes system) */
 function renderCoach(){
   const b=$("#coachBody"); if(!b)return; b.innerHTML="";
+  const back=el("button","tiny muted","← Back to More"); back.style.cssText="margin-bottom:8px;cursor:pointer;font-weight:600";
+  back.addEventListener("click",()=>switchTab("more")); b.appendChild(back);
   b.appendChild(helpBar("coach"));
 
   if(!DATA.prefs.coachConsent){
@@ -4752,9 +4989,9 @@ function openMegaBuilder(){
 /* ===================== LIVE TRACKER ===================== */
 let liveSession=null; /* {title,type,exercises,restSec,startedAt} */
 const LIVE_KEY="evolve_live_v1";
-function persistLive(){ try{ if(liveSession&&liveSession.exercises&&liveSession.exercises.length){ localStorage.setItem(LIVE_KEY, JSON.stringify(liveSession)); } }catch(e){} }
+function persistLive(){ try{ if(liveSession&&liveSession.exercises&&liveSession.exercises.length){ localStorage.setItem(LIVE_KEY, JSON.stringify(safeJsonValue(liveSession,0))); } }catch(e){} }
 function clearLive(){ try{ localStorage.removeItem(LIVE_KEY); }catch(e){} }
-function loadLive(){ try{ const s=localStorage.getItem(LIVE_KEY); return s?JSON.parse(s):null; }catch(e){ return null; } }
+function loadLive(){ try{ const s=localStorage.getItem(LIVE_KEY); return s?safeJsonValue(safeParseJsonText(s,MAX_STATE_BYTES/3,"Live session"),0):null; }catch(e){ return null; } }
 function resumeLive(saved){
   buildState=null; liveSession=saved; stopRest();
   $("#live").classList.add("on");
@@ -5678,15 +5915,43 @@ function renderFuel(){
   b.appendChild(afTop);
 
   /* ───────── AT A GLANCE: calorie ring + macros ───────── */
+  const hasFood = log.food && log.food.length > 0;
   const ringCard=el("div","card center fuel-hero");
-  ringCard.innerHTML=`<div class="ring-wrap">${ringSVG(pct, remaining<0?"#FF5470":"#2FE6A8",170)}
-     <div class="lbl"><div class="big num">${eVal(Math.abs(remaining))}</div>
-     <div class="sub">${remaining<0?"over":"left"} · ${eUnit()}</div></div></div>
-     <div class="row" style="justify-content:space-around;margin-top:14px">
-       <div><div class="tiny muted">EATEN</div><div class="num" style="font-weight:700">${eVal(eaten.c)}</div></div>
-       <div><div class="tiny muted">TARGET</div><div class="num" style="font-weight:700">${eVal(budget)}</div></div>
-       <div><div class="tiny muted">BURNED</div><div class="num" style="font-weight:700">${eVal(burned)}</div></div>
-     </div>`;
+  if(!hasFood){
+    /* Compact ring on empty state — user can tap to expand */
+    ringCard.style.cursor="pointer";
+    ringCard.title="Tap to see full breakdown";
+    ringCard.innerHTML=`<div style="display:flex;align-items:center;gap:14px;text-align:left;padding:4px 0">
+      ${ringSVG(pct,remaining<0?"#FF5470":"#2FE6A8",64)}
+      <div style="flex:1">
+        <div class="eyebrow" style="margin-bottom:4px">Calories</div>
+        <div style="font-family:var(--font-disp);font-size:26px;line-height:1">${eVal(Math.abs(remaining))} <span style="font-size:14px;color:var(--muted);font-family:Inter">${remaining<0?"over":"left"} · ${eUnit()}</span></div>
+        <div class="tiny muted" style="margin-top:4px">Target: ${eVal(budget)} · Log food to see macros</div>
+      </div>
+      <div class="muted" style="font-size:18px">›</div>
+    </div>`;
+    ringCard.addEventListener("click",()=>{
+      ringCard.dataset.expanded="1";
+      ringCard.style.cursor="";
+      ringCard.innerHTML=`<div class="ring-wrap">${ringSVG(pct, remaining<0?"#FF5470":"#2FE6A8",170)}
+       <div class="lbl"><div class="big num">${eVal(Math.abs(remaining))}</div>
+       <div class="sub">${remaining<0?"over":"left"} · ${eUnit()}</div></div></div>
+       <div class="row" style="justify-content:space-around;margin-top:14px">
+         <div><div class="tiny muted">EATEN</div><div class="num" style="font-weight:700">${eVal(eaten.c)}</div></div>
+         <div><div class="tiny muted">TARGET</div><div class="num" style="font-weight:700">${eVal(budget)}</div></div>
+         <div><div class="tiny muted">BURNED</div><div class="num" style="font-weight:700">${eVal(burned)}</div></div>
+       </div>`;
+    });
+  } else {
+    ringCard.innerHTML=`<div class="ring-wrap">${ringSVG(pct, remaining<0?"#FF5470":"#2FE6A8",170)}
+       <div class="lbl"><div class="big num">${eVal(Math.abs(remaining))}</div>
+       <div class="sub">${remaining<0?"over":"left"} · ${eUnit()}</div></div></div>
+       <div class="row" style="justify-content:space-around;margin-top:14px">
+         <div><div class="tiny muted">EATEN</div><div class="num" style="font-weight:700">${eVal(eaten.c)}</div></div>
+         <div><div class="tiny muted">TARGET</div><div class="num" style="font-weight:700">${eVal(budget)}</div></div>
+         <div><div class="tiny muted">BURNED</div><div class="num" style="font-weight:700">${eVal(burned)}</div></div>
+       </div>`;
+  }
   b.appendChild(ringCard);
 
   /* macros — three mini rings (grouped right under the calorie ring) */
@@ -6540,8 +6805,10 @@ function renderStats(){
       if(!photos.length){ host.appendChild(el("div","empty","No photos yet — add one to start a private visual timeline.")); body.appendChild(host); return; }
       const grid=el("div","photo-grid");
       photos.forEach(p=>{
+        const safeSrc=safeInlineImageSrc(p.img,"");
+        if(!safeSrc) return;
         const cell=el("div","photo-cell");
-        cell.innerHTML=`<img src="${p.img}" alt="Progress ${shortDate(p.date)}"><div class="photo-date">${shortDate(p.date)}</div><button class="photo-del" data-del="${p.id}" title="Delete">✕</button>`;
+        cell.innerHTML=`<img src="${esc(safeSrc)}" alt="Progress ${shortDate(p.date)}"><div class="photo-date">${shortDate(p.date)}</div><button class="photo-del" data-del="${p.id}" title="Delete">✕</button>`;
         grid.appendChild(cell);
       });
       host.appendChild(grid);
@@ -6839,13 +7106,13 @@ const LATEST_NUM="1.0";
 const LATEST_TITLE="Evolve 1.0 — the full release";
 const LATEST_ITEMS=[
   "<b>🎉 Evolve is 1.0!</b> After a long beta, this is the first full release — a complete, private, offline-first gym &amp; nutrition tracker. Everything below is what's new in 1.0; earlier entries were the beta builds that got us here.",
-  "<b>AI Coach can build your workouts</b> — in the Coach tab, tap “Generate a workout”, pick the muscle groups and length you want (or let it recommend one), and the AI returns a real, ready-to-use session. <b>Start it now</b> or <b>Save for later</b> — saved ones land in your new Saved workouts list under Train.",
+  "<b>AI Coach can build your workouts</b> — open the Coach from More → Tools, tap “Generate a workout”, pick the muscle groups and length you want (or let it recommend one), and the AI returns a real, ready-to-use session. <b>Start it now</b> or <b>Save for later</b> — saved ones land in your new Saved workouts list under Train.",
   "<b>🛒 Food packs (optional)</b> — add big UK supermarket food databases from Settings → Food packs. Pick your shops (Tesco, Sainsbury's, Asda, Aldi) and download only those; their foods slot into the normal categories with the shop name, and you can filter your food search by shop. Downloaded packs live on your device and work offline. They only download public food lists — your data is never uploaded.",
   "<b>Saved workouts</b> — Train now has a dedicated Saved workouts section. Save any session (tap the ★ during a workout) or a Coach-generated one, and reuse it any time.",
   "<b>Sets pre-fill themselves</b> — no more typing the same weight &amp; reps every time. New sets start pre-filled with your usual numbers (or your last session if newer); you just tap to confirm each one. Set your usual per exercise from the ⋯ menu. Works for machines, free weights and home moves.",
   "<b>AI Coach (optional)</b> — connect your own free OpenRouter key to chat about training &amp; nutrition or analyse your logs. It's the only feature that sends data off your device, and it explains exactly what's shared before you enable it; your key stays on this device and is never backed up.",
   "<b>In-app updates</b> — Evolve updates itself now. When a new version is live you'll get an “Update available” banner; one tap and you're on the latest. There's also a “Check for updates” button in Settings → Help &amp; guide.",
-  "<b>Cleaner navigation</b> — Home now sits on the far left, with the new Coach tab on the right.",
+  "<b>Cleaner navigation</b> — Home now sits on the far left, with a streamlined five-tab layout. AI Coach is accessible from More → Tools.",
   "<b>Routines (multi-day programs)</b> — build a plan like Push/Pull/Legs under Train → 📋 Programs, then start any day with one tap. Starter templates and a quick walkthrough included.",
   "<b>Cardio Ready screen</b> — a fresh cardio waits on a Ready screen and only starts timing when you tap ▶ Start.",
   "<b>Progress photos</b> — a private photo timeline in Progress → Trends, stored only on this device and never uploaded or backed up.",
@@ -7092,6 +7359,11 @@ function renderMore(){
   const photoBtn=$("#profile_photo_card"); if(photoBtn)photoBtn.addEventListener("click",openProfilePhotoPrivacy);
   maybeBackupBanner(b);
 
+  const sec=el("div","notice-card notice-amber");
+  sec.innerHTML=`<div class="notice-title">🔐 Security hardening test build</div><div class="notice-body">Restore/import is stricter in this build, and the AI Coach key can now be kept for this session only.</div>`;
+  sec.style.marginBottom="16px";
+  b.appendChild(sec);
+
   /* ---- PROFILE ---- */
   function buildProfile(body){
     const pc=el("div");
@@ -7204,6 +7476,7 @@ function renderMore(){
     const hf=el("div"); hf.style.marginTop="18px";
     const curHF=DATA.prefs.headingFont||"modern";
     hf.innerHTML=`<div class="tiny muted" style="margin-bottom:8px;text-transform:uppercase;letter-spacing:.05em">Heading font</div>
+      <div class="tiny muted" style="margin-bottom:10px;line-height:1.5">The display font used for titles, headers and the logo. Body text stays the same for readability.</div>
       <div class="seg" id="pf_hfont">${Object.keys(HEADING_FONTS).map(k=>`<button data-v="${k}" class="${curHF===k?'on':''}" style="font-family:${HEADING_FONTS[k].stack};font-weight:800;font-size:16px">${HEADING_FONTS[k].label}</button>`).join("")}</div>
       <div class="tiny muted" id="pf_hfont_lab" style="margin-top:8px">${HEADING_FONTS[curHF].sample}</div>`;
     body.appendChild(hf);
@@ -7430,7 +7703,8 @@ function renderMore(){
         onConfirm:()=>{
           try{localStorage.removeItem(KEY);}catch(e){}
           try{localStorage.clear();}catch(e){}
-          DATA=JSON.parse(JSON.stringify(DEFAULT_DATA)); DATA.meta.created=todayISO();
+          try{sessionStorage.removeItem(COACH_KEY_SESSION_KEY);}catch(e){}
+          DATA=blankData();
           location.reload();
         }});
     });
@@ -7444,6 +7718,13 @@ function renderMore(){
   made.stats=moreAcc("stats","📊","Stats & resets","Reset or adjust your tracked numbers",buildStatsResets,false,{iconClass:"ic-stats"});
   made.backup=moreAcc("backup","💾","Backup & restore","Export or import your data as a code",buildBackup,false,{iconClass:"ic-backup"});
   made.foodpacks=moreAcc("foodpacks","🛒","Food packs","Add UK supermarket foods (optional download)",buildFoodPacks,false,{iconClass:"ic-backup"});
+  made.coach=moreAcc("coach","🤖","AI Coach","Generate workouts & get coaching tips",function(body){
+    const intro=el("div","tiny muted","The AI Coach generates ready-to-use workouts and answers training questions using your own free OpenRouter key.");
+    intro.style.cssText="line-height:1.55;margin-bottom:14px"; body.appendChild(intro);
+    const go=el("button","btn str block","🤖 Open AI Coach"); go.style.marginTop="4px";
+    go.addEventListener("click",()=>switchTab("coach"));
+    body.appendChild(go);
+  },false,{iconClass:"ic-help"});
   made.help=moreAcc("help","📖","Help & guide","How every part of Evolve works",buildHelp,false,{iconClass:"ic-help"});
   made.danger=moreAcc("danger","⚠️","Danger zone","Erase all data — handle with care",buildDanger,true);
 
@@ -7451,6 +7732,7 @@ function renderMore(){
     ["You",            ["profile","units","prefs"]],
     ["Your data",      ["stats","backup"]],
     ["Food",           ["foodpacks"]],
+    ["Tools",          ["coach"]],
     ["About",          ["help"]]
   ];
   groups.forEach(([label,ids])=>{
@@ -7468,13 +7750,14 @@ function renderMore(){
 }
 
 function cleanBackupData(){
-  const copy=JSON.parse(JSON.stringify(DATA));
+  const copy=normalizeStoredData(JSON.parse(JSON.stringify(DATA)));
   if(copy.meta){
     delete copy.meta.driveClientId; delete copy.meta.driveFileId; delete copy.meta.driveEnabled; delete copy.meta.lastDriveBackup; delete copy.meta.backupNotifyLast; delete copy.meta.backupNotifications;
   }
   return copy;
 }
-function backupCode(){return "EVOLVE1:"+btoa(unescape(encodeURIComponent(JSON.stringify(cleanBackupData()))));}
+function decodeB64Utf8(raw){ return new TextDecoder().decode(b64ToBytes(raw)); }
+function backupCode(){ return "EVOLVE1:"+bytesToB64(new TextEncoder().encode(JSON.stringify(cleanBackupData()))); }
 function bytesToB64(bytes){let bin=""; const chunk=0x8000; for(let i=0;i<bytes.length;i+=chunk){bin+=String.fromCharCode.apply(null,bytes.subarray(i,i+chunk));} return btoa(bin);}
 function b64ToBytes(b64){const bin=atob(b64); const out=new Uint8Array(bin.length); for(let i=0;i<bin.length;i++)out[i]=bin.charCodeAt(i); return out;}
 function backupCryptoReady(){return !!(window.crypto&&crypto.subtle&&window.TextEncoder&&window.TextDecoder);}
@@ -7492,11 +7775,12 @@ async function makeEncryptedBackupText(password){
   return JSON.stringify({type:"EVOLVE_ENCRYPTED_BACKUP",version:1,app:"Evolve",created:new Date().toISOString(),kdf:"PBKDF2-SHA256",iterations:210000,cipher:"AES-GCM",salt:bytesToB64(salt),iv:bytesToB64(iv),data:bytesToB64(cipher)},null,2);
 }
 async function decryptEncryptedBackupText(text,password){
-  const box=JSON.parse(text);
+  const box=safeParseJsonText(text,MAX_IMPORT_BYTES,"Encrypted backup");
   if(!box||box.type!=="EVOLVE_ENCRYPTED_BACKUP") throw new Error("not-evolve-encrypted");
+  if(typeof box.salt!=="string" || typeof box.iv!=="string" || typeof box.data!=="string") throw new Error("bad-backup");
   const key=await deriveBackupKey(password,b64ToBytes(box.salt));
   const plain=await crypto.subtle.decrypt({name:"AES-GCM",iv:b64ToBytes(box.iv)},key,b64ToBytes(box.data));
-  const obj=JSON.parse(new TextDecoder().decode(plain));
+  const obj=normalizeStoredData(safeParseJsonText(new TextDecoder().decode(plain),MAX_IMPORT_BYTES,"Decrypted backup"));
   if(!obj||typeof obj!=="object"||!("workouts" in obj)) throw new Error("bad-backup");
   return obj;
 }
@@ -7575,7 +7859,7 @@ function openEncryptedRestoreText(text){
     <div class="field"><label>Password</label><input class="input" id="dec_pw" type="password" autocomplete="current-password"></div>
     <button class="btn danger-solid block" id="dec_go">Decrypt & restore</button>`);
   $("#dec_go").addEventListener("click",async()=>{
-    try{const obj=await decryptEncryptedBackupText(text,$("#dec_pw").value); DATA=Object.assign(JSON.parse(JSON.stringify(DEFAULT_DATA)),obj); migrate(DATA); save(); closeModal(); updateHeader(); switchTab("stats"); toast("Encrypted backup restored ✓");}
+    try{const obj=await decryptEncryptedBackupText(text,$("#dec_pw").value); DATA=normalizeStoredData(obj); save(); closeModal(); updateHeader(); switchTab("stats"); toast("Encrypted backup restored ✓");}
     catch(e){toast("Couldn't decrypt — check the password/file");}
   });
 }
@@ -7622,10 +7906,11 @@ function openImport(){
     let raw=$("#im_code").value;
     raw=raw.replace(/^\s*EVOLVE\d*\s*:\s*/i,"").replace(/\s+/g,""); /* drop optional EVOLVE1: tag (any case) + any stray spaces/line breaks */
     try{
-      const obj=JSON.parse(decodeURIComponent(escape(atob(raw))));
+      if(!raw || raw.length>MAX_IMPORT_BYTES*1.4) throw new Error("bad-size");
+      const decoded=decodeB64Utf8(raw);
+      const obj=normalizeStoredData(safeParseJsonText(decoded,MAX_IMPORT_BYTES,"Backup code"));
       if(!obj||typeof obj!=="object"||!("workouts" in obj)) throw new Error("bad");
-      DATA=Object.assign(JSON.parse(JSON.stringify(DEFAULT_DATA)),obj);
-      migrate(DATA); save(); closeModal(); updateHeader(); switchTab("stats"); toast("Data restored ✓");
+      DATA=obj; save(); closeModal(); updateHeader(); switchTab("stats"); toast("Data restored ✓");
     }catch(e){ toast("That code didn't work — check you copied all of it"); }
   });
 }
@@ -7675,15 +7960,32 @@ function renderSplashNews(){
   document.getElementById("newsFull").addEventListener("click",openChangelog);
 }
 renderSplashNews();
+function maybeShowSecurityNotice(){
+  if((DATA.meta&&DATA.meta.securityNoticeSeen)===SECURITY_NOTICE_VERSION) return;
+  openModal(`<h3>Security hardening test build</h3>
+    <div class="notice-card notice-amber" style="margin-bottom:12px"><div class="notice-title">Heads up</div><div class="notice-body">This test build is intentionally stricter than the 1.0 release.</div></div>
+    <ul class="coach-priv-list" style="margin-top:0">
+      <li>Backup/import/restore validation is stricter. Broken or hand-edited payloads can now be rejected on purpose.</li>
+      <li>The AI Coach key can be stored <b>for this session only</b> or remembered on this device.</li>
+      <li>Service-worker caching is tighter, so stale cross-origin files are less likely to linger.</li>
+    </ul>
+    <button class="btn str block" id="sec_notice_ok">Got it</button>`, {mandatory:false});
+  const btn=$("#sec_notice_ok");
+  if(btn) btn.addEventListener("click",()=>{ DATA.meta.securityNoticeSeen=SECURITY_NOTICE_VERSION; save(); closeModal(); });
+}
 updateHeader();
 checkBackupReminderOnOpen();
+setTimeout(maybeShowSecurityNotice, 900);
 
 /* ---- PWA: install prompt (Android/Chrome) + offline service worker ---- */
 let deferredInstall=null;
 function isStandalone(){ return window.matchMedia("(display-mode: standalone)").matches || window.navigator.standalone===true; }
 window.addEventListener("beforeinstallprompt",(e)=>{ e.preventDefault(); deferredInstall=e;
-  if($("#view-more") && $("#view-more").classList.contains("active")) renderMore(); });
+  if($("#view-more") && $("#view-more").classList.contains("active")) renderMore();
+  /* if the prompt arrives after the banner is up, upgrade "How" → one-tap "Install" */
+  if($("#installBanner") && !installBannerDismissed){ $("#installBanner").remove(); showInstallBanner(); } });
 window.addEventListener("appinstalled",()=>{ deferredInstall=null; toast("Evolve installed 🎉");
+  if($("#installBanner")) $("#installBanner").remove();
   if($("#view-more") && $("#view-more").classList.contains("active")) renderMore(); });
 async function tryInstall(){
   if(deferredInstall){ deferredInstall.prompt(); try{await deferredInstall.userChoice;}catch(e){} deferredInstall=null; renderMore(); return; }
@@ -7695,6 +7997,38 @@ async function tryInstall(){
     </div>
     <button class="btn str block" id="inst_ok" style="margin-top:16px">Got it</button>`);
   $("#inst_ok").addEventListener("click",closeModal);
+}
+
+/* ---- "Add to home screen" prompt banner (browser only, never in the app) ----
+   Shown when Evolve is opened in a normal browser tab, NOT when it's already
+   running as the installed PWA (isStandalone). Android gets a real one-tap
+   Install when Chrome offers the prompt; iPhone gets the manual Safari steps
+   (iOS has no programmatic install). Dismiss hides it for this visit; it
+   returns next browser visit until the app is installed (once installed, the
+   app launches standalone and this never shows again). */
+let installBannerDismissed=false;
+function isiOS(){ return /iphone|ipad|ipod/i.test(navigator.userAgent) || (navigator.platform==="MacIntel" && navigator.maxTouchPoints>1); }
+function showInstallBanner(){
+  if(isStandalone()) return;            /* already installed & launched from icon */
+  if(installBannerDismissed) return;    /* dismissed earlier this visit */
+  if($("#installBanner")) return;       /* already showing */
+  const ios=isiOS();
+  const bar=el("div","install-banner"); bar.id="installBanner";
+  const action = (!ios && deferredInstall)
+    ? `<button class="btn str sm" id="inst_now">Install</button>`
+    : `<button class="btn str sm" id="inst_how">How</button>`;
+  bar.innerHTML=`<span>📲 Add Evolve to your home screen for the full‑screen, offline app.</span>
+    ${action}
+    <button class="upd-x" id="inst_x" title="Not now">✕</button>`;
+  document.body.appendChild(bar);
+  const dismiss=()=>{ installBannerDismissed=true; bar.remove(); };
+  $("#inst_x").addEventListener("click",dismiss);
+  if($("#inst_now")) $("#inst_now").addEventListener("click",async ()=>{
+    $("#inst_now").textContent="…"; $("#inst_now").disabled=true;
+    await tryInstall();                 /* fires Chrome's prompt; appinstalled removes banner */
+    if($("#installBanner")) bar.remove();
+  });
+  if($("#inst_how")) $("#inst_how").addEventListener("click",()=>{ dismiss(); tryInstall(); });
 }
 /* ===================== APP UPDATES (in-app, no more close-twice dance) ===================== */
 let swReg=null, swRefreshing=false;
@@ -7742,6 +8076,10 @@ if("serviceWorker" in navigator){
   /* check again whenever the app is brought back to the foreground */
   document.addEventListener("visibilitychange",()=>{ if(document.visibilityState==="visible") checkForUpdate(false); });
 }
+
+/* offer "add to home screen" shortly after load — only in a browser, never in
+   the installed app. Delayed a touch so it doesn't fight the splash/first paint. */
+window.addEventListener("load",()=>{ if(!isStandalone()) setTimeout(showInstallBanner,2600); });
 
 /* keep number inputs from zooming weirdly handled by viewport; ready. */
 

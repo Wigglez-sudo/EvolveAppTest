@@ -1,5 +1,5 @@
 ==============================================================
- EVOLVE — full source snapshot · v1.0 (RELEASE) · 15 June 2026
+ EVOLVE — full source snapshot · v1.0.2 SECURITY TEST HOTFIX
  Files in deploy order. REFERENCE snapshot, not a runtime file.
 ==============================================================
 
@@ -17,6 +17,8 @@
 <meta name="apple-mobile-web-app-title" content="Evolve">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="theme-color" content="#0C0D11">
+<meta name="referrer" content="no-referrer">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; base-uri 'self'; object-src 'none'; form-action 'self'; frame-ancestors 'none'; img-src 'self' data: blob:; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com data:; script-src 'self'; connect-src 'self' https://openrouter.ai https://fonts.googleapis.com https://fonts.gstatic.com; manifest-src 'self'; worker-src 'self' blob:;">
 <link rel="manifest" href="manifest.json">
 <link rel="icon" type="image/png" sizes="64x64" href="favicon.png">
 <link rel="icon" type="image/png" sizes="192x192" href="icon-192.png">
@@ -28,6 +30,7 @@
 <link rel="stylesheet" href="styles.css">
 </head>
 <body>
+<noscript><div style="padding:16px;background:#101218;color:#F3F4F8;border-bottom:1px solid #272B38;font-family:Inter,sans-serif">Evolve needs JavaScript enabled to run.</div></noscript>
 
 <!-- SPLASH -->
 <div id="splash">
@@ -105,7 +108,6 @@
   <button data-tab="fuel" class="fuelTab"><svg viewBox="0 0 24 24"><path d="M12 3c0 3-2 4-2 7a4 4 0 008 0c0-4-3-6-3-9M12 21a6 6 0 01-6-6"/></svg>Fuel</button>
   <button data-tab="stats"><svg viewBox="0 0 24 24"><path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/></svg>Progress</button>
   <button data-tab="more"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19 12a7 7 0 00-.1-1l2-1.5-2-3.4-2.3 1a7 7 0 00-1.7-1l-.3-2.6h-4l-.3 2.6a7 7 0 00-1.7 1l-2.3-1-2 3.4 2 1.5a7 7 0 000 2l-2 1.5 2 3.4 2.3-1a7 7 0 001.7 1l.3 2.6h4l.3-2.6a7 7 0 001.7-1l2.3 1 2-3.4-2-1.5a7 7 0 00.1-1z"/></svg>More</button>
-  <button data-tab="coach"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><circle cx="9" cy="10" r="1.2" fill="currentColor" stroke="none"/><circle cx="15" cy="10" r="1.2" fill="currentColor" stroke="none"/><path d="M9 15c1 1 5 1 6 0"/></svg>Coach</button>
 </nav>
 <button id="fuelFab" class="hidden" aria-label="Add food">＋</button>
 
@@ -379,12 +381,12 @@ select.input{appearance:none;background-image:url("data:image/svg+xml;utf8,<svg 
 
 /* muscle group tiles */
 .mg-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
-.mg{position:relative;border-radius:var(--r);padding:18px 16px;min-height:104px;overflow:hidden;
+.mg{position:relative;border-radius:var(--r);padding:18px 16px;min-height:116px;overflow:hidden;
   border:1px solid var(--line2);display:flex;flex-direction:column;justify-content:flex-end;
   background:var(--surface);transition:transform .12s}
 .mg:active{transform:scale(.97)}
 .mg .nm{font-family:var(--font-disp);font-size:30px;letter-spacing:.02em;position:relative;z-index:2}
-.mg .ct{font-size:11px;color:var(--muted);letter-spacing:.08em;text-transform:uppercase;position:relative;z-index:2}
+.mg .ct{font-size:12px;color:var(--text);letter-spacing:.04em;text-transform:uppercase;position:relative;z-index:2;font-weight:700;opacity:.7}
 .mg .glow{position:absolute;inset:0;opacity:.55}
 .mega-card{position:relative;width:100%;text-align:left;margin-top:14px;border-radius:var(--r);padding:18px 18px;overflow:hidden;
   border:1px solid var(--line2);background:linear-gradient(120deg,rgba(255,106,44,.16),rgba(47,230,168,.14));transition:transform .12s}
@@ -748,9 +750,10 @@ svg.chart{width:100%;height:auto;display:block}
   background:rgba(16,18,24,.78);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);
   border:1px solid var(--line2);border-radius:26px;box-shadow:0 18px 44px rgba(0,0,0,.55);
   display:flex;padding:7px}
-#nav button{flex:1;min-width:0;display:flex;flex-direction:column;align-items:center;gap:2px;color:var(--muted2);
-  font-size:9px;font-weight:700;letter-spacing:.02em;padding:8px 0 7px;border-radius:16px;transition:background .2s,color .2s;white-space:nowrap}
-#nav button svg{width:21px;height:21px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+#nav button{flex:1;min-width:0;display:flex;flex-direction:column;align-items:center;gap:3px;color:var(--muted2);
+  font-family:var(--font-disp),Inter,-apple-system,sans-serif;font-size:10px;font-weight:800;letter-spacing:.03em;
+  padding:9px 4px 8px;border-radius:16px;transition:background .2s,color .2s;white-space:nowrap}
+#nav button svg{width:22px;height:22px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
 #nav button.on{color:var(--text);background:rgba(255,255,255,.08)}
 #nav button.on svg{stroke:var(--strength)}
 #nav button.fuelTab.on svg{stroke:var(--fuel)}
@@ -806,7 +809,7 @@ hr{border:none;border-top:1px solid var(--line);margin:16px 0}
 
 /* v3.31 — floating "+" Add-food button (Fuel tab only) */
 #fuelFab{position:fixed;z-index:119;right:max(22px,calc((100vw - 560px)/2 + 22px));
-  bottom:calc(90px + var(--safe-b));width:56px;height:56px;border-radius:50%;
+  bottom:calc(106px + var(--safe-b));width:56px;height:56px;border-radius:50%;
   background:var(--grad-fuel,linear-gradient(135deg,#2FE6A8,#16b98a));color:#04241a;
   font-size:30px;font-weight:700;line-height:1;display:flex;align-items:center;justify-content:center;
   border:none;box-shadow:0 10px 26px rgba(0,0,0,.5),0 0 0 4px var(--ink);
@@ -882,6 +885,14 @@ hr{border:none;border-top:1px solid var(--line);margin:16px 0}
 .update-banner .btn{flex:0 0 auto;background:rgba(255,255,255,.95);color:#111}
 .update-banner .upd-x{flex:0 0 auto;background:none;border:none;color:rgba(255,255,255,.85);font-size:14px;cursor:pointer;padding:4px}
 @keyframes upd-in{from{transform:translateY(16px);opacity:0}to{transform:translateY(0);opacity:1}}
+/* install ("add to home screen") banner — sits above update banner so they never overlap */
+.install-banner{position:fixed;left:14px;right:14px;bottom:calc(162px + var(--safe-b));max-width:560px;margin:0 auto;z-index:200;
+  display:flex;align-items:center;gap:10px;padding:12px 14px;border-radius:16px;
+  background:linear-gradient(135deg,var(--ink2),var(--surface2));color:#fff;border:1px solid var(--line2);
+  box-shadow:0 14px 40px rgba(0,0,0,.5);animation:upd-in .3s ease}
+.install-banner span{flex:1;font-size:13.5px;font-weight:600;line-height:1.3}
+.install-banner .btn{flex:0 0 auto}
+.install-banner .upd-x{flex:0 0 auto;background:none;border:none;color:rgba(255,255,255,.7);font-size:14px;cursor:pointer;padding:4px}
 
 /* v1.0 — coach generated-workout card */
 .cw-card{width:100%;max-width:100%}
@@ -926,10 +937,18 @@ hr{border:none;border-top:1px solid var(--line);margin:16px 0}
 .fp-sub{font-size:12.5px;color:var(--muted);margin-top:2px}
 .fp-act{display:flex;align-items:center;flex:0 0 auto}
 
+/* ---------- SECURITY NOTICE CARDS ---------- */
+.notice-card{background:rgba(255,255,255,.045);border:1px solid var(--line2);border-radius:16px;padding:14px 15px;box-shadow:0 8px 24px rgba(0,0,0,.18)}
+.notice-title{font-size:14px;font-weight:800;color:var(--text);margin-bottom:6px}
+.notice-body{font-size:13px;line-height:1.55;color:var(--muted)}
+.notice-amber{background:linear-gradient(180deg,rgba(255,200,87,.12),rgba(255,255,255,.035));border-color:rgba(255,200,87,.35)}
+.notice-blue{background:linear-gradient(180deg,rgba(90,169,255,.12),rgba(255,255,255,.035));border-color:rgba(90,169,255,.35)}
+
 
 /* ============ FILE: data.js ============ */
 
 /* ===== Evolve data — exercise & food database (rarely changes) =====
+   Security-hardening test build note: this file is reference data only.
    Loaded BEFORE app.js. Pure reference data + the tiny lookup maps. */
 "use strict";
 
@@ -2099,9 +2118,63 @@ const GOALS={lose:{adj:-500,l:"Lose weight"},maintain:{adj:0,l:"Maintain"},gain:
   });}); }
 
   /* ---- in-memory cache of installed pack foods (built once, on boot) ------ */
-  var _packFoods = [];          /* flat array in app food format */
-  var _installed = {};          /* id -> {id,name,count,bytes,version} */
-  var _ready = false;
+var _packFoods = [];          /* flat array in app food format */
+var _installed = {};          /* id -> {id,name,count,bytes,version} */
+var _ready = false;
+var MAX_MANIFEST_BYTES = 512 * 1024;
+var MAX_PACK_BYTES = 12 * 1024 * 1024;
+var MAX_PACK_ITEMS = 12000;
+
+function isPlainObject(v){ return !!v && typeof v === "object" && !Array.isArray(v) && Object.getPrototypeOf(v) === Object.prototype; }
+function safeText(v, max){
+  return String(v == null ? "" : v).replace(/\s+/g, " ").trim().slice(0, max || 120);
+}
+function safeNumber(v, fallback){
+  var n = Number(v);
+  return Number.isFinite(n) ? n : (fallback == null ? 0 : fallback);
+}
+function validateShop(shop){
+  if(!isPlainObject(shop)) return null;
+  var id = safeText(shop.id, 40).toLowerCase();
+  var file = safeText(shop.file, 80);
+  if(!/^[a-z0-9-]+$/.test(id)) return null;
+  if(!/^[a-z0-9-]+\.json$/i.test(file)) return null;
+  return {
+    id: id,
+    name: safeText(shop.name || id, 80),
+    file: file,
+    count: Math.max(0, Math.round(safeNumber(shop.count, 0))),
+    bytes: Math.max(0, Math.round(safeNumber(shop.bytes, 0))),
+    version: safeText(shop.version || "", 40)
+  };
+}
+function validateItem(it){
+  if(!isPlainObject(it)) return null;
+  var name = safeText(it.n, 90);
+  if(!name) return null;
+  var kcal = safeNumber(it.kcal, NaN), p = safeNumber(it.p, NaN), c = safeNumber(it.c, NaN), f = safeNumber(it.f, NaN);
+  if(!Number.isFinite(kcal) || kcal < 0 || kcal > 900) return null;
+  if(!Number.isFinite(p) || p < 0 || p > 100) return null;
+  if(!Number.isFinite(c) || c < 0 || c > 100) return null;
+  if(!Number.isFinite(f) || f < 0 || f > 100) return null;
+  var out = {
+    n: name,
+    b: safeText(it.b || "", 60),
+    shop: safeText(it.shop || "", 40),
+    cat: APP_CATEGORIES[safeText(it.cat || "", 60)] ? safeText(it.cat || "", 60) : "Misc & extras",
+    kcal: Math.round(kcal),
+    p: Math.round(p * 10) / 10,
+    c: Math.round(c * 10) / 10,
+    f: Math.round(f * 10) / 10
+  };
+  if(it.serve && isPlainObject(it.serve)){
+    var grams = safeNumber(it.serve.grams, NaN);
+    if(Number.isFinite(grams) && grams > 0 && grams <= 2000){
+      out.serve = { unit: safeText(it.serve.unit || "", 24), grams: Math.round(grams) };
+    }
+  }
+  return out;
+}
 
   /* category whitelist — shop foods must map onto an existing app category.
      Anything unknown falls back to "Misc & extras". Kept in sync with data.js. */
@@ -2154,29 +2227,45 @@ const GOALS={lose:{adj:-500,l:"Lose weight"},maintain:{adj:0,l:"Maintain"},gain:
   function isPackInstalled(id){ return !!_installed[id]; }
 
   /* fetch the manifest of available shops (network — only called on the screen) */
-  function loadManifest(){
-    return fetch(MANIFEST_URL, {cache:"no-store"}).then(function(r){
-      if(!r.ok) throw new Error("manifest "+r.status);
-      return r.json();
-    }).then(function(m){
-      if(!m || !Array.isArray(m.shops)) throw new Error("bad manifest");
-      return m;
-    });
-  }
+function loadManifest(){
+  return fetch(MANIFEST_URL, {cache:"no-store", credentials:"same-origin"}).then(function(r){
+    if(!r.ok) throw new Error("manifest "+r.status);
+    var len = +(r.headers.get("content-length") || 0);
+    if(len && len > MAX_MANIFEST_BYTES) throw new Error("manifest too large");
+    return r.json();
+  }).then(function(m){
+    if(!m || !Array.isArray(m.shops)) throw new Error("bad manifest");
+    var shops = m.shops.map(validateShop).filter(Boolean);
+    if(!shops.length) throw new Error("empty manifest");
+    return {
+      version: safeText(m.version || "", 40),
+      generated: safeText(m.generated || "", 64),
+      total: Math.max(0, Math.round(safeNumber(m.total, 0))),
+      attribution: safeText(m.attribution || "", 240),
+      shops: shops
+    };
+  });
+}
 
   /* download one shop's pack and store it; resolves with the installed summary */
-  function downloadPack(shop){
-    if(!shop || !shop.id || !shop.file) return Promise.reject(new Error("bad shop"));
-    var url = FOOD_DB_BASE + shop.file;
-    return fetch(url, {cache:"no-store"}).then(function(r){
-      if(!r.ok) throw new Error("download "+r.status);
-      return r.json();
-    }).then(function(items){
-      if(!Array.isArray(items)) throw new Error("bad pack file");
-      var rec = { id:shop.id, name:shop.name||shop.id, version:shop.version||"", bytes:shop.bytes||0, items:items };
-      return idbPut(rec).then(function(){ return rebuild(); }).then(function(){ return _installed[shop.id]; });
-    });
-  }
+function downloadPack(shop){
+  shop = validateShop(shop);
+  if(!shop) return Promise.reject(new Error("bad shop"));
+  var url = FOOD_DB_BASE + shop.file;
+  return fetch(url, {cache:"no-store", credentials:"same-origin"}).then(function(r){
+    if(!r.ok) throw new Error("download "+r.status);
+    var len = +(r.headers.get("content-length") || 0);
+    if(len && len > MAX_PACK_BYTES) throw new Error("pack too large");
+    return r.json();
+  }).then(function(items){
+    if(!Array.isArray(items)) throw new Error("bad pack file");
+    if(items.length > MAX_PACK_ITEMS) throw new Error("pack too large");
+    var clean = items.map(validateItem).filter(Boolean);
+    if(!clean.length) throw new Error("pack had no valid foods");
+    var rec = { id:shop.id, name:shop.name||shop.id, version:shop.version||"", bytes:shop.bytes||0, items:clean };
+    return idbPut(rec).then(function(){ return rebuild(); }).then(function(){ return _installed[shop.id]; });
+  });
+}
 
   /* remove an installed pack */
   function removePack(id){ return idbDel(id).then(function(){ return rebuild(); }); }
@@ -2313,11 +2402,18 @@ const KEY="evolve_v1";
 const PROFILE_PHOTO_KEY="evolve_profile_photo_v1"; /* separate local-only photo; deliberately not included in backup codes */
 const PROGRESS_PHOTOS_KEY="evolve_progress_photos_v1"; /* v3.31: local-only progress gallery; never in backups */
 const COACH_KEY_KEY="evolve_coach_key_v1"; /* v3.31: OpenRouter API key — local-only, never in any backup, never sent anywhere except OpenRouter */
+const COACH_KEY_MODE_KEY="evolve_coach_key_mode_v1"; /* device|session */
+const COACH_KEY_SESSION_KEY="evolve_coach_key_session_v1"; /* session-only storage for the Coach key */
+const MAX_STATE_BYTES=4.5*1024*1024;
+const MAX_IMPORT_BYTES=4*1024*1024;
+const MAX_IMAGE_FILE_BYTES=15*1024*1024;
+const MAX_PROGRESS_PHOTOS=60;
+const SECURITY_NOTICE_VERSION="2026-06-security-test-2";
 const DEFAULT_DATA = {
   profile:null, /* {name,sex,age,heightCm,weightKg,activity,goal,goalWeightKg} */
   targets:null, /* {calories,protein,carbs,fat,water} */
   prefs:{energy:"kcal", addExercise:true, showAchievements:true, showHelpBars:true, liftUnit:"kg", bodyUnit:"kg", gymEquip:"machine_cardio", env:"gym", rmFormula:"epley", theme:"ember", mealTimes:false, targetMode:"auto",
-    restDefault:90, restBeep:true, restFlash:true, keepAwake:true, waterUnit:"ml", waterStep:250, startTab:"home", headingFont:"modern",
+    restDefault:90, restBeep:true, restFlash:true, keepAwake:true, waterUnit:"ml", waterStep:250, startTab:"home", headingFont:"classic",
     coachConsent:false, coachModel:"openrouter/free"},
   customFoods:[], /* {name,kcal,p,c,f} per 100g, user-added */
   favFoods:[],  /* GLOBAL favourite food names */
@@ -2335,10 +2431,52 @@ const DEFAULT_DATA = {
   statResets:{}, /* per-stat user resets: key -> {start, since} (prs: {since}) */
   meta:{lastBackup:null, created:null, backupReminder:"weekly", backupNotifications:false, backupNotifyLast:null, driveEnabled:false, driveClientId:"", driveFileId:null, lastDriveBackup:null}
 };
+function isPlainObject(v){ return !!v && typeof v==="object" && !Array.isArray(v) && Object.getPrototypeOf(v)===Object.prototype; }
+function safeJsonValue(v, depth){
+  if(depth>40) throw new Error("Data nesting is too deep");
+  if(Array.isArray(v)) return v.slice(0,50000).map(x=>safeJsonValue(x,depth+1));
+  if(isPlainObject(v)){
+    const out={};
+    Object.keys(v).forEach(k=>{
+      if(k==="__proto__" || k==="prototype" || k==="constructor") return;
+      out[k]=safeJsonValue(v[k],depth+1);
+    });
+    return out;
+  }
+  return v;
+}
+function safeParseJsonText(raw, maxBytes, label){
+  if(typeof raw!=="string" || !raw) throw new Error((label||"JSON")+" is empty");
+  if(raw.length>maxBytes) throw new Error((label||"JSON")+" is too large");
+  return safeJsonValue(JSON.parse(raw),0);
+}
+function blankData(){ const d=JSON.parse(JSON.stringify(DEFAULT_DATA)); d.meta.created=todayISO(); return d; }
+function mergeKnownDataKeys(clean){
+  if(!isPlainObject(clean)) throw new Error("Bad data root");
+  const out=JSON.parse(JSON.stringify(DEFAULT_DATA));
+  Object.keys(out).forEach(k=>{ if(Object.prototype.hasOwnProperty.call(clean,k)) out[k]=clean[k]; });
+  return out;
+}
+function normalizeStoredData(obj){
+  const d=mergeKnownDataKeys(safeJsonValue(obj,0));
+  migrate(d);
+  if(!d.meta.created) d.meta.created=todayISO();
+  return d;
+}
+function safeInlineImageSrc(src, fallback){
+  const s=String(src||"").trim();
+  if(!s) return fallback||"";
+  if(/^(?:\.\/)?(?:icon-192\.png|icon-512\.png|apple-touch-icon\.png)$/i.test(s)) return s.replace(/^\.\//,"");
+  if(/^data:image\/(?:png|jpeg|jpg|webp);base64,[a-z0-9+/=\s]+$/i.test(s) && s.length<=2500000) return s;
+  return fallback||"";
+}
 let DATA = load();
 function load(){
-  try{const raw=localStorage.getItem(KEY); if(raw){const d=Object.assign(JSON.parse(JSON.stringify(DEFAULT_DATA)),JSON.parse(raw)); migrate(d); return d;}}catch(e){}
-  const d=JSON.parse(JSON.stringify(DEFAULT_DATA)); d.meta.created=todayISO(); return d;
+  try{
+    const raw=localStorage.getItem(KEY);
+    if(raw) return normalizeStoredData(safeParseJsonText(raw,MAX_STATE_BYTES,"Stored app data"));
+  }catch(e){}
+  return blankData();
 }
 function migrate(d){
   if(!Array.isArray(d.favExercises)) d.favExercises=[];
@@ -2350,7 +2488,16 @@ function migrate(d){
   if(d.prefs.targetMode!=="manual") d.prefs.targetMode="auto"; /* auto = formula targets; manual = user-set calories & macros */
   /* v3.22 — new preference defaults (kept here so existing users carry over untouched) */
   if(!(Number(d.prefs.restDefault)>0)) d.prefs.restDefault=90;       /* default rest-timer length (seconds) */
-  if(!d.prefs.headingFont) d.prefs.headingFont="modern";             /* v3.31: heading font style */
+  if(!d.prefs.headingFont) d.prefs.headingFont="classic";            /* v3.31: heading font style (1.0: Classic default) */
+  /* 1.0 — adopt Classic (Bebas) as the app's display font globally. Existing
+     installs still on the OLD "modern" default are moved to "classic" ONCE
+     (guarded by a flag) so the change reaches them; a deliberate later choice
+     of any font sticks and is never re-flipped. */
+  if(!d.meta || typeof d.meta!=="object") d.meta={};
+  if(!d.meta.classicFontApplied){
+    if(d.prefs.headingFont==="modern") d.prefs.headingFont="classic";
+    d.meta.classicFontApplied=true;
+  }
   if(typeof d.prefs.coachConsent!=="boolean") d.prefs.coachConsent=false; /* v3.31: AI Coach privacy consent */
   if(!d.prefs.coachModel) d.prefs.coachModel="openrouter/free";
   /* v3.31: retire model slugs OpenRouter has dropped, and move the old default to the free router */
@@ -2375,9 +2522,15 @@ function migrate(d){
   if(typeof d.meta.driveClientId!=="string") d.meta.driveClientId="";
   if(typeof d.meta.driveFileId!=="string") d.meta.driveFileId=null;
   if(typeof d.meta.lastDriveBackup!=="string") d.meta.lastDriveBackup=null;
+  if(typeof d.meta.securityNoticeSeen!=="string") d.meta.securityNoticeSeen="";
 }
 
-function save(){try{localStorage.setItem(KEY,JSON.stringify(DATA));}catch(e){toast("Storage full or blocked");}}
+function save(){
+  try{
+    DATA=normalizeStoredData(DATA);
+    localStorage.setItem(KEY,JSON.stringify(DATA));
+  }catch(e){toast("Storage full, blocked, or data was invalid");}
+}
 
 /* ===================== THEMES ===================== */
 const THEMES={
@@ -2419,16 +2572,16 @@ applyTheme((DATA.prefs&&DATA.prefs.theme)||"ember");
 
 /* v3.31 — heading font styles, switchable in Settings → Preferences */
 const HEADING_FONTS={
-  modern:{label:"Modern",   stack:'"Inter",-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif', spacing:"-0.01em", sample:"Clean & legible"},
-  bold:  {label:"Bold",     stack:'"Archivo","Inter",sans-serif',                                          spacing:"-0.02em", sample:"Strong & sporty"},
-  classic:{label:"Classic", stack:'"Bebas Neue","Inter",sans-serif',                                        spacing:"0.02em",  sample:"Tall gym poster"}
+  modern:{label:"Modern",   stack:'"Inter",-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif', spacing:"-0.01em", sample:"Clean, rounded sans-serif — the most legible option."},
+  bold:  {label:"Bold",     stack:'"Archivo","Inter",sans-serif',                                          spacing:"-0.02em", sample:"Wide, heavy and sporty — strong without shouting."},
+  classic:{label:"Classic", stack:'"Bebas Neue","Inter",sans-serif',                                        spacing:"0.02em",  sample:"Tall, condensed gym-poster capitals (default)."}
 };
 function applyHeadingFont(id){
   const f=HEADING_FONTS[id]||HEADING_FONTS.modern; const r=document.documentElement.style;
   r.setProperty("--font-disp",f.stack);
   r.setProperty("--font-disp-spacing",f.spacing);
 }
-applyHeadingFont((DATA.prefs&&DATA.prefs.headingFont)||"modern");
+applyHeadingFont((DATA.prefs&&DATA.prefs.headingFont)||"classic");
 
 /* ===================== DATE HELPERS (device clock) ===================== */
 function todayISO(d){d=d||new Date();return d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0");}
@@ -2558,14 +2711,15 @@ function getProfilePhoto(){
   try{return localStorage.getItem(PROFILE_PHOTO_KEY)||"";}catch(e){return "";}
 }
 function setProfilePhoto(v){
-  try{localStorage.setItem(PROFILE_PHOTO_KEY,v);return true;}catch(e){return false;}
+  try{ const safe=safeInlineImageSrc(v,""); if(!safe) return false; localStorage.setItem(PROFILE_PHOTO_KEY,safe); return true; }catch(e){return false;}
 }
 function clearProfilePhoto(){
   try{localStorage.removeItem(PROFILE_PHOTO_KEY);}catch(e){}
 }
 function profileAvatarHTML(){
-  const src=getProfilePhoto()||"icon-192.png";
-  return `<img src="${esc(src)}" alt="${getProfilePhoto()?"Profile photo":"Evolve logo"}">`;
+  const raw=getProfilePhoto();
+  const src=safeInlineImageSrc(raw,"icon-192.png")||"icon-192.png";
+  return `<img src="${esc(src)}" alt="${raw?"Profile photo":"Evolve logo"}">`;
 }
 function openProfilePhotoPrivacy(){
   openModal(`<h3>Profile picture privacy</h3>
@@ -2584,6 +2738,7 @@ function chooseProfilePhoto(){
     const file=input.files&&input.files[0]; input.remove();
     if(!file)return;
     if(!/^image\//.test(file.type||"")){toast("Choose an image file");return;}
+    if(file.size && file.size>MAX_IMAGE_FILE_BYTES){toast("That image is too large");return;}
     resizeAndSaveProfilePhoto(file);
   },{once:true});
   input.click();
@@ -2615,12 +2770,31 @@ function resizeAndSaveProfilePhoto(file){
 
 /* v3.31 — progress photos: local-only, never backed up, like the profile photo */
 function getProgressPhotos(){
-  try{const raw=localStorage.getItem(PROGRESS_PHOTOS_KEY); return raw?JSON.parse(raw):[];}catch(e){return [];}
+  try{
+    const raw=localStorage.getItem(PROGRESS_PHOTOS_KEY);
+    const arr=raw?safeParseJsonText(raw,MAX_STATE_BYTES/2,"Progress photos"):[];
+    if(!Array.isArray(arr)) return [];
+    return arr.map(p=>({
+      id:+p.id||Date.now(),
+      date:typeof p.date==="string"?p.date:todayISO(),
+      img:safeInlineImageSrc(p.img,"")
+    })).filter(p=>p.img).slice(0,MAX_PROGRESS_PHOTOS);
+  }catch(e){return [];}
 }
 function setProgressPhotos(arr){
-  try{localStorage.setItem(PROGRESS_PHOTOS_KEY,JSON.stringify(arr)); return true;}catch(e){return false;}
+  try{
+    const safe=(Array.isArray(arr)?arr:[]).map(p=>({
+      id:+(p&&p.id)||Date.now(),
+      date:(p&&typeof p.date==="string")?p.date:todayISO(),
+      img:safeInlineImageSrc(p&&p.img,"")
+    })).filter(p=>p.img).slice(0,MAX_PROGRESS_PHOTOS);
+    localStorage.setItem(PROGRESS_PHOTOS_KEY,JSON.stringify(safe));
+    return true;
+  }catch(e){return false;}
 }
 function addProgressPhotoFromFile(file, after){
+  if(!file || !/^image\//.test(file.type||"")){ toast("Choose an image file"); return; }
+  if(file.size && file.size>MAX_IMAGE_FILE_BYTES){ toast("That image is too large"); return; }
   const reader=new FileReader();
   reader.onerror=()=>toast("Couldn't read that photo");
   reader.onload=()=>{
@@ -2921,8 +3095,10 @@ function lineChart(points,color,opts){
 /* ===================== NAVIGATION ===================== */
 function switchTab(tab){
   document.querySelectorAll(".screen").forEach(s=>s.classList.remove("active"));
-  $("#view-"+tab).classList.add("active");
-  document.querySelectorAll("#nav button").forEach(b=>b.classList.toggle("on",b.dataset.tab===tab));
+  const vEl=$("#view-"+tab); if(vEl) vEl.classList.add("active");
+  /* Coach lives under More, Cardio under Train — keep the parent nav button highlighted */
+  var navTab = tab==="coach"?"more" : tab==="cardio"?"train" : tab;
+  document.querySelectorAll("#nav button").forEach(b=>b.classList.toggle("on",b.dataset.tab===navTab));
   window.scrollTo(0,0);
   if(tab==="home")renderHome();
   if(tab==="train")renderTrain();
@@ -4049,7 +4225,7 @@ function openRoutineDayExercises(dayIdx){
 }
 
 /* ===================== AI COACH (OpenRouter, user's own key) — v3.31 =====================
-   Privacy: the API key lives ONLY in localStorage on this device (COACH_KEY_KEY),
+   Privacy: the API key can be kept for this session only or remembered on this device,
    is never written to any backup (encrypted or CSV) and is never sent anywhere except
    OpenRouter. A summary of the user's training/nutrition is sent to OpenRouter ONLY when
    the user actively asks the Coach something, and only after they've given consent. */
@@ -4067,7 +4243,7 @@ const COACH_MODELS=[
 let coachLiveModels=null;
 async function fetchCoachModels(){
   try{
-    const res=await fetch("https://openrouter.ai/api/v1/models");
+    const res=await fetch("https://openrouter.ai/api/v1/models",{cache:"no-store",credentials:"omit",referrerPolicy:"no-referrer"});
     if(!res.ok) throw new Error("models fetch failed");
     const data=await res.json();
     const free=(data.data||[]).filter(m=>{
@@ -4088,8 +4264,43 @@ async function fetchCoachModels(){
   }catch(e){ return null; }
 }
 function coachModelList(){ return coachLiveModels||COACH_MODELS; }
-function getCoachKey(){ try{return localStorage.getItem(COACH_KEY_KEY)||"";}catch(e){return "";} }
-function setCoachKey(k){ try{ if(k)localStorage.setItem(COACH_KEY_KEY,k); else localStorage.removeItem(COACH_KEY_KEY); return true;}catch(e){return false;} }
+function getCoachKeyMode(){
+  try{
+    const mode=localStorage.getItem(COACH_KEY_MODE_KEY);
+    if(mode==="device" || mode==="session") return mode;
+    if(localStorage.getItem(COACH_KEY_KEY)) return "device";
+  }catch(e){}
+  return "session";
+}
+function setCoachKeyMode(mode){
+  try{ localStorage.setItem(COACH_KEY_MODE_KEY, mode==="device"?"device":"session"); return true; }catch(e){ return false; }
+}
+function getCoachKey(){
+  try{
+    if(getCoachKeyMode()==="device") return localStorage.getItem(COACH_KEY_KEY)||"";
+    return sessionStorage.getItem(COACH_KEY_SESSION_KEY)||"";
+  }catch(e){
+    try{return localStorage.getItem(COACH_KEY_KEY)||"";}catch(_){return "";}
+  }
+}
+function setCoachKey(k, mode){
+  try{
+    const m=(mode||getCoachKeyMode())==="device"?"device":"session";
+    if(m==="device"){
+      if(k)localStorage.setItem(COACH_KEY_KEY,k); else localStorage.removeItem(COACH_KEY_KEY);
+      try{sessionStorage.removeItem(COACH_KEY_SESSION_KEY);}catch(e){}
+    }else{
+      if(k)sessionStorage.setItem(COACH_KEY_SESSION_KEY,k); else sessionStorage.removeItem(COACH_KEY_SESSION_KEY);
+      try{localStorage.removeItem(COACH_KEY_KEY);}catch(e){}
+    }
+    setCoachKeyMode(m);
+    return true;
+  }catch(e){return false;}
+}
+function clearCoachKeyEverywhere(){
+  try{localStorage.removeItem(COACH_KEY_KEY);}catch(e){}
+  try{sessionStorage.removeItem(COACH_KEY_SESSION_KEY);}catch(e){}
+}
 function coachReady(){ return DATA.prefs.coachConsent===true && !!getCoachKey(); }
 
 /* build a compact, on-device summary of the user's training to give the model context */
@@ -4119,6 +4330,9 @@ async function coachAsk(messages){
   const key=getCoachKey(); if(!key) throw new Error("No API key set");
   const res=await fetch("https://openrouter.ai/api/v1/chat/completions",{
     method:"POST",
+    cache:"no-store",
+    credentials:"omit",
+    referrerPolicy:"no-referrer",
     headers:{ "Authorization":"Bearer "+key, "Content-Type":"application/json",
       "HTTP-Referer":"https://wigglez-sudo.github.io/", "X-Title":"Evolve" },
     body:JSON.stringify({ model:DATA.prefs.coachModel||"deepseek/deepseek-chat-v3-0324:free", messages })
@@ -4152,7 +4366,7 @@ function openCoachConsent(onAgree){
         <li>Don't include anything you wouldn't want a third-party AI service to process.</li>
         <li>The Coach can be wrong. It is not medical advice.</li>
       </ul>
-      <p class="tiny muted">You can revoke consent and delete your key any time in the Coach tab.</p>
+      <p class="tiny muted">You can revoke consent and delete your key any time in Coach settings.</p>
     </div>
     <button class="btn str block" id="coach_agree">I understand — enable AI Coach</button>
     <button class="btn ghost block" id="coach_decline" style="margin-top:10px">Not now</button>`);
@@ -4162,31 +4376,53 @@ function openCoachConsent(onAgree){
 function openCoachKeySetup(onDone){
   function modelOptions(){
     const list=coachModelList().slice();
-    /* make sure the currently-selected model is always an option */
     if(!list.some(m=>m.id===DATA.prefs.coachModel)) list.unshift({id:DATA.prefs.coachModel,name:DATA.prefs.coachModel});
     return list.map(m=>`<option value="${esc(m.id)}" ${DATA.prefs.coachModel===m.id?"selected":""}>${esc(m.name)}</option>`).join("");
   }
+  function modeNote(mode){
+    return mode==="device"
+      ? "Convenient, but less strict: the key stays in browser storage on this device until you delete it."
+      : "Safer: the key lives only for this browser session and is cleared when the session ends.";
+  }
   function paint(){
+    const mode=getCoachKeyMode();
     openModal(`<h3>Connect OpenRouter</h3>
-      <p class="muted tiny" style="line-height:1.5;margin-bottom:12px">The Coach uses <b>OpenRouter</b>, which gives access to many AI models with one key — including free ones. Create a free key at <b>openrouter.ai/keys</b>, then paste it below. It's stored only on this device.</p>
+      <p class="muted tiny" style="line-height:1.5;margin-bottom:12px">The Coach uses <b>OpenRouter</b>, which gives access to many AI models with one key — including free ones. Create a free key at <b>openrouter.ai/keys</b>, then paste it below.</p>
+      <div class="notice-card notice-amber" style="margin-bottom:12px"><div class="notice-title">🔐 Test-build privacy hardening</div><div class="notice-body">Choose whether your key is kept <b>for this session only</b> or remembered <b>on this device</b>. Session-only is the safer option.</div></div>
       <div class="field"><label>OpenRouter API key</label><input class="input" id="coach_key" type="password" placeholder="sk-or-..." value="${esc(getCoachKey())}" autocomplete="off"></div>
+      <div class="field"><label>Key storage</label>
+        <div class="seg scroll" id="coach_key_mode">
+          <button data-v="session" class="${mode==="session"?"on":""}">This session only</button>
+          <button data-v="device" class="${mode==="device"?"on":""}">Remember on this device</button>
+        </div>
+        <div class="tiny muted" id="coach_key_mode_note" style="margin-top:8px;line-height:1.5">${modeNote(mode)}</div>
+      </div>
       <div class="field"><label>Model</label><select class="input" id="coach_model">${modelOptions()}</select>
         <div class="tiny muted" style="margin-top:6px">Free models change often. <button class="linklike" id="coach_refresh" style="font-size:12px">↻ Load current free models</button></div>
         <div class="tiny muted" style="margin-top:4px">Tip: “Auto” always works but uses a little credit. If a free model says it's unavailable, refresh and pick another.</div></div>
       <button class="btn str block" id="coach_savekey">Save</button>
-      ${getCoachKey()?`<button class="btn ghost block" id="coach_delkey" style="margin-top:10px">Delete key from this device</button>`:""}`);
+      ${getCoachKey()?`<button class="btn ghost block" id="coach_delkey" style="margin-top:10px">Delete key</button>`:""}`);
+    $("#coach_key_mode").querySelectorAll("button").forEach(btn=>btn.addEventListener("click",()=>{
+      $("#coach_key_mode").querySelectorAll("button").forEach(b=>b.classList.toggle("on", b===btn));
+      $("#coach_key_mode_note").textContent=modeNote(btn.dataset.v);
+    }));
     $("#coach_refresh").addEventListener("click",async ()=>{
       const r=$("#coach_refresh"); r.textContent="Loading…";
-      DATA.prefs.coachModel=$("#coach_model").value; /* keep current pick */
+      DATA.prefs.coachModel=$("#coach_model").value;
       const got=await fetchCoachModels();
       if(got){ paint(); toast("Loaded "+(got.length)+" models"); } else { r.textContent="Couldn't load — try again"; }
     });
     $("#coach_savekey").addEventListener("click",()=>{
-      const k=$("#coach_key").value.trim(); DATA.prefs.coachModel=$("#coach_model").value; save();
-      if(!setCoachKey(k)){toast("Couldn't save key");return;}
-      closeModal(); toast(k?"Coach connected":"Key cleared"); if(onDone)onDone();
+      const k=$("#coach_key").value.trim();
+      const modeBtn=$("#coach_key_mode .on");
+      const mode=modeBtn?modeBtn.dataset.v:"session";
+      DATA.prefs.coachModel=$("#coach_model").value; save();
+      if(!setCoachKey(k, mode)){toast("Couldn't save key");return;}
+      closeModal();
+      toast(k?(mode==="device"?"Coach key saved on this device":"Coach key saved for this session"):"Key cleared");
+      if(onDone)onDone();
     });
-    const del=$("#coach_delkey"); if(del)del.addEventListener("click",()=>{ setCoachKey(""); closeModal(); toast("Key deleted"); if(onDone)onDone(); });
+    const del=$("#coach_delkey"); if(del)del.addEventListener("click",()=>{ clearCoachKeyEverywhere(); closeModal(); toast("Key deleted"); if(onDone)onDone(); });
   }
   paint();
 }
@@ -4195,6 +4431,8 @@ function openCoachKeySetup(onDone){
 let coachChat=[]; /* {role, content} visible conversation (excludes system) */
 function renderCoach(){
   const b=$("#coachBody"); if(!b)return; b.innerHTML="";
+  const back=el("button","tiny muted","← Back to More"); back.style.cssText="margin-bottom:8px;cursor:pointer;font-weight:600";
+  back.addEventListener("click",()=>switchTab("more")); b.appendChild(back);
   b.appendChild(helpBar("coach"));
 
   if(!DATA.prefs.coachConsent){
@@ -4772,9 +5010,9 @@ function openMegaBuilder(){
 /* ===================== LIVE TRACKER ===================== */
 let liveSession=null; /* {title,type,exercises,restSec,startedAt} */
 const LIVE_KEY="evolve_live_v1";
-function persistLive(){ try{ if(liveSession&&liveSession.exercises&&liveSession.exercises.length){ localStorage.setItem(LIVE_KEY, JSON.stringify(liveSession)); } }catch(e){} }
+function persistLive(){ try{ if(liveSession&&liveSession.exercises&&liveSession.exercises.length){ localStorage.setItem(LIVE_KEY, JSON.stringify(safeJsonValue(liveSession,0))); } }catch(e){} }
 function clearLive(){ try{ localStorage.removeItem(LIVE_KEY); }catch(e){} }
-function loadLive(){ try{ const s=localStorage.getItem(LIVE_KEY); return s?JSON.parse(s):null; }catch(e){ return null; } }
+function loadLive(){ try{ const s=localStorage.getItem(LIVE_KEY); return s?safeJsonValue(safeParseJsonText(s,MAX_STATE_BYTES/3,"Live session"),0):null; }catch(e){ return null; } }
 function resumeLive(saved){
   buildState=null; liveSession=saved; stopRest();
   $("#live").classList.add("on");
@@ -5698,15 +5936,43 @@ function renderFuel(){
   b.appendChild(afTop);
 
   /* ───────── AT A GLANCE: calorie ring + macros ───────── */
+  const hasFood = log.food && log.food.length > 0;
   const ringCard=el("div","card center fuel-hero");
-  ringCard.innerHTML=`<div class="ring-wrap">${ringSVG(pct, remaining<0?"#FF5470":"#2FE6A8",170)}
-     <div class="lbl"><div class="big num">${eVal(Math.abs(remaining))}</div>
-     <div class="sub">${remaining<0?"over":"left"} · ${eUnit()}</div></div></div>
-     <div class="row" style="justify-content:space-around;margin-top:14px">
-       <div><div class="tiny muted">EATEN</div><div class="num" style="font-weight:700">${eVal(eaten.c)}</div></div>
-       <div><div class="tiny muted">TARGET</div><div class="num" style="font-weight:700">${eVal(budget)}</div></div>
-       <div><div class="tiny muted">BURNED</div><div class="num" style="font-weight:700">${eVal(burned)}</div></div>
-     </div>`;
+  if(!hasFood){
+    /* Compact ring on empty state — user can tap to expand */
+    ringCard.style.cursor="pointer";
+    ringCard.title="Tap to see full breakdown";
+    ringCard.innerHTML=`<div style="display:flex;align-items:center;gap:14px;text-align:left;padding:4px 0">
+      ${ringSVG(pct,remaining<0?"#FF5470":"#2FE6A8",64)}
+      <div style="flex:1">
+        <div class="eyebrow" style="margin-bottom:4px">Calories</div>
+        <div style="font-family:var(--font-disp);font-size:26px;line-height:1">${eVal(Math.abs(remaining))} <span style="font-size:14px;color:var(--muted);font-family:Inter">${remaining<0?"over":"left"} · ${eUnit()}</span></div>
+        <div class="tiny muted" style="margin-top:4px">Target: ${eVal(budget)} · Log food to see macros</div>
+      </div>
+      <div class="muted" style="font-size:18px">›</div>
+    </div>`;
+    ringCard.addEventListener("click",()=>{
+      ringCard.dataset.expanded="1";
+      ringCard.style.cursor="";
+      ringCard.innerHTML=`<div class="ring-wrap">${ringSVG(pct, remaining<0?"#FF5470":"#2FE6A8",170)}
+       <div class="lbl"><div class="big num">${eVal(Math.abs(remaining))}</div>
+       <div class="sub">${remaining<0?"over":"left"} · ${eUnit()}</div></div></div>
+       <div class="row" style="justify-content:space-around;margin-top:14px">
+         <div><div class="tiny muted">EATEN</div><div class="num" style="font-weight:700">${eVal(eaten.c)}</div></div>
+         <div><div class="tiny muted">TARGET</div><div class="num" style="font-weight:700">${eVal(budget)}</div></div>
+         <div><div class="tiny muted">BURNED</div><div class="num" style="font-weight:700">${eVal(burned)}</div></div>
+       </div>`;
+    });
+  } else {
+    ringCard.innerHTML=`<div class="ring-wrap">${ringSVG(pct, remaining<0?"#FF5470":"#2FE6A8",170)}
+       <div class="lbl"><div class="big num">${eVal(Math.abs(remaining))}</div>
+       <div class="sub">${remaining<0?"over":"left"} · ${eUnit()}</div></div></div>
+       <div class="row" style="justify-content:space-around;margin-top:14px">
+         <div><div class="tiny muted">EATEN</div><div class="num" style="font-weight:700">${eVal(eaten.c)}</div></div>
+         <div><div class="tiny muted">TARGET</div><div class="num" style="font-weight:700">${eVal(budget)}</div></div>
+         <div><div class="tiny muted">BURNED</div><div class="num" style="font-weight:700">${eVal(burned)}</div></div>
+       </div>`;
+  }
   b.appendChild(ringCard);
 
   /* macros — three mini rings (grouped right under the calorie ring) */
@@ -6560,8 +6826,10 @@ function renderStats(){
       if(!photos.length){ host.appendChild(el("div","empty","No photos yet — add one to start a private visual timeline.")); body.appendChild(host); return; }
       const grid=el("div","photo-grid");
       photos.forEach(p=>{
+        const safeSrc=safeInlineImageSrc(p.img,"");
+        if(!safeSrc) return;
         const cell=el("div","photo-cell");
-        cell.innerHTML=`<img src="${p.img}" alt="Progress ${shortDate(p.date)}"><div class="photo-date">${shortDate(p.date)}</div><button class="photo-del" data-del="${p.id}" title="Delete">✕</button>`;
+        cell.innerHTML=`<img src="${esc(safeSrc)}" alt="Progress ${shortDate(p.date)}"><div class="photo-date">${shortDate(p.date)}</div><button class="photo-del" data-del="${p.id}" title="Delete">✕</button>`;
         grid.appendChild(cell);
       });
       host.appendChild(grid);
@@ -6859,13 +7127,13 @@ const LATEST_NUM="1.0";
 const LATEST_TITLE="Evolve 1.0 — the full release";
 const LATEST_ITEMS=[
   "<b>🎉 Evolve is 1.0!</b> After a long beta, this is the first full release — a complete, private, offline-first gym &amp; nutrition tracker. Everything below is what's new in 1.0; earlier entries were the beta builds that got us here.",
-  "<b>AI Coach can build your workouts</b> — in the Coach tab, tap “Generate a workout”, pick the muscle groups and length you want (or let it recommend one), and the AI returns a real, ready-to-use session. <b>Start it now</b> or <b>Save for later</b> — saved ones land in your new Saved workouts list under Train.",
+  "<b>AI Coach can build your workouts</b> — open the Coach from More → Tools, tap “Generate a workout”, pick the muscle groups and length you want (or let it recommend one), and the AI returns a real, ready-to-use session. <b>Start it now</b> or <b>Save for later</b> — saved ones land in your new Saved workouts list under Train.",
   "<b>🛒 Food packs (optional)</b> — add big UK supermarket food databases from Settings → Food packs. Pick your shops (Tesco, Sainsbury's, Asda, Aldi) and download only those; their foods slot into the normal categories with the shop name, and you can filter your food search by shop. Downloaded packs live on your device and work offline. They only download public food lists — your data is never uploaded.",
   "<b>Saved workouts</b> — Train now has a dedicated Saved workouts section. Save any session (tap the ★ during a workout) or a Coach-generated one, and reuse it any time.",
   "<b>Sets pre-fill themselves</b> — no more typing the same weight &amp; reps every time. New sets start pre-filled with your usual numbers (or your last session if newer); you just tap to confirm each one. Set your usual per exercise from the ⋯ menu. Works for machines, free weights and home moves.",
   "<b>AI Coach (optional)</b> — connect your own free OpenRouter key to chat about training &amp; nutrition or analyse your logs. It's the only feature that sends data off your device, and it explains exactly what's shared before you enable it; your key stays on this device and is never backed up.",
   "<b>In-app updates</b> — Evolve updates itself now. When a new version is live you'll get an “Update available” banner; one tap and you're on the latest. There's also a “Check for updates” button in Settings → Help &amp; guide.",
-  "<b>Cleaner navigation</b> — Home now sits on the far left, with the new Coach tab on the right.",
+  "<b>Cleaner navigation</b> — Home now sits on the far left, with a streamlined five-tab layout. AI Coach is accessible from More → Tools.",
   "<b>Routines (multi-day programs)</b> — build a plan like Push/Pull/Legs under Train → 📋 Programs, then start any day with one tap. Starter templates and a quick walkthrough included.",
   "<b>Cardio Ready screen</b> — a fresh cardio waits on a Ready screen and only starts timing when you tap ▶ Start.",
   "<b>Progress photos</b> — a private photo timeline in Progress → Trends, stored only on this device and never uploaded or backed up.",
@@ -7112,6 +7380,11 @@ function renderMore(){
   const photoBtn=$("#profile_photo_card"); if(photoBtn)photoBtn.addEventListener("click",openProfilePhotoPrivacy);
   maybeBackupBanner(b);
 
+  const sec=el("div","notice-card notice-amber");
+  sec.innerHTML=`<div class="notice-title">🔐 Security hardening test build</div><div class="notice-body">Restore/import is stricter in this build, and the AI Coach key can now be kept for this session only.</div>`;
+  sec.style.marginBottom="16px";
+  b.appendChild(sec);
+
   /* ---- PROFILE ---- */
   function buildProfile(body){
     const pc=el("div");
@@ -7224,6 +7497,7 @@ function renderMore(){
     const hf=el("div"); hf.style.marginTop="18px";
     const curHF=DATA.prefs.headingFont||"modern";
     hf.innerHTML=`<div class="tiny muted" style="margin-bottom:8px;text-transform:uppercase;letter-spacing:.05em">Heading font</div>
+      <div class="tiny muted" style="margin-bottom:10px;line-height:1.5">The display font used for titles, headers and the logo. Body text stays the same for readability.</div>
       <div class="seg" id="pf_hfont">${Object.keys(HEADING_FONTS).map(k=>`<button data-v="${k}" class="${curHF===k?'on':''}" style="font-family:${HEADING_FONTS[k].stack};font-weight:800;font-size:16px">${HEADING_FONTS[k].label}</button>`).join("")}</div>
       <div class="tiny muted" id="pf_hfont_lab" style="margin-top:8px">${HEADING_FONTS[curHF].sample}</div>`;
     body.appendChild(hf);
@@ -7450,7 +7724,8 @@ function renderMore(){
         onConfirm:()=>{
           try{localStorage.removeItem(KEY);}catch(e){}
           try{localStorage.clear();}catch(e){}
-          DATA=JSON.parse(JSON.stringify(DEFAULT_DATA)); DATA.meta.created=todayISO();
+          try{sessionStorage.removeItem(COACH_KEY_SESSION_KEY);}catch(e){}
+          DATA=blankData();
           location.reload();
         }});
     });
@@ -7464,6 +7739,13 @@ function renderMore(){
   made.stats=moreAcc("stats","📊","Stats & resets","Reset or adjust your tracked numbers",buildStatsResets,false,{iconClass:"ic-stats"});
   made.backup=moreAcc("backup","💾","Backup & restore","Export or import your data as a code",buildBackup,false,{iconClass:"ic-backup"});
   made.foodpacks=moreAcc("foodpacks","🛒","Food packs","Add UK supermarket foods (optional download)",buildFoodPacks,false,{iconClass:"ic-backup"});
+  made.coach=moreAcc("coach","🤖","AI Coach","Generate workouts & get coaching tips",function(body){
+    const intro=el("div","tiny muted","The AI Coach generates ready-to-use workouts and answers training questions using your own free OpenRouter key.");
+    intro.style.cssText="line-height:1.55;margin-bottom:14px"; body.appendChild(intro);
+    const go=el("button","btn str block","🤖 Open AI Coach"); go.style.marginTop="4px";
+    go.addEventListener("click",()=>switchTab("coach"));
+    body.appendChild(go);
+  },false,{iconClass:"ic-help"});
   made.help=moreAcc("help","📖","Help & guide","How every part of Evolve works",buildHelp,false,{iconClass:"ic-help"});
   made.danger=moreAcc("danger","⚠️","Danger zone","Erase all data — handle with care",buildDanger,true);
 
@@ -7471,6 +7753,7 @@ function renderMore(){
     ["You",            ["profile","units","prefs"]],
     ["Your data",      ["stats","backup"]],
     ["Food",           ["foodpacks"]],
+    ["Tools",          ["coach"]],
     ["About",          ["help"]]
   ];
   groups.forEach(([label,ids])=>{
@@ -7488,13 +7771,14 @@ function renderMore(){
 }
 
 function cleanBackupData(){
-  const copy=JSON.parse(JSON.stringify(DATA));
+  const copy=normalizeStoredData(JSON.parse(JSON.stringify(DATA)));
   if(copy.meta){
     delete copy.meta.driveClientId; delete copy.meta.driveFileId; delete copy.meta.driveEnabled; delete copy.meta.lastDriveBackup; delete copy.meta.backupNotifyLast; delete copy.meta.backupNotifications;
   }
   return copy;
 }
-function backupCode(){return "EVOLVE1:"+btoa(unescape(encodeURIComponent(JSON.stringify(cleanBackupData()))));}
+function decodeB64Utf8(raw){ return new TextDecoder().decode(b64ToBytes(raw)); }
+function backupCode(){ return "EVOLVE1:"+bytesToB64(new TextEncoder().encode(JSON.stringify(cleanBackupData()))); }
 function bytesToB64(bytes){let bin=""; const chunk=0x8000; for(let i=0;i<bytes.length;i+=chunk){bin+=String.fromCharCode.apply(null,bytes.subarray(i,i+chunk));} return btoa(bin);}
 function b64ToBytes(b64){const bin=atob(b64); const out=new Uint8Array(bin.length); for(let i=0;i<bin.length;i++)out[i]=bin.charCodeAt(i); return out;}
 function backupCryptoReady(){return !!(window.crypto&&crypto.subtle&&window.TextEncoder&&window.TextDecoder);}
@@ -7512,11 +7796,12 @@ async function makeEncryptedBackupText(password){
   return JSON.stringify({type:"EVOLVE_ENCRYPTED_BACKUP",version:1,app:"Evolve",created:new Date().toISOString(),kdf:"PBKDF2-SHA256",iterations:210000,cipher:"AES-GCM",salt:bytesToB64(salt),iv:bytesToB64(iv),data:bytesToB64(cipher)},null,2);
 }
 async function decryptEncryptedBackupText(text,password){
-  const box=JSON.parse(text);
+  const box=safeParseJsonText(text,MAX_IMPORT_BYTES,"Encrypted backup");
   if(!box||box.type!=="EVOLVE_ENCRYPTED_BACKUP") throw new Error("not-evolve-encrypted");
+  if(typeof box.salt!=="string" || typeof box.iv!=="string" || typeof box.data!=="string") throw new Error("bad-backup");
   const key=await deriveBackupKey(password,b64ToBytes(box.salt));
   const plain=await crypto.subtle.decrypt({name:"AES-GCM",iv:b64ToBytes(box.iv)},key,b64ToBytes(box.data));
-  const obj=JSON.parse(new TextDecoder().decode(plain));
+  const obj=normalizeStoredData(safeParseJsonText(new TextDecoder().decode(plain),MAX_IMPORT_BYTES,"Decrypted backup"));
   if(!obj||typeof obj!=="object"||!("workouts" in obj)) throw new Error("bad-backup");
   return obj;
 }
@@ -7595,7 +7880,7 @@ function openEncryptedRestoreText(text){
     <div class="field"><label>Password</label><input class="input" id="dec_pw" type="password" autocomplete="current-password"></div>
     <button class="btn danger-solid block" id="dec_go">Decrypt & restore</button>`);
   $("#dec_go").addEventListener("click",async()=>{
-    try{const obj=await decryptEncryptedBackupText(text,$("#dec_pw").value); DATA=Object.assign(JSON.parse(JSON.stringify(DEFAULT_DATA)),obj); migrate(DATA); save(); closeModal(); updateHeader(); switchTab("stats"); toast("Encrypted backup restored ✓");}
+    try{const obj=await decryptEncryptedBackupText(text,$("#dec_pw").value); DATA=normalizeStoredData(obj); save(); closeModal(); updateHeader(); switchTab("stats"); toast("Encrypted backup restored ✓");}
     catch(e){toast("Couldn't decrypt — check the password/file");}
   });
 }
@@ -7642,10 +7927,11 @@ function openImport(){
     let raw=$("#im_code").value;
     raw=raw.replace(/^\s*EVOLVE\d*\s*:\s*/i,"").replace(/\s+/g,""); /* drop optional EVOLVE1: tag (any case) + any stray spaces/line breaks */
     try{
-      const obj=JSON.parse(decodeURIComponent(escape(atob(raw))));
+      if(!raw || raw.length>MAX_IMPORT_BYTES*1.4) throw new Error("bad-size");
+      const decoded=decodeB64Utf8(raw);
+      const obj=normalizeStoredData(safeParseJsonText(decoded,MAX_IMPORT_BYTES,"Backup code"));
       if(!obj||typeof obj!=="object"||!("workouts" in obj)) throw new Error("bad");
-      DATA=Object.assign(JSON.parse(JSON.stringify(DEFAULT_DATA)),obj);
-      migrate(DATA); save(); closeModal(); updateHeader(); switchTab("stats"); toast("Data restored ✓");
+      DATA=obj; save(); closeModal(); updateHeader(); switchTab("stats"); toast("Data restored ✓");
     }catch(e){ toast("That code didn't work — check you copied all of it"); }
   });
 }
@@ -7695,15 +7981,32 @@ function renderSplashNews(){
   document.getElementById("newsFull").addEventListener("click",openChangelog);
 }
 renderSplashNews();
+function maybeShowSecurityNotice(){
+  if((DATA.meta&&DATA.meta.securityNoticeSeen)===SECURITY_NOTICE_VERSION) return;
+  openModal(`<h3>Security hardening test build</h3>
+    <div class="notice-card notice-amber" style="margin-bottom:12px"><div class="notice-title">Heads up</div><div class="notice-body">This test build is intentionally stricter than the 1.0 release.</div></div>
+    <ul class="coach-priv-list" style="margin-top:0">
+      <li>Backup/import/restore validation is stricter. Broken or hand-edited payloads can now be rejected on purpose.</li>
+      <li>The AI Coach key can be stored <b>for this session only</b> or remembered on this device.</li>
+      <li>Service-worker caching is tighter, so stale cross-origin files are less likely to linger.</li>
+    </ul>
+    <button class="btn str block" id="sec_notice_ok">Got it</button>`, {mandatory:false});
+  const btn=$("#sec_notice_ok");
+  if(btn) btn.addEventListener("click",()=>{ DATA.meta.securityNoticeSeen=SECURITY_NOTICE_VERSION; save(); closeModal(); });
+}
 updateHeader();
 checkBackupReminderOnOpen();
+setTimeout(maybeShowSecurityNotice, 900);
 
 /* ---- PWA: install prompt (Android/Chrome) + offline service worker ---- */
 let deferredInstall=null;
 function isStandalone(){ return window.matchMedia("(display-mode: standalone)").matches || window.navigator.standalone===true; }
 window.addEventListener("beforeinstallprompt",(e)=>{ e.preventDefault(); deferredInstall=e;
-  if($("#view-more") && $("#view-more").classList.contains("active")) renderMore(); });
+  if($("#view-more") && $("#view-more").classList.contains("active")) renderMore();
+  /* if the prompt arrives after the banner is up, upgrade "How" → one-tap "Install" */
+  if($("#installBanner") && !installBannerDismissed){ $("#installBanner").remove(); showInstallBanner(); } });
 window.addEventListener("appinstalled",()=>{ deferredInstall=null; toast("Evolve installed 🎉");
+  if($("#installBanner")) $("#installBanner").remove();
   if($("#view-more") && $("#view-more").classList.contains("active")) renderMore(); });
 async function tryInstall(){
   if(deferredInstall){ deferredInstall.prompt(); try{await deferredInstall.userChoice;}catch(e){} deferredInstall=null; renderMore(); return; }
@@ -7715,6 +8018,38 @@ async function tryInstall(){
     </div>
     <button class="btn str block" id="inst_ok" style="margin-top:16px">Got it</button>`);
   $("#inst_ok").addEventListener("click",closeModal);
+}
+
+/* ---- "Add to home screen" prompt banner (browser only, never in the app) ----
+   Shown when Evolve is opened in a normal browser tab, NOT when it's already
+   running as the installed PWA (isStandalone). Android gets a real one-tap
+   Install when Chrome offers the prompt; iPhone gets the manual Safari steps
+   (iOS has no programmatic install). Dismiss hides it for this visit; it
+   returns next browser visit until the app is installed (once installed, the
+   app launches standalone and this never shows again). */
+let installBannerDismissed=false;
+function isiOS(){ return /iphone|ipad|ipod/i.test(navigator.userAgent) || (navigator.platform==="MacIntel" && navigator.maxTouchPoints>1); }
+function showInstallBanner(){
+  if(isStandalone()) return;            /* already installed & launched from icon */
+  if(installBannerDismissed) return;    /* dismissed earlier this visit */
+  if($("#installBanner")) return;       /* already showing */
+  const ios=isiOS();
+  const bar=el("div","install-banner"); bar.id="installBanner";
+  const action = (!ios && deferredInstall)
+    ? `<button class="btn str sm" id="inst_now">Install</button>`
+    : `<button class="btn str sm" id="inst_how">How</button>`;
+  bar.innerHTML=`<span>📲 Add Evolve to your home screen for the full‑screen, offline app.</span>
+    ${action}
+    <button class="upd-x" id="inst_x" title="Not now">✕</button>`;
+  document.body.appendChild(bar);
+  const dismiss=()=>{ installBannerDismissed=true; bar.remove(); };
+  $("#inst_x").addEventListener("click",dismiss);
+  if($("#inst_now")) $("#inst_now").addEventListener("click",async ()=>{
+    $("#inst_now").textContent="…"; $("#inst_now").disabled=true;
+    await tryInstall();                 /* fires Chrome's prompt; appinstalled removes banner */
+    if($("#installBanner")) bar.remove();
+  });
+  if($("#inst_how")) $("#inst_how").addEventListener("click",()=>{ dismiss(); tryInstall(); });
 }
 /* ===================== APP UPDATES (in-app, no more close-twice dance) ===================== */
 let swReg=null, swRefreshing=false;
@@ -7763,6 +8098,10 @@ if("serviceWorker" in navigator){
   document.addEventListener("visibilitychange",()=>{ if(document.visibilityState==="visible") checkForUpdate(false); });
 }
 
+/* offer "add to home screen" shortly after load — only in a browser, never in
+   the installed app. Delayed a touch so it doesn't fight the splash/first paint. */
+window.addEventListener("load",()=>{ if(!isStandalone()) setTimeout(showInstallBanner,2600); });
+
 /* keep number inputs from zooming weirdly handled by viewport; ready. */
 
 /* boot the optional food packs (installed shop databases) so search includes
@@ -7784,7 +8123,7 @@ if("serviceWorker" in navigator){
 {
   "name": "Evolve",
   "short_name": "Evolve",
-  "version": "1.0.0",
+  "version": "1.0.2",
   "description": "Private, offline-first gym & nutrition tracker with encrypted local backup files you can save/share to cloud storage of your choice.",
   "start_url": "./index.html",
   "scope": "./",
@@ -7819,21 +8158,31 @@ if("serviceWorker" in navigator){
   ],
   "lang": "en",
   "dir": "ltr",
-  "version": "3.29-test"
+  "id": "./",
+  "display_override": [
+    "standalone",
+    "minimal-ui"
+  ],
+  "prefer_related_applications": false
 }
+
 
 /* ============ FILE: sw.js ============ */
 
-/* Evolve service worker — v3.31 (network-first with offline fallback + in-app update flow).
-   Bump CACHE whenever you change ANY of the shell files so old caches are cleared. */
-const CACHE = "evolve-v3-55";
-const SHELL = ["./", "./index.html", "./styles.css", "./data.js", "./food-packs.js", "./app.js", "./manifest.json", "./icon-192.png", "./icon-512.png", "./apple-touch-icon.png", "./favicon.png"];
+/* Evolve service worker — v3.31 security-hardening test build.
+   Network-first for navigations, tightly-scoped caching for shell assets, and
+   Google Fonts-only cross-origin caching. Bump CACHE whenever shell files change. */
+const CACHE = "evolve-v3-62";
+const SHELL = [
+  "./", "./index.html", "./styles.css", "./data.js", "./food-packs.js", "./app.js",
+  "./manifest.json", "./icon-192.png", "./icon-512.png", "./apple-touch-icon.png", "./favicon.png"
+];
+const SAME_ORIGIN_CACHE_RE = /\.(?:css|js|json|png|jpg|jpeg|webp|gif|svg|ico|woff2?|ttf)$/i;
+const FONT_ORIGINS = new Set(["https://fonts.googleapis.com", "https://fonts.gstatic.com"]);
 
 self.addEventListener("install", (e) => {
   e.waitUntil(
     caches.open(CACHE).then((c) => c.addAll(SHELL)).catch(() => {})
-    /* NOTE: no skipWaiting() here — the new worker waits until the user taps
-       "Update" in the app, which posts SKIP_WAITING. This drives the banner. */
   );
 });
 
@@ -7845,54 +8194,1280 @@ self.addEventListener("activate", (e) => {
   );
 });
 
-/* let the app trigger an immediate activation when the user taps "Update" */
 self.addEventListener("message", (e) => {
   if (e.data === "SKIP_WAITING" || (e.data && e.data.type === "SKIP_WAITING")) {
     self.skipWaiting();
   }
 });
 
+function shouldCacheSameOrigin(req, url, res) {
+  if (!res || !res.ok || res.type !== "basic") return false;
+  if (req.mode === "navigate") return url.pathname === "/" || /(?:\/index\.html)?$/.test(url.pathname);
+  return SAME_ORIGIN_CACHE_RE.test(url.pathname);
+}
+
+function shouldCacheCrossOrigin(url, res) {
+  if (!res || !res.ok) return false;
+  return FONT_ORIGINS.has(url.origin) && (res.type === "cors" || res.type === "default");
+}
+
 self.addEventListener("fetch", (e) => {
   const req = e.request;
   if (req.method !== "GET") return;
   const url = new URL(req.url);
+  const sameOrigin = url.origin === self.location.origin;
 
-  // Same-origin app files: NETWORK-FIRST so a deployed update is picked up,
-  // falling back to cache when offline (and to cached index for navigations).
-  if (req.mode === "navigate" || url.origin === self.location.origin) {
+  if (req.mode === "navigate") {
     e.respondWith(
       fetch(req)
         .then((res) => {
-          const copy = res.clone();
-          caches.open(CACHE).then((c) => c.put(req, copy)).catch(() => {});
+          if (shouldCacheSameOrigin(req, url, res)) {
+            caches.open(CACHE).then((c) => c.put("./index.html", res.clone())).catch(() => {});
+          }
           return res;
         })
-        .catch(() =>
-          caches.match(req).then((hit) => hit || caches.match("./index.html"))
-        )
+        .catch(() => caches.match(req).then((hit) => hit || caches.match("./index.html")))
     );
     return;
   }
 
-  // Cross-origin (e.g. Google Fonts): network-first, fall back to cache.
-  e.respondWith(
-    fetch(req)
-      .then((res) => {
-        const copy = res.clone();
-        caches.open(CACHE).then((c) => c.put(req, copy)).catch(() => {});
-        return res;
-      })
-      .catch(() => caches.match(req))
-  );
+  if (sameOrigin) {
+    e.respondWith(
+      fetch(req)
+        .then((res) => {
+          if (shouldCacheSameOrigin(req, url, res)) {
+            caches.open(CACHE).then((c) => c.put(req, res.clone())).catch(() => {});
+          }
+          return res;
+        })
+        .catch(() => caches.match(req))
+    );
+    return;
+  }
+
+  if (FONT_ORIGINS.has(url.origin)) {
+    e.respondWith(
+      fetch(req)
+        .then((res) => {
+          if (shouldCacheCrossOrigin(url, res)) {
+            caches.open(CACHE).then((c) => c.put(req, res.clone())).catch(() => {});
+          }
+          return res;
+        })
+        .catch(() => caches.match(req))
+    );
+    return;
+  }
+
+  e.respondWith(fetch(req));
 });
 
 self.addEventListener("notificationclick", (e) => {
   e.notification.close();
   e.waitUntil(
     clients.matchAll({ type: "window", includeUncontrolled: true }).then((wins) => {
-      for (const w of wins) { if ("focus" in w) return w.focus(); }
+      for (const w of wins) {
+        if ("focus" in w) return w.focus();
+      }
       if (clients.openWindow) return clients.openWindow("./");
     })
   );
 });
 
+
+/* ============ FILE: README.md ============ */
+
+<div align="center">
+
+# 💪 Evolve
+
+### Train smarter · Become next.
+
+**A private, offline-first gym & nutrition tracker that lives entirely on your device.**
+
+`Version 1.0` · Built by **Wigglez**
+
+</div>
+
+---
+
+## 🔐 Test build hardening
+
+This rebuild includes a **security-hardening test pass** over the app shell.
+
+- Added a **Content Security Policy** and a `no-referrer` policy to the runtime page.
+- Tightened **backup/import/restore validation** so malformed or hand-edited payloads can be rejected instead of being merged blindly.
+- Added a **session-only AI Coach key** option (safer) alongside device storage.
+- Tightened **service-worker caching** so only the app shell and Google Fonts are cached.
+- Hardened **food-pack manifest and pack validation** before anything is stored on-device.
+
+Because this is a test build, it is intentionally stricter than the 1.0 release. Some broken or hand-edited backup codes that used to import may now be rejected on purpose.
+
+## 🌟 What is Evolve?
+
+Evolve is a personal **fitness Progressive Web App (PWA)** — a full gym and nutrition tracker that runs in your browser and installs to your home screen like a native app. No accounts, no sign-ups, no ads, no servers. Everything you log stays **on your device**.
+
+It's built for people who want a powerful training and food log *without* handing their data to a company.
+
+---
+
+## ✨ Features
+
+### 🏋️ Train
+- **Target a muscle group** — tap Chest, Back, Shoulders, Arms, Legs or Core to auto-build a workout; choose how many exercises, focus a sub-muscle, and swap any you don't like.
+- **📋 Programs (routines)** — save a multi-day plan like **Push / Pull / Legs**, then start any day with one tap. Begin from a ready-made template (PPL, Upper/Lower, Full Body ×3) or build your own.
+- **Mega workouts** — mix several muscle groups (plus optional cardio) into one session.
+- **★ Favourites** — star exercises and build a session from them.
+- **💾 Saved workouts** — save any session (or a Coach-generated one) and reuse it any time from a dedicated section in Train.
+- **Gym / Home modes** — the exercise pool adapts to where you're training.
+- **Live logging** — sets, reps, weights, supersets, rest timer, previous-set hints and quiet progressive-overload nudges.
+
+### 🏃 Cardio
+- Track any cardio activity with live calorie & distance estimates.
+- **Ready, then Start** — a fresh cardio opens on a Ready screen and the timer only begins when you tap **▶ Start**, so you can get set up first.
+- Pause, resume and finish — leave mid-session and it picks up where you left off.
+
+### 🥩 Fuel (nutrition)
+- **Plate-based logging** — add several foods to a running plate, then log the whole meal at once.
+- **Floating ＋** — the Add Food button follows you as you scroll.
+- **Smart portions** — common foods show a sensible portion (1 egg, 1 slice); everything else uses grams, and grams entry is always available.
+- **Typo-friendly search** with your recent & favourite foods on top.
+- **Your own foods** — add custom foods with macros and an optional category.
+- Daily calorie ring and protein / carbs / fat / water targets.
+
+### 📈 Progress
+- **Trends** — bodyweight, lifting volume, and strength per exercise with **estimated 1RM** and a **60–95% training-percentage table** for percentage-based programming.
+- **📸 Progress photos** — a private photo timeline stored **only on your device** (never uploaded, never backed up).
+- **Activity calendar** — full workout, cardio and Mega history; expand any workout to repeat it.
+- **Goals & milestones** — streaks, daily targets and achievements.
+
+### 🤖 AI Coach *(optional)*
+- A dedicated Coach tab powered by **your own** [OpenRouter](https://openrouter.ai) API key (free models available).
+- **Chat** about your training & nutrition, **generate a ready-to-use workout** (Start it now or Save for later), or **analyse your recent logs** — grounded in your actual data.
+- 🔒 **Privacy-first:** this is the *only* feature that sends data off your device, and it tells you exactly what's shared before you enable it. Your API key is stored **only on this device**, is **never** included in any backup, and is never sent anywhere except OpenRouter.
+
+### 🛒 Food packs *(optional)*
+- Add big **UK supermarket food databases** from **Settings → Food packs** — Tesco, Sainsbury's, Asda and Aldi.
+- **Download only the shops you want.** Each pack's foods slot into the **normal categories** (Cheese, Dairy, Fast food & meals…) with the shop's name, and you can **filter your food search by shop**.
+- Packs are stored **on your device** and work **offline** once downloaded.
+- The data is built from [Open Food Facts](https://world.openfoodfacts.org) by a scheduled GitHub Action and served from this repo. The app only **downloads** these public lists — it **never uploads** any of your data.
+
+### ⚙️ Settings & personalisation
+- **🎨 Themes** that recolour the whole app.
+- **🔤 Heading font** — choose **Modern**, **Bold** or **Classic**.
+- Units (kcal/kJ, kg/lb/stone), rest timer length + end beep & flash, keep-screen-awake, water unit, start tab, meal times and more.
+- **Profile photo** — local only, never uploaded.
+
+### 🔐 Backup & privacy
+- **Encrypted backups** — lock your data with a password (AES-GCM via the Web Crypto API), then save or share the file anywhere you like (iCloud, Files, Drive, etc.). Restore with the same password.
+- **Backup reminders** — Off / Daily / Weekly / Biweekly / Monthly, with optional notifications.
+- **CSV export** — export your workouts or food log as a spreadsheet for your own records.
+- **No tracking, no ads, no servers.** Photos and your AI key are device-only and never leave in a backup.
+
+---
+
+## 🔒 Privacy by design
+
+Evolve is **offline-first** and stores everything in your browser's local storage on your own device.
+
+- ✅ No account, no login, no email required
+- ✅ No analytics, no tracking, no ads
+- ✅ No backend server — there's nowhere for your data to be sent
+- ✅ Backups are encrypted and only go where *you* choose to put them
+- ⚠️ The **AI Coach** is the single optional exception — it sends your question and a training summary to OpenRouter *only when you ask it to*, and only after you've given clear consent
+
+---
+
+## 📲 Install
+
+Evolve is a PWA, so you can install it straight from the browser:
+
+**iPhone / iPad (Safari)**
+1. Open the app's web address in Safari
+2. Tap the **Share** button
+3. Tap **Add to Home Screen**
+
+**Android (Chrome)**
+1. Open the app's web address in Chrome
+2. Tap the **⋮** menu
+3. Tap **Install app** / **Add to Home Screen**
+
+Once installed it runs full-screen and works **offline**.
+
+---
+
+## 🛠️ Tech
+
+- **Vanilla JavaScript, HTML & CSS** — no framework, no build step
+- **PWA** with a service worker for offline use and home-screen install
+- **localStorage** for all app data; **Web Crypto API** (AES-GCM + PBKDF2) for encrypted backups
+- **OpenRouter API** for the optional AI Coach (user-supplied key)
+
+---
+
+## 📁 Repository contents
+
+| File | Purpose |
+| --- | --- |
+| `index.html` | App shell & layout |
+| `styles.css` | All styling |
+| `data.js` | Exercise & food databases |
+| `food-packs.js` | Optional downloadable supermarket food packs (IndexedDB) |
+| `app.js` | All app logic |
+| `sw.js` | Service worker (offline cache) |
+| `manifest.json` | PWA manifest |
+| `icon-*.png`, `apple-touch-icon.png`, `favicon.png` | App icons |
+| `food-db/` | Generated per-shop food packs + manifest (built by the Action) |
+| `tools/` | Open Food Facts build & validation scripts |
+| `.github/workflows/` | Food-database update workflow (monthly + on demand); optional Pages deploy |
+| `Evolve-v1.0-preview.html` | Single-file build regenerated from the current app shell |
+| `tools/validate-app-shell.js` | Sanity-checks core files, syntax and required hardening markers |
+
+---
+
+## 📝 What's new in 1.0
+
+After a long beta (the 3.x series), this is Evolve's first full release. Highlights:
+
+- 🤖 **AI Coach that builds workouts** — generate a ready-to-use session and Start it now or Save for later
+- 🛒 **Food packs** — optional downloadable UK supermarket databases (Tesco, Sainsbury's, Asda, Aldi) that fold into your food search, offline
+- 💾 **Saved workouts** — a dedicated section in Train for sessions you save or the Coach generates
+- ⚡ **Sets pre-fill themselves** — your usual weight & reps (or last session), so you just tap to confirm
+- 🔄 **In-app updates** — an "Update available" banner; one tap to update
+- 📋 **Routines / Programs** — multi-day plans with starter templates and a walkthrough
+- 🏃 **Cardio Ready screen** — the timer waits until you tap Start
+- 📸 **Progress photos** — private, on-device only
+- 📊 **CSV export** of workouts and food
+- 🔢 **1RM training percentages** (60–95%)
+- 🔤 **Heading font** setting (Modern / Bold / Classic) — defaults to **Classic** (the tall "gym poster" display font); body text stays Inter for readability
+- 📲 **Install prompt** — when opened in a browser, a gentle "Add to home screen" banner helps you install (one-tap on Android, guided steps on iPhone); never shown once installed
+- 🍽️ **Faster food logging** — plate-based, floating Add button, smarter portions, categorised custom foods
+- 🧭 **Cleaner navigation** (Home on the left, Coach on the right) and polish throughout
+
+---
+
+<div align="center">
+
+**Evolve** — *Created by Wigglez* 💪
+
+*Private. Offline-first. Yours.*
+
+</div>
+
+
+## Security hotfix test build 1.0.2
+
+This test rebuild tightens plain backup-code restore so imported data is decoded through the same guarded parser used by encrypted restores. It strips dangerous object keys, enforces import size limits, and only merges known Evolve data keys before migration. Service-worker cache is bumped to evolve-v3-62.
+
+
+/* ============ FILE: EVOLVE_HANDOFF.txt ============ */
+
+==================================================================
+ SECURITY HARDENING TEST BUILD (post-1.0)
+ Updated: 16 June 2026
+------------------------------------------------------------------
+ - Added a CSP + no-referrer policy to the live runtime page.
+ - Tightened backup/import/encrypted-restore parsing. Oversized or
+   malformed payloads can now be rejected on purpose.
+ - Added AI Coach key storage mode: session-only or remembered on this
+   device. Session-only is the safer option.
+ - Tightened service-worker caching to the app shell + Google Fonts.
+ - Hardened food-pack manifest / pack validation and added a dedicated
+   app-shell validator in tools/validate-app-shell.js.
+ - Current app service-worker cache for this test rebuild: evolve-v3-61.
+ - Current effective manifest version for this test rebuild: 1.0.1.
+==================================================================
+
+==================================================================
+ EVOLVE — PROJECT HANDOFF
+ Version: 1.0  ·  Updated: 15 June 2026  ·  STATUS: 1.0 RELEASE
+ Owner/Director: Wigglez   ·   Build partner: Claude / ChatGPT lineage
+ ------------------------------------------------------------------
+ FINAL PACKAGE: evolveappFINISH1.0.zip (15 Jun 2026, end of day).
+ Contains TWO separate projects in their own folders:
+   APP/      → the Evolve PWA  (repo: github.com/Wigglez-sudo/EvolveApp,
+               live: https://wigglez-sudo.github.io/EvolveApp/)
+   WEBSITE/  → the marketing/landing + install site
+               (repo: the evolveapp.cc site repo, live: https://evolveapp.cc)
+ These deploy to SEPARATE places and must be uploaded separately.
+ Current app service-worker cache at packaging: evolve-v3-61.
+ Current effective manifest version: 1.0.1.
+==================================================================
+
+==================================================================
+ POST-REBUILD UI REFINEMENTS (16 Jun 2026) — applied on top of 1.0
+ Requested by owner after UI review. App cache NOT bumped here
+ (owner should bump sw.js CACHE by 1 before deploying).
+------------------------------------------------------------------
+ 1. COACH MOVED TO MORE TAB: the AI Coach is now accessed via
+    More → Tools → AI Coach (new accordion section) instead of
+    occupying a 6th bottom-nav slot. The nav returns to 5 tabs
+    (Home · Train · Fuel · Progress · More), which breathes better
+    on small screens. The coach screen (view-coach) and all coach
+    logic remain intact; only the nav entry point changed.
+ 2. NAV FONT UPDATED: nav button labels now use var(--font-disp)
+    (Bebas Neue in Classic mode) at 10px/800 weight instead of plain
+    Inter at 9px. More on-brand; slightly easier to scan.
+ 3. FUEL FAB CLEARANCE FIXED: #fuelFab bottom raised from
+    calc(90px …) to calc(106px …) so it always clears the nav pill
+    without overlap on any screen size.
+ 4. INSTALL/UPDATE BANNER SEPARATION: .install-banner bottom raised
+    from calc(150px …) to calc(162px …) so it never overlaps the
+    update banner if both appear simultaneously.
+ 5. CALORIE RING COLLAPSIBLE ON EMPTY STATE: when no food has been
+    logged for the day, Fuel shows a compact inline ring row (small
+    ring + headline number + target) instead of the full 170px ring.
+    Tapping it expands to the full ring. Once food is logged, the
+    full ring always shows. This pushes "Add food" higher above the
+    fold for new users.
+ 6. MUSCLE TILE EXERCISE COUNT MORE VISIBLE: .mg .ct now renders in
+    var(--text) at 70% opacity and 12px/700 weight (was --muted at
+    11px), making the "X exercises" count legible at a glance.
+==================================================================
+
+>>> 1.0 — FIRST FULL RELEASE (per owner instruction) <<<
+This is the 1.0 release. All prior versions (the 3.x series) are now
+designated the BETA series; 1.0 brings the whole app together as the
+first full public release. Every user-facing version string reads
+"1.0" (splash, Settings footer, changelog, manifest version 1.0.0).
+Internal code comments still carry the historical "v3.31" markers that
+note when code was added — these are dev notes, not user-facing, and
+were intentionally left as an accurate authoring record.
+
+The cache name (sw.js CACHE) continues its own monotonic sequence
+(evolve-v3-NN) independent of the app version — do NOT reset it to
+match 1.0, or the service worker won't see it as a new version. Just
+keep bumping it by 1 on every shell change as before.
+
+SHIPPABILITY NOTE: features are verified via automated headless tests
+(Playwright). The AI Coach's LIVE network calls can't be exercised in
+the sandbox (openrouter.ai is blocked) — the owner has confirmed the
+Coach working on-device with the free router. A final device pass over
+the 1.0 additions (Coach-generated workouts, Saved section, nav) is
+recommended before wide release.
+
+NOTE ON BRANCHES: a separate Claude v3.23 build exists (body
+measurements, weekly recap, single-day plan editing). Those three
+features are NOT in this branch. If wanted, they'd need porting in.
+Lineage: v3.22 → ChatGPT 3.23–3.29 → 3.30 → 3.31 (beta) → 1.0.
+
+==================================================================
+ POST-1.0 CHANGE LOG (chronological, all 15 Jun 2026) — QUICK INDEX
+ Full detail for each is in its own section further down.
+ ------------------------------------------------------------------
+ 1. FOOD-DB CI HARDENING (tooling/CI only, no cache bump):
+    build/validate kcal limits synced to 900; finite-number guard;
+    validator checks EVERY item + has a --report mode; workflow
+    reordered Build→Commit→Validate; actions upgraded checkout/setup-
+    node v4→v5; repo refs EvolveAppTest→EvolveApp. Plus optional new
+    deploy-pages.yml (only if owner switches Pages source to Actions).
+ 2. INSTALL PROMPT BANNER in the app (cache 55 → 56): browser-only
+    "Add to home screen" banner; one-tap Install on Android, Safari
+    steps on iOS; hidden when already installed (isStandalone); dismiss
+    is per-visit, returns until installed.
+ 3. CLASSIC FONT AS DEFAULT (cache 56 → 57): the app's display font now
+    defaults to Classic (Bebas Neue); body stays Inter. One-time
+    migration moves existing "modern" installs to "classic" once
+    (meta.classicFontApplied), later deliberate choices stick. Heading-
+    font helper text rewritten to proper descriptions + new explainer
+    line that it affects titles/headers/logo only.
+ 4. MANIFEST DUP VERSION FIX (cache 57 → 58): removed stale trailing
+    "3.29-test" version key; effective manifest version now 1.0.0.
+ CURRENT app cache at final packaging: evolve-v3-59.
+ NOTE: the website was ALSO rebuilt 15 Jun (separate project, no cache):
+ split into landing + dedicated install.html, bold animated redesign,
+ "Open the app" buttons fixed to point at the real github.io app, hero
+ CTA order = How to install (primary) then Open the app (ghost),
+ end-user README, deploy guide moved to DEPLOY.md. See WEBSITE/ folder.
+==================================================================
+
+==================================================================
+ MAINTENANCE — 15 Jun 2026 (post-1.0)  ·  FOOD-DB CI HARDENING
+ Tooling/CI only. NO app-shell files changed (app.js, styles.css,
+ index.html, sw.js, food-packs.js, data.js, manifest.json all
+ untouched) → service-worker CACHE deliberately NOT bumped; the
+ served PWA is byte-for-byte the 1.0 build. Files changed: only
+ tools/build-openfoodfacts-uk-db.js, tools/validate-food-db.js,
+ .github/workflows/update-food-database.yml, food-db/README.md,
+ README.md, plus a NEW optional deploy-pages.yml (see below).
+==================================================================
+
+CONTEXT — a monthly food-DB run built all 4 shops to target (10,000
+foods) but FAILED at the validate step: two Asda items came in at 928
+and 923 kcal/100 g. Because validate ran BEFORE commit and exits 1 on
+any error, the whole ~55-min build was discarded and nothing reached
+main. (Main still held an older partial set: 721 foods.) Root cause was
+a limit MISMATCH: the build accepted kcal up to 1000, the validator
+rejected above 900 — so the build kept writing items CI would always
+reject. 900 is correct (pure fat = ~900 kcal/100 g is the physical max;
+928/923 are bad OFF data — a per-pack/serving figure mislabelled as
+per-100 g).
+
+FIXES
+A. BUILD now drops bad data at the source (tools/build-openfoodfacts-
+   uk-db.js, mapProduct): kcal ceiling 1000 → 900 to MATCH the
+   validator, plus a finite-number guard (rejects NaN/Infinity) so a
+   written file can never contain anything the validator rejects. Keep
+   the two scripts' kcal/macro limits in sync if either is changed.
+B. VALIDATOR (tools/validate-food-db.js): now checks EVERY item, not
+   just the first 2000 per shop (a 2500-item file previously left a
+   500-row blind spot). On error it prints the exact file+index, e.g.
+   "asda.json[293]", so a flagged row can be found and deleted by hand.
+   Added an optional --report (or EVOLVE_VALIDATE_REPORT=1) mode that
+   lists problems but exits 0, for a local dry-run.
+C. WORKFLOW reordered to BUILD → COMMIT → VALIDATE
+   (.github/workflows/update-food-database.yml). Commit now runs BEFORE
+   validate, so a long build is saved no matter what. Validate runs last
+   as a HARD check: if anything slips through, the run goes RED (so the
+   owner notices) but the data is already committed — fix is to edit the
+   committed food-db/<shop>.json, delete the flagged row(s), commit.
+   This is the owner-chosen design: "drop bad items during build" PLUS a
+   loud-but-non-destructive backstop.
+D. NODE 24 / ACTION DEPRECATION: bumped actions/checkout v4 → v5 and
+   actions/setup-node v4 → v5 (both run on Node 24 natively) and removed
+   the now-unnecessary FORCE_JAVASCRIPT_ACTIONS_TO_NODE24 env stopgap.
+   Clears the "Node.js 20 actions are deprecated" warning for this
+   workflow (GitHub forces Node 24 from 16 Jun 2026).
+
+GITHUB PAGES (separate, harmless): the owner also saw a Node-20
+deprecation warning on the Pages build. That is GitHub's OWN managed
+"pages-build-deployment" workflow (Pages source = "Deploy from a
+branch"); it has no file in the repo and the flagged checkout@v4 /
+upload-artifact@v4 are nested INSIDE GitHub's upload-pages-artifact@v3.
+It is not the owner's to fix, the deploy still succeeds, and GitHub will
+update it. OPTIONAL: a new deploy-pages.yml is provided (NOT yet added
+to .github/workflows/) that deploys the static PWA via current Node-24
+actions (checkout@v5, configure-pages@v5, upload-pages-artifact@v4,
+deploy-pages@v4). To use it: add it under .github/workflows/ AND set
+repo Settings → Pages → Source to "GitHub Actions". This also skips the
+needless Jekyll step (Evolve is plain static files). Left optional
+because nothing is broken without it.
+
+VALIDATION (this maintenance pass): both scripts pass `node --check`;
+the build filter was unit-tested to drop the exact 928/923 items and a
+non-finite value while keeping normal foods; the validator was tested to
+catch a bad row at index 2200 (beyond the old 2000 cap) and to exit 0 in
+--report mode; all workflow YAML parses. The fixes could NOT be run
+against live OFF here (sandbox blocks it) — re-run the workflow on
+GitHub; expect another ~55-min run (OFF 503s) that will now COMMIT and
+take main from 721 → ~10,000 foods.
+
+STILL OUTSTANDING:
+ - (none open as of the final 1.0 package — see RESOLVED below.)
+
+RESOLVED — manifest duplicate version key (sw cache → evolve-v3-59)
+ - manifest.json previously had a DUPLICATE "version" key: "1.0.0" near
+   the top AND a stale "3.29-test" as the LAST key. JSON keeps the last,
+   so the effective version was wrongly 3.29-test. FIXED on 15 Jun 2026
+   by deleting the stale trailing key; effective version is now 1.0.0.
+   This was a shell change → CACHE bumped 57 → 58.
+
+ADD-ON — INSTALL PROMPT BANNER (sw cache → evolve-v3-56)
+-------------------------------------------------------
+An "Add Evolve to your home screen" banner now appears when the app is
+opened in a NORMAL BROWSER tab (the landing site at evolveapp.cc is now
+install-first — it no longer offers an inline "Open"). Details:
+ - Gated by isStandalone(): NEVER shows when launched from the installed
+   icon (display-mode:standalone / navigator.standalone), so installed
+   users are never asked again — avoids the "ask twice" problem.
+ - Android (Chrome): if beforeinstallprompt has fired, the banner shows a
+   one-tap "Install" calling the existing tryInstall() (deferredInstall
+   .prompt()); appinstalled removes it. If the prompt arrives after the
+   banner is up, "How" upgrades to "Install".
+ - iPhone/iPad: iOS has no programmatic install, so the banner shows a
+   "How" button opening the existing Safari Share → Add to Home Screen
+   steps (isiOS() incl. iPadOS MacIntel+touch).
+ - Dismiss (✕) hides it for THIS visit only (installBannerDismissed, not
+   persisted) → returns every browser visit until installed, per owner.
+ - Shows ~2.6s after load. Code near tryInstall(): showInstallBanner() +
+   isiOS(); CSS .install-banner mirrors .update-banner but sits higher
+   (bottom:150px) so the two never overlap.
+ - Verified headless: present + "How" under iOS-UA browser, HIDDEN in
+   simulated standalone, dismiss removes it, no pageerrors.
+ - SHELL change (app.js + styles.css) → CACHE bumped 55 → 56.
+
+ADD-ON — CLASSIC FONT AS DEFAULT (sw cache → evolve-v3-57)
+---------------------------------------------------------
+The app now uses the "Classic" display font (Bebas Neue) by default, per
+owner. The heading-font SETTING (Modern / Bold / Classic) is unchanged and
+still switchable; only the default moved. Body text stays Inter (Classic is
+condensed/all-caps display type and is unreadable for body/inputs/numbers —
+the v3.31 note flagged this, so only the --font-disp display var changes).
+Implementation (app.js):
+ - DEFAULT_DATA.prefs.headingFont "modern" → "classic" (new users).
+ - applyHeadingFont boot fallback "modern" → "classic".
+ - migrate(): missing pref backfills to "classic"; PLUS a ONE-TIME flip of
+   existing installs still on the old "modern" default → "classic", guarded
+   by d.meta.classicFontApplied so it runs once. A deliberate later choice of
+   ANY font (incl. modern) then sticks and is never re-flipped.
+ - Bebas Neue is already in the Google Fonts <link>, so Classic renders (no
+   silent fallback to Inter).
+ - The per-font helper text was rewritten from vague taglines to proper
+   descriptions: Modern "Clean, rounded sans-serif — the most legible
+   option.", Bold "Wide, heavy and sporty — strong without shouting.",
+   Classic "Tall, condensed gym-poster capitals (default)."  Also added an
+   intro line under "Heading font": "The display font used for titles,
+   headers and the logo. Body text stays the same for readability."
+ - Verified headless: fresh user → Bebas; existing-"modern" user → renders
+   Bebas on load and persists "classic"+flag on next save; deliberate "bold"
+   is preserved across reloads; no pageerrors.
+ - SHELL change (app.js) → CACHE bumped 56 → 57.
+
+WORK DONE — 1.0 (15 Jun 2026)  ·  RELEASE build
+-----------------------------------
+Before building, reviewed the whole app against the leading 2025/26
+workout trackers (Strong, Hevy, Setgraph, Fitbod, JEFIT, FitNotes).
+Evolve already had: plate calculator, warm-up generator, est. 1RM, PR
+tracking, previous-set hints, supersets, saved favourites, rest timer,
+encrypted local-first backup. Common reviewer asks that Evolve LACKED
+and were added this build: CSV/data export, 1RM training percentages,
+progress photos, and full multi-day routines. Deliberately still NOT
+added (consistent with prior decisions): barcode scanning (breaks
+local-first), AI workout generation (needs a server), social feed
+(privacy), Apple Health/HealthKit (impossible in a PWA).
+
+NEW FEATURES
+1. Routines (multi-day programs). DATA.routines:[] +
+   migrate backfill. Build under Train → 📋 PROGRAMS card. Functions:
+   openRoutinesHub / openRoutineView / startRoutineDay /
+   openRoutineEditor + paintRoutineEditor (uses routineDraft global) /
+   openRoutineDayExercises (exercise picker via gymPoolNames + EX_BY_NAME).
+   startRoutineDay maps a day's exercises through mkExercise into
+   startSession(title="<routine> · <day>", type="routine"). CSS .rt-*.
+2. Progress photos. Local-only gallery, key evolve_progress_photos_v1,
+   NEVER backed up (mirrors the profile-photo privacy model). Functions
+   getProgressPhotos / setProgressPhotos / addProgressPhotoFromFile
+   (resize → 640px JPEG) / deleteProgressPhoto. Builder buildProgressPhotos
+   registered as pg_photos in Progress → 📈 Trends. CSS .photo-grid etc.
+3. CSV export. exportWorkoutsCSV + exportFoodCSV (+ _csvCell/_csvRows
+   helpers) in Settings → Backup. Records only — not a restorable backup.
+   Reuses saveOrShareBlob (Web Share w/ download fallback).
+4. 1RM training percentages. 60/70/80/90/95% of est. 1RM table added to
+   openExerciseHistory. CSS .rm-table/.rm-row/.rm-p/.rm-w.
+
+CHANGES / FIXES
+5. Portion data rebuilt to EXACT-NAME (data.js FOOD_PORTIONS map);
+   FOOD_PORTION_RULES regex array DELETED; foodPortionFor simplified to
+   exact-name only. Fixes mis-tags (apple sauce/juice → "1 medium",
+   veggie burger → "1 egg", egg fried rice, banana bread, pineapple,
+   breaded items, sausage roll → all now grams-only). Genuine portions
+   kept (apple, egg, breads, chicken breast, salmon, sausage, pizza,
+   burger, biscuits). Grams entry always available.
+6. Fuel logging reachability: ＋ Add food moved ABOVE the calorie ring;
+   added a floating #fuelFab (bottom-right) shown only on Fuel via
+   switchTab toggle, clears nav/Home/safe-area. CSS #fuelFab.
+7. Custom food categories: openCustomFood gains an optional category
+   chip row; stored as customFoods[].cat; allFoods() exposes it as the
+   7th array element; logger filter shows a custom food under "My foods"
+   OR its tagged category.
+8. Splash logo framing removed (bare icon). Splash + settings footer →
+   "Created by Wigglez · Version 3.31" (date dropped).
+9. All six help sheets rewritten to match the real 3.31 build (incl.
+   the actual 7-accordion Settings structure, encrypted backups +
+   reminders + CSV, profile photo, floating +, plate logger, routines,
+   progress photos, 1RM %). Home help confirmed already accurate (this
+   branch's week strip starts a day directly; it has no day-editor).
+10. Version → 3.31 everywhere; changelog gains a 3.31 entry with 3.30
+    preserved in history; sw.js cache → evolve-v3-39.
+12. POST-FINAL FIXES (later 14 Jun, sw cache → evolve-v3-40):
+    a. Heading font is now switchable — Settings → Preferences → "Heading
+       font" with Modern / Bold / Classic. Implemented via a CSS var
+       --font-disp (+ --font-disp-spacing): all 30 hard-coded "Bebas Neue"
+       refs in styles.css now read the var; applyHeadingFont(id) swaps it;
+       HEADING_FONTS map holds the stacks; prefs.headingFont (default
+       "modern") + migrate backfill. Modern=Inter (new default, the old
+       Bebas condensed look was hard to read), Bold=Archivo (added to the
+       Google Fonts <link>), Classic=Bebas Neue (unchanged look). .disp /
+       .sect-h h3 / .modal h3 weights bumped 400→800 so Inter/Archivo
+       read as proper headings (Bebas is single-weight, unaffected).
+    b. Rest-timer label bug fixed — Settings showed "1.5:30" / "2.5:30"
+       for the 90s/150s options because the formatter used (s/60) giving
+       1.5 then appended ":30". Changed to Math.floor(s/60) → now "1:30"
+       and "2:30". Values themselves were always correct; display only.
+    c. Defensive overflow-x:clip on .screen, so a mid-swipe tab
+       transition can't bleed a stray element in from the edge (a user
+       screenshot showed a transient "›"/shadow artifact that did NOT
+       reproduce in a clean render — this is a safeguard, not a bug fix).
+13. ZOOM DISABLED (sw cache → evolve-v3-41): the viewport meta already
+    had user-scalable=no + maximum-scale=1, but iOS Safari ignores those.
+    Added (a) CSS html{touch-action:manipulation} to kill double-tap
+    zoom, and (b) a preventZoom() IIFE near the top of app.js blocking
+    Safari gesturestart/change/end, multi-touch touchmove (pinch), and
+    ctrl+wheel (desktop). The double-tap guard only fires for two taps
+    within 300ms AT the same spot (<40px), so rapid taps on different
+    buttons (e.g. quick plate adds) are NOT blocked. Scrolling and single
+    taps are unaffected. NOTE: this is an accessibility trade-off — some
+    low-vision users rely on pinch-zoom; the in-app font setting and
+    large touch targets partly offset this.
+14. ROUTINES UX OVERHAUL (sw cache → evolve-v3-42): the feature worked
+    but felt dead — a 7-step, 3-screen-deep flow whose editor opened
+    showing only empty name/note fields. Fixed three ways:
+    a. Starter templates — "New routine" now offers Push/Pull/Legs,
+       Upper/Lower, Full Body ×3 (real machine names, verified via
+       EX_BY_NAME) or "Start blank". Picking one pre-fills a working,
+       editable program (ROUTINE_TEMPLATES + newRoutineFromTemplate).
+    b. Editor streamlined — each day now shows its exercises as removable
+       chips with a live count and a prominent "＋ Add exercises" button,
+       so it visibly contains something. Per-exercise ✕ removal inline.
+       Save now requires ≥1 exercise on a day.
+    c. First-time walkthrough — a one-time 1-2-3 explainer on first open
+       (gated by DATA.meta.routinesIntroSeen) clarifying programs are
+       multi-day plans and how to start a day; notes Favourites = one
+       workout, Programs = a whole week. Train help row updated to match.
+15. CARDIO READY SCREEN (sw cache → evolve-v3-43): the live cardio timer
+    used to start ticking the instant it opened. openLiveCardioTimer now
+    splits into showReady() and showTimer(): a FRESH cardio
+    (ex.progressMs===0) opens on a Ready screen with a ▶ Start button and
+    the clock does not run until tapped. Reopening MID-SESSION
+    (progressMs>0) skips Ready and drops straight back into the running
+    timer (auto-resume). Pause/Resume/Finish/Discard and the
+    resume-from-progress logic are unchanged. Cardio help row updated.
+16. AI COACH (sw cache → evolve-v3-44): a new 6th nav tab. Optional AI
+    coaching via the user's OWN OpenRouter API key (OpenAI-compatible
+    endpoint https://openrouter.ai/api/v1/chat/completions, Bearer key).
+    Three actions: free chat, "Generate a workout", "Analyse my logs".
+    PRIVACY (Evolve is privacy-first, so this is handled carefully):
+    - Direct Duck.ai was rejected — it has no official API and the
+      reverse-engineered ones violate DuckDuckGo's ToS. OpenRouter chosen
+      instead: legitimate API, browser-friendly, free models available.
+    - API key stored in its OWN localStorage item (COACH_KEY_KEY), NOT in
+      DATA, so it is structurally impossible for it to enter any backup
+      (encrypted or CSV) — verified in tests. Never sent anywhere except
+      OpenRouter.
+    - Mandatory consent gate (openCoachConsent) before first use, stating
+      plainly that this is the one feature that sends data off-device,
+      what is sent (question + on-device training summary), to whom, and
+      that OpenRouter's own policies apply. Consent stored in
+      prefs.coachConsent; revocable.
+    - A persistent privacy line sits in the Coach tab footer.
+    Code: COACH_MODELS (5: 3 free, 2 paid), getCoachKey/setCoachKey,
+    coachContext() (builds the on-device summary), coachAsk() (fetch with
+    401/402/429 handling), renderCoach() (consent → key → chat states),
+    coachSend/coachAction. Wired into switchTab; #coachBody in index.html;
+    6th nav button; coach help sheet; .coach-* CSS. NOTE: the live API
+    call can't be exercised in headless tests (needs a real key); all UI
+    states, the request shape, context builder and backup-exclusion were
+    verified. Real-device test with an actual key still recommended.
+    NOTE: 6 bottom-nav tabs is tighter than 5 — acceptable per owner, but
+    worth eyeballing on a small device.
+17. IN-APP UPDATES (sw cache → evolve-v3-45): updating used to require
+    deploying + closing/reopening the PWA twice because the old service
+    worker was CACHE-FIRST (served stale app.js until the cache name
+    changed). Fixed:
+    - sw.js rewritten to NETWORK-FIRST for same-origin app files (always
+      fetches the newest, falls back to cache when offline / to cached
+      index.html for navigations). Cross-origin (fonts) stays
+      network-first too. install() no longer calls skipWaiting(); instead
+      a "message" handler calls skipWaiting() when the app posts
+      SKIP_WAITING — this powers the update banner.
+    - app.js: full registration with updatefound/statechange detection,
+      a showUpdateBanner() (fixed banner with Update + dismiss), a
+      controllerchange handler that reloads once when the new SW takes
+      over, checkForUpdate(manual) (calls reg.update()), an auto-check on
+      visibilitychange (app foreground), and a "Check for updates" button
+      in Settings → Help & guide.
+    - .update-banner CSS.
+    ONE-TIME NOTE: because the OLD deployed SW is cache-first, the FIRST
+    update to this new SW still needs the usual close/reopen once. After
+    that, every future update is the smooth in-app banner flow.
+    Network-first means an update needs a connection; offline still works
+    from cache.
+18. COACH MODEL FIX (sw cache → evolve-v3-46): on-device testing showed
+    the original free model slugs had gone stale on OpenRouter
+    (gemini-2.0-flash-exp:free → "no endpoints"; the :free deepseek →
+    "unavailable for free"). Fixes: refreshed COACH_MODELS to current
+    working free slugs (DeepSeek V3 0324:free [default], DeepSeek R1:free,
+    Llama 3.3 70B:free, Gemma 3 27B:free) + openrouter/auto + paid
+    staples; migrate() rewrites known-dead slugs to the working default;
+    fetchCoachModels() pulls the LIVE free list from GET /api/v1/models
+    (no auth) via a "↻ Load current free models" link so the list never
+    goes stale again; clearer 404/"no endpoints"/402/429 error messages.
+    Sandbox blocks openrouter.ai so live slugs weren't verifiable here —
+    they're from June 2026 search + the user's own error screenshot; the
+    live refresh button is the durable safeguard. Default-to-free per
+    owner (Auto is the fallback when a free model is busy).
+19. COACH POLISH (sw cache → evolve-v3-47): after the owner confirmed
+    the free router works on-device:
+    - Default model is now "openrouter/free" (OpenRouter's router that
+      auto-picks an available free model) — set as DEFAULT_DATA default,
+      top of the dropdown, and migrate() moves existing users (incl. the
+      old deepseek default) onto it. This sidesteps individual free slugs
+      going stale.
+    - Chat log is now a contained SCROLLABLE box: .coach-log max-height
+      48vh + overflow-y:auto, so long conversations scroll inside their
+      own region while the action buttons (above) and input (below) stay
+      put. Auto-scrolls to the newest message via rAF + a 60ms fallback;
+      removed scroll-behavior:smooth so the jump-to-bottom is instant and
+      reliable. Verified: box clamps to 48vh, input stays on-screen,
+      newest message visible.
+20. SET PRE-FILL + USUALS (sw cache → evolve-v3-49): re-entering weight &
+    reps every workout was tedious. Now new sets pre-fill automatically.
+    - DEFAULT_DATA.usualSets={} (map "<exercise name>"→{kg,reps}); migrate
+      backfills it. NOT sensitive, stays in DATA (so it IS in backups,
+      which is desirable — usuals should travel with a restore).
+    - Helpers near lastSetFor: usualFor(name), setUsual(name,kg,reps),
+      prefillValues(name) (usual, OVERRIDDEN by last logged session if
+      newer/non-empty — per owner's "both" choice), prefilledSet(name)
+      (done:false — user still taps to confirm each set).
+    - All set-creation paths now use prefilledSet(name) instead of
+      blankSet(): mkExercise (machines/FW) + every inline home-exercise
+      creation (lines ~1192,1524,1636,1705,2242,2354). The only remaining
+      blankSet() is the workout-SAVE mapper (~4003), correct (it
+      reconstructs already-logged sets). "+Add set" still copies the
+      previous set (unchanged) — fine.
+    - UI: "📌 Set usual weight & reps" in the exercise ⋯ menu
+      (openExerciseMenu) → openSetUsual(ex): a small editor (weight in the
+      user's lift unit via kgFromLift for storage, reps), Save/Clear,
+      applies immediately to the current exercise's empty not-done sets.
+    - Works for machines, free weights AND home (verified each).
+    - Live tracker guide + changelog updated.
+21. 1.0 RELEASE BATCH (sw cache → evolve-v3-50):
+    a. NAV REORDER — Home moved to the FAR LEFT (was a raised centre
+       button via .nav-home; that class was removed from the Home button
+       in index.html so it's a normal tab). Order is now
+       home·train·fuel·stats·more·coach. Nav button CSS tightened
+       (font 9px, icon 21px, gap 2px, nowrap) so 6 labels fit a 390px
+       screen without wrapping. The .nav-home CSS rules are now unused
+       but left in place (harmless).
+    b. SAVED WORKOUTS SECTION — the Train "★ Saved workouts" block is now
+       ALWAYS shown (was hidden when empty). Added an empty state
+       (.saved-empty) explaining how to save (★ during a workout) and
+       that the Coach can generate saveable workouts. Reuses the existing
+       favWorkouts model + startFavWorkout/deleteFavWorkout. A new
+       optional field favWorkouts[].source==="coach" shows a "🤖 Coach"
+       badge (.fav-src).
+    c. COACH → STRUCTURED WORKOUTS — "Generate a workout" now calls
+       coachGenerateWorkout(), which sends a JSON-schema system prompt
+       (title + exercises[{name,sets,reps}]) and constrains "name" to a
+       capped list of real app exercise names (coachExercisePool, ≤180).
+       parseCoachWorkout() strips code fences, extracts the first {...},
+       JSON.parses, and maps each AI name via coachMatchExercise()
+       (exact → case-insensitive → contains → ≥2-token overlap; returns
+       null on weak matches so junk is dropped). The assistant message is
+       stored as "__WORKOUT__"+JSON and rendered in renderCoach() as a
+       card (.cw-card) listing exercises with sets×reps and two buttons:
+       "▶ Start now" (coachStartWorkout → builds a live session with the
+       suggested set counts, prefilled first set) and "★ Save for later"
+       (coachSaveWorkout → favWorkouts with source:"coach"). Non-workout
+       answers (chat, analyse) render as normal bubbles. Verified parse
+       (incl. fences + fuzzy names + junk rejection), card, start, save,
+       and that saved coach workouts appear in Train. NOTE: live API not
+       exercisable in sandbox; tested with mocked coachAsk.
+    d. 1.0 VERSIONING — LATEST_NUM "1.0", new LATEST_TITLE/LATEST_ITEMS
+       framing this as the first full release after the beta series;
+       added HISTORY_BETA divider entry in the changelog before the old
+       3.x entries. Splash footer + Settings footer now read "Version
+       1.0"; manifest gained "version":"1.0.0". Internal code comments
+       keep their v3.31 authoring markers (not user-facing).
+22. SPLASH FIXES (sw cache → evolve-v3-51): on-device the welcome screen
+    looked off and the logo collided with the iPhone Dynamic Island.
+    - #splash top padding now includes var(--safe-t) (was a flat 40px),
+      so the logo clears the Dynamic Island / notch. Verified: with a
+      simulated 59px safe area the logo top sits at ~95px.
+    - .splash-logo-img: shrunk (min(34vw,140px)), added border-radius
+      28px + a warm glow + a subtle logoIn entrance, so it reads as an
+      intentional mark instead of a hard-edged pasted square on the
+      gradient. Tightened wordmark/tagline sizing and the feats margin
+      for better vertical rhythm. Both first-run (feature chips) and
+      returning-user (dynamic tiles) splash variants verified.
+23. COACH GENERATE OPTIONS (sw cache → evolve-v3-52): "Generate a
+    workout" no longer fires immediately — it opens openCoachGenSheet(),
+    where the user can tap "✨ Recommend one for me" (AI decides) or pick
+    muscle groups (GROUPS chips, multi-select) + a length (Quick 3-4 /
+    Standard 5-6 / Full 7-8). coachGenerateWorkout(opts) now takes
+    {groups,size} and bakes them into the system prompt (groups → "train
+    these ONLY"; size → exercise count; title reflects the focus). The
+    user message label shows the chosen groups. Verified the sheet, the
+    custom prompt (contains chosen groups + size + ONLY constraint), the
+    recommend path, and that the workout card still renders. CSS:
+    .cg-chip/.cg-seg. Coach help + changelog updated.
+24. COACH PARSE HARDENING + RETRY (sw cache → evolve-v3-53): on-device,
+    some free models (esp. Google/Gemini) prepend safety-classifier text
+    like "User Safety: safe / Response Safety: safe" before the JSON,
+    which broke parsing. Fixes:
+    - parseCoachWorkout() now strips everything before the first "{",
+      removes fences anywhere, and tries multiple candidate objects
+      (greedy span + each balanced {...} block), picking the first that
+      has an exercises array. Verified against the exact safety-preamble
+      case, trailing chatter, fenced+preamble, and pure-prose (→ null).
+    - On genuine failure it stores "__GENRETRY__"+JSON(opts); renderCoach
+      shows a friendly card (.cw-retry) explaining this is a free-model
+      quirk, NOT an app bug, with a one-tap "↻ Try again" that re-runs
+      coachGenerateWorkout with the SAME options and removes the failed
+      message. Verified the retry flow end to end.
+25. FOOD PACKS — downloadable per-shop UK food DBs (sw cache → evolve-v3-54):
+    optional supermarket food databases (Tesco/Sainsbury's/Asda/Aldi) the
+    user downloads from GitHub; foods fold into the EXISTING categories &
+    search. The Food tab, plate, recents, edit are UNTOUCHED.
+    - NEW FILE food-packs.js (window.FoodPacks): IndexedDB store
+      ("evolve_food_packs_v1"), loadManifest()/downloadPack()/removePack(),
+      packFoods() returns installed-pack foods as [name,kcal,p,c,f,cat,shopId]
+      with brand folded into the name ("Mature Cheddar (Tesco)"). Boot hook
+      at end of app.js calls FoodPacks.init() then repaints the food list.
+    - SINGLE SEAM: allFoods() now concats packFoods(). That's the ONLY change
+      to existing food code — search/plate/recents/edit all pick up shop
+      foods automatically.
+    - Settings → "Food packs" accordion (buildFoodPacks): lists shops from
+      food-db/manifest.json with Download/Update/Remove, sizes, offline +
+      missing-manifest handling, honest privacy line. New "Food" group in
+      renderMore.
+    - Shop filter in food search: foodShop var + #fs_shops chip row (only
+      shown when packs installed); paintList filters on f[6] (shop id).
+    - Packs live in IndexedDB → NOT in backups (re-downloadable), like photos.
+    - index.html loads food-packs.js before app.js; sw SHELL precaches it.
+      The per-shop JSONs are NOT precached — fetched on demand into IDB.
+    - GITHUB TOOLING (Claude wrote; OWNER runs — sandbox can't reach OFF):
+        tools/build-openfoodfacts-uk-db.js — fetches UK products per store
+          from world.openfoodfacts.org/cgi/search.pl, maps OFF categories →
+          the app's 18 categories, writes food-db/<shop>.json + manifest.json.
+          Has --test (5 items, 1 shop) dry-run.
+        tools/validate-food-db.js — sanity-checks structure & macro ranges,
+          fails CI on bad data.
+        .github/workflows/update-food-database.yml — monthly + manual,
+          builds, validates, commits food-db/.
+        food-db/README.md — data shape + how to run.
+    - SHIP STATE: NO real food-db data is bundled (sandbox can't fetch OFF).
+      Until the owner runs the workflow once, food-db/ has only README.md and
+      the Food packs screen shows "No food packs available yet." App works
+      exactly as before in the meantime. Verified: no-manifest path is
+      graceful; with a throwaway test manifest the full
+      download→search→filter→persist→remove lifecycle passed; full app
+      regression clean. The throwaway test JSONs were deleted before
+      packaging.
+    - PRIVACY NOTE: packs only ever DOWNLOAD public lists; no personal data
+      is uploaded. Wording in the screen reflects this. (This is a conscious,
+      owner-approved departure from the "no runtime external API calls" line
+      in the source prompt, which assumed a fully-bundled DB; per-shop
+      on-demand download is the better fit and keeps data inbound-only.)
+26. SPLASH "View full history" FIX (sw cache → evolve-v3-55): tapping
+    "View full history" on the splash opened the changelog modal BEHIND
+    the splash (#modalWrap z-index 180 < #splash z-index 200), so it only
+    appeared after pressing Enter. Fix: openModal() detects a visible
+    splash and lifts #modalWrap to z-index 240; closeModal() clears the
+    inline z-index. Verified the changelog is now topmost over the splash.
+27. FOOD-PACK BUILD SCRIPT — final round-robin design. OFF returns frequent
+    503s; earlier shop-by-shop builds left some shops empty.
+    tools/build-openfoodfacts-uk-db.js now:
+    - ROUND-ROBINS shops one page per lap (Tesco p1, Sainsbury's p1, ...);
+      a 503 skips that shop THIS lap and retries NEXT lap — a failing shop
+      never blocks/starves the others and is never abandoned.
+    - per-request backoff 10s/20s/30s/60s, then skip page (retry next lap).
+    - lighter search_simple query (country tag + keyword) not the heavy
+      stores-tag filter → fewer 503s; multiple search terms per shop.
+    - requires all 4 macros (quality bar).
+    - stops when every shop hits EVOLVE_FOOD_PER_SHOP_TARGET (default 2500),
+      OR a whole lap adds 0 new foods (exhausted), OR MAX_PAGES (120), OR
+      the 120-min job timeout. PER-SHOP files kept.
+    Workflow: Node 24, timeout-minutes 120, inputs per_shop_target(2500)/
+    max_pages_per_store(120), git pull --rebase before push. Verified the
+    loop with a mocked busy API (perpetual-503 shop still filled via next-lap
+    retries; exhausted shop stopped cleanly; others unaffected). First real
+    owner run confirmed working on-device.
+11. REGRESSION FIX (post-build): while adding the progress-photo
+    functions, the shared shuffle() helper was accidentally removed,
+    which silently broke every randomised builder (muscle-group build,
+    quick start, mega "Surprise me", randomise-from-favourites) — buttons
+    opened nothing because the handler threw "shuffle is not defined".
+    shuffle() restored; a full button/function sweep now passes with no
+    runtime errors. Lesson logged: test EXISTING paths after edits, not
+    just new features. sw cache bumped again to evolve-v3-39.
+
+ON-DEVICE CHECKS STILL RECOMMENDED
+- Routines: build/edit/start a day; exercise picker on a small screen.
+- Progress photos: add/delete; confirm they never appear in a backup.
+- CSV export: opens via the Share sheet / downloads on iOS & Android.
+- 1RM % table renders for an exercise with history.
+- Floating + and plate logger with the keyboard open.
+- Inherited 3.29: encrypted backup share sheet + notifications.
+
+WORK DONE — 3.30-test (14 Jun 2026)  ·  Food logger overhaul
+-----------------------------------
+Researched the leading nutrition apps (MyFitnessPal 2025 redesign,
+MacroFactor — rated the fastest food logger) and rebuilt food logging
+around their core pattern, reusing Evolve's existing food DB, fuzzy
+search, favourites, recents and portion data.
+1. Plate-based logger (openFoodSearch rebuilt): a sticky meal-selector +
+   search at the top, a scrolling results area in the middle, and a
+   sticky "Plate" tray at the bottom. Tapping ＋ on a result/recent adds
+   it to the plate (plate[] = [{name,grams,f}]); you keep adding without
+   relaunching search, then "Log N items to <meal>" commits the whole
+   tray to dayLog(viewDate).food in one go (commitPlate).
+2. Results show first: the 17 category chips are now behind a "▾
+   Categories" toggle (collapsed by default) and the recents block hides
+   while searching, so results are no longer pushed ~690px down the
+   screen. (Measured fix for the reported issue.)
+3. Recent & frequent shown at the top before searching, each with a ＋.
+4. Inline portion editing on the plate (editPlatePortion): tap an
+   item's name OR its ⚙ to expand a chip+grams stepper row inside the
+   plate; ✕ removes. IMPORTANT: this is inline on purpose — the app has
+   a SINGLE modal layer, so opening a second openModal() for portions
+   would destroy the logger. Do not "simplify" this back into a modal.
+5. Backup-reminder seg overflow fixed: #bk_freq now uses ".seg scroll"
+   (horizontal scroll) so Off/Daily/Weekly/Biweekly/Monthly no longer
+   overflow the rounded container. New CSS: .seg.scroll, plus the
+   .logger / .lg-* layout classes.
+6. Version/cache/docs: LATEST_NUM 3.30-test, splash + settings footer
+   3.30-test, sw.js cache evolve-v3-37-test, changelog gains a 3.30
+   entry (3.29 preserved), Fuel help sheet updated for the plate logger.
+7. Plate editor layout fix: the inline portion editor was rendering as a
+   flex sibling inside .lg-pi (so name/chips/buttons bunched onto one
+   cramped line). .lg-pi is now a flex COLUMN with a .lg-pi-row for the
+   name+buttons and the .lg-pi-edit panel dropping full-width beneath it;
+   .lg-plate-items max-height raised to 34vh. Also fixed a doubled "1"
+   in the portion chip label (unit string already includes the count).
+
+Known checks still needed on real devices:
+- Plate logger on small screens: sticky plate + scrolling list height,
+  and that "Log all" stays reachable with the keyboard open.
+- Confirm logging a multi-item plate writes all items to the right meal
+  and they appear in the diary (verified in headless tests).
+- Everything inherited from 3.29 still needs its own device checks
+  (encrypted backup share sheet, notifications) — see below.
+
+WORK DONE — 3.29-test (12 Jun 2026)
+-----------------------------------
+1. Simplified cloud backup: removed the Google OAuth / Client ID upload flow from the main app because it was too much friction for normal users.
+2. Recommended backup path is now encrypted Save/Share: Evolve encrypts the backup locally, then opens the phone's normal share sheet so the user chooses iCloud, Files, Google Drive, Proton Drive, Dropbox, OneDrive, MEGA, email, USB or any other target.
+3. Privacy flow tightened: before creating the encrypted backup, Evolve clearly says it does not upload anything itself, but the encrypted file may leave the device if the user chooses cloud storage.
+4. Encrypted restore remains: users restore from the encrypted file with their password; wrong passwords fail safely.
+5. Backup reminders remain: Off/Daily/Weekly/Biweekly/Monthly, in-app due banner, notification permission and Send test notification button all remain.
+6. Version/cache/docs updated: app.js LATEST_NUM is 3.29-test, index splash says 3.29-test, sw.js cache is evolve-v3-35-test, README, preview build and this handoff were updated.
+
+Known checks still needed on real devices:
+- iOS Safari/PWA: Create encrypted backup, confirm the share sheet appears and iCloud/Files can save it.
+- Android Chrome/PWA: Create encrypted backup, confirm the share sheet/download fallback works and Google Drive/Files can save it.
+- Restore the encrypted backup with the correct password and confirm wrong passwords fail safely.
+- Test notification permission and Send test notification on installed iOS/Android PWAs.
+
+WORK DONE — 3.28-test (12 Jun 2026)
+-----------------------------------
+1. Encrypted backup files: users can create password-locked Evolve backup files locally and save/share them anywhere. Encryption uses Web Crypto AES-GCM with PBKDF2-derived keys.
+2. Optional Google Drive backup: added an off-by-default Google Drive section. It warns twice before enabling, requires a Google OAuth Client ID, encrypts locally first, then uploads only the encrypted backup file to the user's own Drive.
+3. Google Drive restore: can sign in, fetch the encrypted Evolve backup file from Drive, decrypt locally with the password, and restore.
+4. Backup reminders: added Off/Daily/Weekly/Biweekly/Monthly reminder options, a notification permission button, and a Send test notification button. The in-app backup banner now respects the selected frequency.
+5. Privacy design: Google Drive credentials/file IDs stay local. They are stripped from exported backup data. Profile photos remain excluded from backup codes/files.
+6. Version/cache/docs updated: app.js LATEST_NUM is 3.28-test, index splash says 3.28-test, sw.js cache is evolve-v3-34-test, README, preview build and this handoff were updated.
+
+Known checks still needed on real devices:
+- Google Drive upload requires a valid Google OAuth web Client ID configured for the deployed GitHub Pages origin.
+- Notification support varies by iOS/Android/browser/install state; test the button on real installed PWAs.
+- Confirm encrypted export/restore works with the same password on iPhone and Android.
+- Confirm Drive upload/restore works after signing into Google and that wrong passwords fail safely.
+
+WORK DONE — 3.27-test (12 Jun 2026)
+-----------------------------------
+1. Local profile pictures: users can choose a profile photo from More → Profile or by tapping the profile image in the More header.
+2. Privacy-first flow: before the picker opens, Evolve explains that the photo is fully local, never uploaded or synced, not sent to GitHub, not included in backup codes, and will be lost if the app/browser data is deleted.
+3. Storage design: the photo is resized/cropped to a small 256×256 JPEG and stored separately in localStorage under evolve_profile_photo_v1, outside the main Evolve backup data.
+4. UI refresh: the chosen photo appears in the top header avatar and the More profile card; if no photo is set, Evolve falls back to the app logo.
+5. Version/cache/docs updated: app.js LATEST_NUM is 3.27-test, index splash says 3.27-test, sw.js cache is evolve-v3-33-test, README, preview build and this handoff were updated.
+
+Known checks still needed on real devices:
+- iPhone Safari/PWA: choose photo from library, confirm it saves, close/reopen app, confirm it remains.
+- Android Chrome/PWA: choose photo from gallery, confirm it saves, close/reopen app, confirm it remains.
+- Confirm backup export/import stays small and deliberately does not transfer the profile photo.
+- Confirm Reset all data clears the local profile photo too.
+
+WORK DONE — 3.26-test (12 Jun 2026)
+-----------------------------------
+1. Centered icon fix: all app icon assets were regenerated from the corrected centred logo after the earlier icon looked off-centre on installs.
+2. PWA/mobile refresh: replaced favicon, 192, 512 and Apple touch icon files with the corrected design and bumped the service-worker cache so phones fetch the new icon set.
+3. Docs/version refresh: version strings, manifest and this handoff were updated to reflect the icon-fix package.
+
+Known checks still needed on real devices:
+- Open the updated site once online, then remove and re-add any existing home-screen shortcut so iPhone/Android pick up the new icon.
+- Confirm the installed icon now looks visually centred on both light and dark home-screen backgrounds.
+
+WORK DONE — 3.25-test (12 Jun 2026)
+-----------------------------------
+1. Branding refresh: adopted the new gradient E logo chosen from the brand concepts. The splash now shows the new mark and the in-app profile/header branding uses the same icon treatment.
+2. PWA / mobile icons: added real PNG app icons (favicon, 192, 512, Apple touch icon) and switched manifest + index.html to use them so installed phone icons match the chosen logo.
+3. Preview/source/docs updated: preview build, manifest, README, service-worker cache and source snapshot were refreshed for the new logo package.
+
+Known checks still needed on real devices:
+- Delete/re-add the home-screen install on iPhone/Android after the cache bump so the new icon is picked up.
+- Check splash/logo sharpness on smaller devices and confirm the new top-right header icon feels the right size.
+- If the logo text looks too small on very tiny home-screen icons, consider a later icon-only variant for production.
+
+WORK DONE — 3.24-test (12 Jun 2026)
+-----------------------------------
+1. Settings: added a new More → Preferences → App option called
+   “Show help bars” with On/Off buttons. It defaults to On for new and
+   existing users, and when turned Off it hides the “How this page works”
+   bars on Home, Train, Cardio, Fuel and Progress. The full Help & guide
+   area in More stays available.
+2. Fuel polish: the Goal & activity edit link at the bottom of Fuel now
+   uses a pencil edit marker (“✏️ edit”) instead of the small dot that
+   could wrap awkwardly above the word edit. The new span is no-wrap so
+   the marker and label stay together.
+3. Version/cache/docs updated: app.js LATEST_NUM is 3.24-test, index splash
+   says 3.24-test, sw.js cache is evolve-v3-30-test, README, manifest,
+   preview build and this handoff were updated.
+
+Known checks still needed on real devices:
+- Toggle Show help bars Off/On and confirm the bars disappear/reappear
+  across Home, Train, Cardio, Fuel and Progress after tab switches.
+- Check the Fuel bottom Goal & activity card on iPhone widths to confirm
+  “✏️ edit” no longer leaves a lonely dot/marker above the label.
+- iOS Add to Home Screen after service-worker cache bump.
+
+WORK DONE — 3.23-test (12 Jun 2026)
+-----------------------------------
+1. Fuel portions: added common portion hints in data.js and quick chips
+   in the portion sheet, e.g. 1 egg, 1 slice, 1 banana, 1 breast. Grams
+   remain visible/editable and are still the calculation source.
+2. Fuel search: replaced plain includes() matching with ranked matching:
+   exact/prefix/word-start/contains first, plus one-letter typo tolerance.
+3. Workout history: each expanded workout row now has “↻ Do this workout
+   again”, which loads its exercises and previous set targets into a new
+   live tracker session with all sets unticked.
+4. Backup: export still shows the code, but now also has “Save / share
+   backup file” using Web Share files where supported, falling back to a
+   downloadable .txt file.
+5. Workout notes: live tracker has a Workout notes button. Notes persist
+   with the in-progress session, are saved into workout history, and show
+   in expanded history rows.
+6. Exercise history mid-workout: tapping an exercise name in the live
+   tracker opens recent best sets, last best set, and estimated 1RM.
+7. Rest timer consistency: in-session rest chips now include 150s, matching
+   the Settings default-rest option. Per-exercise rest also includes 150s.
+8. Settings: Preferences are split into smaller labelled sub-sections
+   rather than one long control stack.
+9. Progress: bodyweight trend x-axis is now date-scaled instead of spacing
+   every weigh-in evenly by index.
+10. Version/cache/docs updated: app.js LATEST_NUM is 3.23-test, index splash
+    says 3.23-test, sw.js cache is evolve-v3-29-test, README and this
+    handoff explain this is a test package.
+
+Known checks still needed on real devices:
+- iOS Add to Home Screen after service-worker cache bump.
+- Backup Save/Share behaviour in Safari/Chrome, because file sharing
+  support varies by browser and install state.
+- Portion-chip defaults for common UK foods; the rule list is deliberately
+  approximate and may need tuning.
+- Repeat-from-history flow on very old saved workouts that may have sparse
+  set data.
+
+WHAT EVOLVE IS
+--------------
+A single-user, offline-first PWA gym + nutrition tracker. Plain
+HTML/CSS/JS — no framework, no build step, no backend, no accounts.
+All state lives in the phone's localStorage. Installs to the home
+screen on iPhone/iPad and Android and runs fully offline.
+Tagline: "Train smarter · Become next."
+
+5 tabs (Home / Train / Fuel / Progress / More) plus a full-screen
+live-workout overlay. Databases: ~92 machines, 53 free weights,
+58 home moves, ~40 cardio, 726 foods.
+
+
+>>> SOURCE OF TRUTH — READ THIS FIRST <<<
+-----------------------------------------
+The canonical code is the GitHub repo, branch `main`:
+    wigglez-sudo/EvolveApp
+    live site: https://wigglez-sudo.github.io/EvolveApp/
+Pull it with raw URLs, e.g.:
+    https://raw.githubusercontent.com/wigglez-sudo/EvolveApp/main/app.js
+
+Do NOT assume a set of uploaded files is the newest. In June 2026 a
+"v3.19" file set was floating around that was a BROKEN regression
+(it didn't boot, and was missing the modal close buttons and the
+Manual daily-targets editor). The real, complete, working build was
+the deployed 3.18 on GitHub. Always diff against GitHub before
+editing, and confirm with Wigglez which build their phone is running.
+
+
+THE 8 REPO FILES (this is the whole app)
+----------------------------------------
+  index.html      app shell + splash (inlines base64 icons)
+  styles.css      all styling (CSS variables: --line, --line2,
+                  --muted, --text, --fuel, --strength, --blue, etc.)
+  data.js         constants + databases + DEFAULT_DATA (loads FIRST)
+  app.js          all logic (loads SECOND; `let DATA = load();` lives
+                  here near the top — keep it in app.js, not data.js)
+  manifest.json   PWA manifest (large; embedded icons)
+  sw.js           service worker — bump CACHE on every shell change
+  README.md       public readme
+  LICENSE         MIT (© 2026 Wigglez — keep the credit)
+
+Extra (not deployed, for continuity/reference only):
+  evolve_code.txt        full source snapshot in one file
+  EVOLVE_HANDOFF.txt     this file
+  Evolve-vX.Y-preview.html   single-file inlined build for previewing
+
+
+KEY CONVENTIONS
+---------------
+- Storage keys: main data = "evolve_v1"; in-progress live session =
+  "evolve_live_v1". load() merges saved data over DEFAULT_DATA then
+  migrate(). save() and persistLive() are try/catch wrapped.
+- Units stored canonically (kg, kcal); converted on display
+  (eVal/eUnit/liftFromKg, energy can be kcal or kJ).
+- Targets: computeTargets(p) uses Mifflin–St Jeor. GOALS =
+  {lose:-500, maintain:0, gain:+350}. prefs.targetMode = "auto" |
+  "manual".
+- Modals: openModal(html, opts) injects a sticky top bar with a grab
+  handle and a ✕ (#modalX) unless opts.mandatory. closeModal handles
+  the phone Back button via history.pushState/popstate. A module-level
+  `liveCardioStop` lets closeModal stop a running cardio timer.
+- Health figures are estimates, not medical advice (already noted in
+  app + README). Keep that framing for any nutrition/macro features.
+
+
+VERSION / CACHE BOOKKEEPING (do all of these on a release)
+----------------------------------------------------------
+  app.js:   LAST_UPDATED, LATEST_NUM, LATEST_TITLE, LATEST_ITEMS,
+            the "Version X.Y" footer string, and prepend a v(...) entry
+            in openChangelog() so older versions stay in history.
+  index.html: the .splash-foot "Version X.Y · Updated …" line.
+  sw.js:    const CACHE = "evolve-v3-NN"  (increment NN).
+Then: phones pick up the new version after fully closing + reopening
+the app once or twice. Saved data carries over untouched.
+
+Current test package: LATEST_NUM "3.24-test", CACHE "evolve-v3-30-test". Previous test package: LATEST_NUM "3.23-test", CACHE "evolve-v3-29-test". Previous final baseline: LATEST_NUM "3.22", CACHE "evolve-v3-28".
+
+
+WORK DONE — 3.22 (12 Jun 2026)  ·  QOL polish across every tab
+------------------------------------------------------------------
+11. Splash: the "What's new" panel no longer collides with the footer.
+    .splash-foot was position:absolute (pinned), so expanding the news
+    body slid under it and made "View full history" untappable. It now
+    flows in normal document order (margin-top:auto) after .splash-inner
+    (margin:auto 0 0). Also REMOVED the duplicate "Last updated" line
+    inside renderSplashNews() — the date already lives in the footer.
+12. Fuel tab: added a title header (renderFuel) matching the other tabs
+    — a .topbar with "Food & macros" / "Fuel" above the date switcher.
+13. Home (renderHome): added "Quick actions" and "At a glance" eyebrow
+    headings; the streak/workouts/volume strip (.home-glance) is now
+    tappable and jumps to the Progress tab (switchTab("stats")).
+14. Manual targets (openGoalActivity manual branch): focus auto-fill
+    no longer drifts a few kcal. applyFocus() now rounds protein & fat,
+    then derives carbs from the remainder, so the macros sum back to the
+    entered calories (e.g. 5000 "More energy" → 313/687/111 = 4999, was
+    5003). Hand-editing a macro is unchanged.
+15. Nav bar: reordered to Train · Fuel · Home · Progress · More, with
+    Home centred, raised and circular (.nav-home / .nav-ic), bordered in
+    var(--strength) so it tracks the theme. Nav keys off data-tab, not
+    DOM order, so switchTab + wiring needed no changes. Home SVG is
+    wrapped in <span class="nav-ic"> for the raised circle.
+16. Progress (renderStats): the 11 dropdowns are grouped under 3 eyebrow
+    headings — "📈 Trends", "📅 Activity", "🎯 Goals & milestones" — plus
+    an Expand all / Collapse all control. moreAcc() now exposes
+    _open/_close/_id; no sections were removed. NO reorder setting (the
+    grouping removed the need).
+17. Settings (renderMore): visual refresh + new options.
+    - Profile header card at top (.more-prof / .more-av) replaces the
+      plain topbar; gives the tab a face + theme colour.
+    - Sections grouped under "You" / "Your data" / "About" (+ Danger
+      standalone) and given colour-coded icon chips (moreAcc opts.iconClass
+      → .acc-ic.ic-*).
+    - NEW prefs (all in DEFAULT_DATA.prefs + migrate(), so existing users
+      carry over): restDefault (default rest timer, used by startSession),
+      restBeep / restFlash (gated in restAlert()), keepAwake (gated in
+      requestWakeLock()), waterUnit + waterStep (used in renderFuel water
+      card + home snapshot), startTab (used on Enter).
+    - A "How Settings works" button was added to the Help & guide section
+      (buildHelp) → openTabHelp("more").
+18. Help sheets (TAB_HELP): all rewritten to concise labelled rows
+    (.help-row + .help-lead), factual drift fixed (meal-times now noted as
+    living in More → Preferences, Home's new headings, Progress grouping),
+    and a NEW "more" (Settings) sheet added.
+19. Nav clearance fix (post-3.22 polish): the raised centre Home button
+    overhung the pill and covered scrolling content. Fixed by widening the
+    .nav-ic ink ring (box-shadow 0 0 0 8px var(--ink)), easing the lift
+    (margin-top:-16px) and increasing .screen bottom padding to
+    calc(150px + var(--safe-b)). CACHE bumped to evolve-v3-28.
+
+Validation: rebuilt + headless-tested with Playwright (Chromium, 390x844)
+— seeded a profile, drove every changed flow (nav order, Fuel title, Home
+eyebrows + tap-through, Progress groups + Expand all, Settings header +
+groups + all new pref controls, water-unit toggle, splash panel, manual
+macro math, all help sheets) with zero pageerrors. The single-file
+Evolve-v3.24-test-preview.html should be used for this package; Evolve-v3.23-test-preview.html referred to the previous test pass, and the older Evolve-v3.22-preview.html referred to the final baseline.
+
+
+
+WORK DONE — 3.21 (12 Jun 2026)
+------------------------------
+10. Fuel tab reorganised (renderFuel). New top-to-bottom order:
+    date → calorie ring → macros → ＋Add food (prominent) →
+    Burned + Repeat a meal (smaller row) → Your usuals → food log by
+    meal → Water → burned list → a small "Goal & activity" ghost link
+    at the very bottom. Goal/activity was demoted from a top card to
+    that link. An empty-state line shows under Add food when nothing
+    is logged.
+    The "Show meal times" switch was REMOVED from the Fuel tab and now
+    lives in More → Preferences (buildPrefs, #pf_mt). DATA.prefs.mealTimes
+    is unchanged; only its control moved.
+
+
+WORK DONE — 3.19 (12 Jun 2026)
+------------------------------
+Built on GitHub 3.18 (the broken uploaded "3.19" was discarded):
+ 1. Manual daily targets: added a focus picker (Build muscle / Lose
+    fat / More energy / Balanced) that auto-fills P/C/F from calories.
+    Splits (% of kcal): muscle 30/45/25, lean 40/30/30, energy
+    25/55/20, balanced 30/40/30. protein_g=cal*P/4, carbs_g=cal*C/4,
+    fat_g=cal*F/9. Fields stay editable; editing a macro clears the
+    active focus. Code: openGoalActivity() manual branch (FOCI map,
+    #m_focus chips, applyFocus/paintFoci).
+ 2. Food sheet: favourite star sits next to the name (removed flex:1).
+    pickFood() h3.
+ 3. Repeat a meal: preview lists the actual food names. openRepeatMeal
+    upd().
+ 4. Block empty sets: a set won't complete at 0 kg AND 0 reps (toast
+    "Add a weight or some reps first"); bodyweight (0 kg + reps) still
+    works. NOTE: the LIVE screen uses buildSetList() (class
+    `sl-complete`), NOT buildSetBlock() (`sb-complete`, which is dead
+    code). Guard added in buildSetList.
+ 5. Save favourite: lists the exercise names. saveFavWorkout().
+ 6. Saved workouts: rows expand to show exercises (renderTrain fav
+    list; CSS .fav-wrap/.fav-exlist/.fav-caret/.fav-exrow/.fav-exn).
+ 7. Backup import: accepts the code with/without the EVOLVE1: tag and
+    strips stray whitespace —
+    raw.replace(/^\s*EVOLVE\d*\s*:\s*/i,"").replace(/\s+/g,"")
+    plus a helper note on the Import sheet. openImport()/openExport().
+ 8. Cardio double-timer: closing the timer via ✕/Back now stops the
+    interval (module-level liveCardioStop hooked into closeModal).
+
+
+WORK DONE — 3.20 (12 Jun 2026)
+------------------------------
+ 9. Cardio progress is no longer lost. The in-workout cardio timer
+    (openLiveCardioTimer) previously kept elapsed time only in a local
+    object, so closing it reset to zero. Now:
+      - st.elapsedMs initialises from ex.progressMs (resume).
+      - each tick writes ex.progressMs; stop() also persistLive() so it
+        survives an app reload mid-session.
+      - the cardio card shows "▶ Resume cardio · mm:ss" when progress
+        exists (buildCardioLiveCard), and the live screen re-renders
+        when the timer is torn down.
+      - Finish (doFinish) logs the session and clears progress;
+        Discard (#lct_cancel) resets progress to 0.
+
+
+HOW TO VALIDATE (headless, no device needed)
+--------------------------------------------
+Chromium + Playwright are available. Pattern:
+  - python http.server in the build dir; sync_playwright; Chromium;
+    viewport 390x844.
+  - functions are on `window` (declared with `function`), but
+    `let DATA` is NOT — read state via load() or localStorage
+    ("evolve_v1" / "evolve_live_v1").
+  - Seed a profile/targets/log/favWorkouts into localStorage, reload,
+    then drive the real flows and assert on the DOM.
+  - Listen for pageerror to catch JS errors.
+Every fix above was verified this way (all green) before shipping.
+
+
+DEPLOY
+------
+Replace the 8 repo files in wigglez-sudo/EvolveApp (root, branch
+main) and commit. On the phone, fully close Evolve and reopen once or
+twice to pull the new cache. Data is preserved.
+==================================================================
+
+
+## Security hotfix test build 1.0.2
+
+This test rebuild tightens plain backup-code restore so imported data is decoded through the same guarded parser used by encrypted restores. It strips dangerous object keys, enforces import size limits, and only merges known Evolve data keys before migration. Service-worker cache is bumped to evolve-v3-62.

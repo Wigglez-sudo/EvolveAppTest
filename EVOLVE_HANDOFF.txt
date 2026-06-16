@@ -1,4 +1,20 @@
 ==================================================================
+ SECURITY HARDENING TEST BUILD (post-1.0)
+ Updated: 16 June 2026
+------------------------------------------------------------------
+ - Added a CSP + no-referrer policy to the live runtime page.
+ - Tightened backup/import/encrypted-restore parsing. Oversized or
+   malformed payloads can now be rejected on purpose.
+ - Added AI Coach key storage mode: session-only or remembered on this
+   device. Session-only is the safer option.
+ - Tightened service-worker caching to the app shell + Google Fonts.
+ - Hardened food-pack manifest / pack validation and added a dedicated
+   app-shell validator in tools/validate-app-shell.js.
+ - Current app service-worker cache for this test rebuild: evolve-v3-61.
+ - Current effective manifest version for this test rebuild: 1.0.1.
+==================================================================
+
+==================================================================
  EVOLVE — PROJECT HANDOFF
  Version: 1.0  ·  Updated: 15 June 2026  ·  STATUS: 1.0 RELEASE
  Owner/Director: Wigglez   ·   Build partner: Claude / ChatGPT lineage
@@ -10,8 +26,8 @@
    WEBSITE/  → the marketing/landing + install site
                (repo: the evolveapp.cc site repo, live: https://evolveapp.cc)
  These deploy to SEPARATE places and must be uploaded separately.
- Current app service-worker cache at packaging: evolve-v3-59.
- Current effective manifest version: 1.0.0 (stale dup key removed).
+ Current app service-worker cache at packaging: evolve-v3-61.
+ Current effective manifest version: 1.0.1.
 ==================================================================
 
 ==================================================================
@@ -986,3 +1002,8 @@ Replace the 8 repo files in wigglez-sudo/EvolveApp (root, branch
 main) and commit. On the phone, fully close Evolve and reopen once or
 twice to pull the new cache. Data is preserved.
 ==================================================================
+
+
+## Security hotfix test build 1.0.2
+
+This test rebuild tightens plain backup-code restore so imported data is decoded through the same guarded parser used by encrypted restores. It strips dangerous object keys, enforces import size limits, and only merges known Evolve data keys before migration. Service-worker cache is bumped to evolve-v3-62.

@@ -174,3 +174,8 @@ After a long beta (the 3.x series), this is Evolve's first full release. Highlig
 *Private. Offline-first. Yours.*
 
 </div>
+
+
+## Security hotfix test build 1.0.2
+
+This test rebuild tightens plain backup-code restore so imported data is decoded through the same guarded parser used by encrypted restores. It strips dangerous object keys, enforces import size limits, and only merges known Evolve data keys before migration. Service-worker cache is bumped to evolve-v3-62.
