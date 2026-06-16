@@ -1,0 +1,45 @@
+name: Deploy to GitHub Pages
+
+# Static deploy for the Evolve PWA (plain HTML/JS — no Jekyll build needed).
+# Uses current action versions that run on Node 24, so no deprecation warnings.
+# To use this: in repo Settings → Pages, set "Source" to "GitHub Actions"
+# (instead of "Deploy from a branch"). That stops the old managed Jekyll build.
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# Allow one concurrent deployment; don't cancel an in-progress run.
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v5
+
+      - name: Setup Pages
+        uses: actions/configure-pages@v5
+
+      - name: Upload site as a Pages artifact
+        # v4 internally uses a Node 24 upload-artifact (v3 pulled in the
+        # deprecated Node 20 one). Uploads the whole repo root as the site.
+        uses: actions/upload-pages-artifact@v4
+        with:
+          path: "."
+
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4

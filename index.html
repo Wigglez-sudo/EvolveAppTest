@@ -1,0 +1,114 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, maximum-scale=1, user-scalable=no">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="application-name" content="Evolve">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Evolve">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="theme-color" content="#0C0D11">
+<link rel="manifest" href="manifest.json">
+<link rel="icon" type="image/png" sizes="64x64" href="favicon.png">
+<link rel="icon" type="image/png" sizes="192x192" href="icon-192.png">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<title>Evolve</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Archivo:wght@600;700;800;900&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<!-- SPLASH -->
+<div id="splash">
+  <div class="splash-orb o1"></div><div class="splash-orb o2"></div>
+  <div class="splash-inner">
+    <img class="splash-logo-img" src="icon-512.png" alt="Evolve app logo">
+    <div class="splash-mark disp">EVOLVE</div>
+    <div class="splash-tag">TRAIN SMARTER · BECOME NEXT</div>
+    <div class="splash-feats">
+      <div class="sf"><span>🏋️</span>Guided workouts & live tracking</div>
+      <div class="sf"><span>🗓️</span>A week planned around your days</div>
+      <div class="sf"><span>🍎</span>Food, macros & water in one place</div>
+      <div class="sf"><span>📈</span>PRs, streaks & progress charts</div>
+    </div>
+    <button class="splash-enter" id="enterBtn">ENTER</button>
+    <button class="splash-news" id="newsToggle" style="margin-top:16px">📜 What's new<span class="news-chev" id="newsChev">▾</span></button>
+    <div class="splash-news-body" id="newsBody"></div>
+  </div>
+  <div class="splash-foot">Created by Wigglez · Version 1.0</div>
+</div>
+
+<!-- APP -->
+<div id="app">
+
+  <!-- TRAIN -->
+  <!-- HOME (Today) -->
+  <section class="screen" id="view-home">
+    <div class="topbar">
+      <div><div class="hello" id="helloTxt">Let's move</div><div class="date" id="dateTxt">—</div></div>
+      <div class="av" id="avInit">E</div>
+    </div>
+    <div id="homeBody"></div>
+  </section>
+
+  <!-- TRAIN (library) -->
+  <section class="screen" id="view-train">
+    <div class="sect-h" style="margin-top:4px"><h3 style="font-size:30px">Train</h3></div>
+    <div class="train-sub">Your workout library — pick a muscle, a preset, or go mega.</div>
+    <div id="trainBody"></div>
+  </section>
+
+  <!-- CARDIO -->
+  <section class="screen" id="view-cardio"><div id="cardioBody"></div></section>
+
+  <!-- FUEL -->
+  <section class="screen" id="view-fuel"><div id="fuelBody"></div></section>
+
+  <!-- STATS / PROGRESS -->
+  <section class="screen" id="view-stats"><div id="statsBody"></div></section>
+
+  <!-- MORE -->
+  <section class="screen" id="view-more"><div id="moreBody"></div></section>
+  <section class="screen" id="view-coach"><div id="coachBody"></div></section>
+
+</div>
+
+<!-- LIVE TRACKER -->
+<div id="live">
+  <div class="live-head">
+    <button class="iconbtn" id="liveClose">✕</button>
+    <div class="ttl" id="liveTitle">Workout</div>
+    <div class="row" style="gap:8px">
+      <button class="iconbtn star" id="liveFav" title="Save as favourite">☆</button>
+      <button class="btn str sm" id="liveFinish">Finish</button>
+    </div>
+  </div>
+  <div class="live-body" id="liveBody"></div>
+  <div class="rest-bar hidden" id="restBar"></div>
+</div>
+
+<!-- NAV -->
+<nav id="nav" class="hidden">
+  <button data-tab="home" class="on"><svg viewBox="0 0 24 24"><path d="M3 11l9-8 9 8M5 10v10h5v-6h4v6h5V10"/></svg>Home</button>
+  <button data-tab="train"><svg viewBox="0 0 24 24"><path d="M6.5 6.5l11 11M4 8l-1 1 2 2M20 16l1-1-2-2M8 4l-1 1 2 2M16 20l1-1-2-2"/><rect x="5" y="9" width="3" height="6" rx="1"/><rect x="16" y="9" width="3" height="6" rx="1"/></svg>Train</button>
+  <button data-tab="fuel" class="fuelTab"><svg viewBox="0 0 24 24"><path d="M12 3c0 3-2 4-2 7a4 4 0 008 0c0-4-3-6-3-9M12 21a6 6 0 01-6-6"/></svg>Fuel</button>
+  <button data-tab="stats"><svg viewBox="0 0 24 24"><path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/></svg>Progress</button>
+  <button data-tab="more"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19 12a7 7 0 00-.1-1l2-1.5-2-3.4-2.3 1a7 7 0 00-1.7-1l-.3-2.6h-4l-.3 2.6a7 7 0 00-1.7 1l-2.3-1-2 3.4 2 1.5a7 7 0 000 2l-2 1.5 2 3.4 2.3-1a7 7 0 001.7 1l.3 2.6h4l.3-2.6a7 7 0 001.7-1l2.3 1 2-3.4-2-1.5a7 7 0 00.1-1z"/></svg>More</button>
+</nav>
+<button id="fuelFab" class="hidden" aria-label="Add food">＋</button>
+
+
+<!-- MODAL -->
+<div id="modalWrap"><div class="modal-bg" id="modalBg"></div><div class="modal" id="modal"></div></div>
+
+<div id="flash"></div>
+<div id="toast"></div>
+<div id="kbdDone"><button type="button">Done</button></div>
+<script src="data.js"></script>
+<script src="food-packs.js"></script>
+<script src="app.js"></script>
+</body>
+</html>

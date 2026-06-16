@@ -1,0 +1,70 @@
+name: Update food database
+
+# Builds the per-shop UK food packs from Open Food Facts and commits them
+# into food-db/. Round-robins the shops with long retry backoff so a busy
+# API fills every shop as much as possible. Runs monthly or on demand.
+
+on:
+  workflow_dispatch:
+    inputs:
+      per_shop_target:
+        description: "Foods to aim for PER shop"
+        required: false
+        default: "2500"
+      max_pages_per_store:
+        description: "Hard page ceiling per shop"
+        required: false
+        default: "120"
+  schedule:
+    - cron: "0 4 1 * *"   # 04:00 UTC on the 1st of each month
+
+permissions:
+  contents: write
+
+concurrency:
+  group: evolve-food-db-update
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 120
+    steps:
+      # v5 of these actions runs on Node 24 natively, so no deprecation warning
+      # and no need for the old FORCE_JAVASCRIPT_ACTIONS_TO_NODE24 stopgap.
+      - name: Checkout
+        uses: actions/checkout@v5
+
+      - name: Set up Node
+        uses: actions/setup-node@v5
+        with:
+          node-version: "24"
+
+      - name: Build food packs from Open Food Facts
+        env:
+          EVOLVE_FOOD_PER_SHOP_TARGET: ${{ github.event.inputs.per_shop_target || '2500' }}
+          EVOLVE_FOOD_MAX_PAGES_PER_STORE: ${{ github.event.inputs.max_pages_per_store || '120' }}
+          EVOLVE_FOOD_USER_AGENT: "Evolve food database builder - https://github.com/Wigglez-sudo/EvolveApp"
+        run: node tools/build-openfoodfacts-uk-db.js
+
+      - name: Commit updated food database
+        run: |
+          if git diff --quiet -- food-db/; then
+            echo "No food database changes to commit."
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add food-db/
+          git commit -m "Update food database ($(date -u +%Y-%m-%d))"
+          git pull --rebase origin main
+          git push
+
+      # Validation runs AFTER the commit on purpose: the build already drops bad
+      # data at write time, so this is a backstop. Running it last means that if
+      # anything ever does slip through, the run goes RED (so you notice) but the
+      # good data is already safely committed — you can then edit the committed
+      # food-db/<shop>.json, delete the flagged rows, and commit. A long (~55 min)
+      # build can never be thrown away by a stray row again.
+      - name: Validate committed data (reports problems; build is already saved)
+        run: node tools/validate-food-db.js
