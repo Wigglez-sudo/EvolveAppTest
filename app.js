@@ -2770,9 +2770,14 @@ function updateLiveProg(){
   if(!liveSession)return;
   let tot=0,done=0;
   liveSession.exercises.forEach(e=>{ if(e.cardio)return; (e.sets||[]).forEach(st=>{tot++; if(st.done)done++;}); });
-  const n=$("#lp_num"), bar=$("#lp_bar");
+  const n=$("#lp_num"), bar=$("#lp_bar"), lbl=$("#lp_exname");
   if(n)n.textContent=`${done} / ${tot} sets`;
   if(bar)bar.style.width=(tot?Math.round(done/tot*100):0)+"%";
+  /* show the first exercise with an incomplete set in the sticky label */
+  if(lbl){
+    const cur=liveSession.exercises.find(e=>!e.cardio&&(e.sets||[]).some(s=>!s.done));
+    lbl.textContent=cur?esc(cur.name):(liveSession.title||"Workout");
+  }
 }
 function ssMembers(xi){
   const ex=liveSession.exercises[xi]; if(!ex||!ex.ss)return null;
@@ -2886,21 +2891,14 @@ function genWarmups(ex){
 function renderLive(){
   const body=$("#liveBody"); body.innerHTML="";
 
-  /* sticky header: single rest control + always-visible session progress */
+  /* ── sticky header: just progress + exercise context ── */
   const sticky=el("div","live-sticky");
-  const rest=el("div","rest-pick");
-  rest.innerHTML=`<span class="rp-lab">Rest between sets · auto-starts when you tick a set</span>`;
-  const seg=el("div","rp-chips"); seg.style.marginTop="8px";
-  [0,30,60,90,120,150,180].forEach(s=>{const bn=el("button","rp-chip"+(liveSession.restSec===s?" on":""),s===0?"Off":s+"s");
-    bn.addEventListener("click",()=>{liveSession.restSec=s; seg.querySelectorAll(".rp-chip").forEach(x=>x.classList.remove("on"));bn.classList.add("on");});
-    seg.appendChild(bn);});
-  rest.appendChild(seg); sticky.appendChild(rest);
-  const prog=el("div"); prog.innerHTML=`<div class="lp2"><span class="l">Session progress</span><span class="n" id="lp_num"></span></div>
-    <div class="bar"><i id="lp_bar" style="background:var(--grad-str)"></i></div>`;
+
+  /* session progress bar */
+  const prog=el("div","lp-bar-wrap");
+  prog.innerHTML=`<div class="lp-row"><span class="lp-label" id="lp_exname"></span><span class="lp-count" id="lp_num"></span></div>
+    <div class="lp-track"><i id="lp_bar"></i></div>`;
   sticky.appendChild(prog);
-  const nb=el("button","btn ghost sm live-note",liveSession.notes?"📝 Notes added":"📝 Workout notes");
-  nb.addEventListener("click",openSessionNotes);
-  sticky.appendChild(nb);
   body.appendChild(sticky);
   updateLiveProg();
 
@@ -2915,17 +2913,34 @@ function renderLive(){
     const wrap=el("div","ex-wrap"+(ss?" linked":"")+(linkedPrev?" linked-prev":""));
     const c=el("div","ex-card"+(ss?" ss":""));
     strengthI++;
-    c.appendChild(el("div","exi",`Exercise ${strengthI} of ${strengthN}${ex.group?" · "+esc(ex.group):""}`));
-    const head=el("div","eh");
-    head.innerHTML=`<div class="nm tap-history" title="Tap for exercise history">${esc(ex.name)}${ss?`<span class="ss-badge">Superset</span>`:""}</div>`;
-    const nm=head.querySelector(".nm"); if(nm) nm.addEventListener("click",()=>openExerciseHistory(ex.name));
-    const more=el("button","more","⋯"); more.title="More"; more.addEventListener("click",()=>openExerciseMenu(ex,xi));
-    head.append(more); c.appendChild(head);
 
-    /* ghost text hint */
+    /* ── exercise header ── */
+    const exi=el("div","exi",`Exercise ${strengthI} of ${strengthN}${ex.group?" · "+esc(ex.group):""}`);
+    c.appendChild(exi);
+
+    const head=el("div","eh");
+    const nm=el("div","nm tap-history"); nm.textContent=esc(ex.name);
+    if(ss) nm.appendChild(Object.assign(el("span","ss-badge"),"Superset".split("").reduce((a,ch)=>{a.textContent+=ch;return a;},{textContent:""})));
+    nm.querySelector&&(nm.title="Tap for history");
+    nm.addEventListener("click",()=>openExerciseHistory(ex.name));
+    head.appendChild(nm);
+
+    /* ── header actions: notes pill + ⋯ ── */
+    const hact=el("div","eh-actions");
+    const nb=el("button","live-note-btn"+(liveSession.notes?" has-notes":""),liveSession.notes?"📝":"📝");
+    nb.title=liveSession.notes?"Edit workout notes":"Add workout notes";
+    nb.addEventListener("click",openSessionNotes);
+    hact.appendChild(nb);
+    const more=el("button","more","⋯"); more.title="More";
+    more.addEventListener("click",()=>openExerciseMenu(ex,xi));
+    hact.appendChild(more);
+    head.appendChild(hact);
+    c.appendChild(head);
+
+    /* ghost hint */
     const last=lastSetFor(ex.name);
     if(last && (+last.kg>0||+last.reps>0)){
-      const gh=el("div","ghost-hint"); gh.innerHTML=`👻 Last time: ${last.kg?liftStr(+last.kg):"—"} × ${last.reps||"—"} reps`;
+      const gh=el("div","ghost-hint"); gh.textContent=`👻 Last time: ${last.kg?liftStr(+last.kg):"—"} × ${last.reps||"—"} reps`;
       c.appendChild(gh);
     }
     if(ex.home){ const tip=el("div","ex-tip"); tip.textContent="Suggested: "+ex.home.reps; c.appendChild(tip); }
@@ -2939,7 +2954,7 @@ function renderLive(){
     });
     c.appendChild(add);
 
-    /* superset link — lives ON the card (footer), never floating between */
+    /* superset link footer */
     if(nx && !nx.cardio){
       const foot=el("div","ss-foot");
       const lb=el("button","",linkedNext?"🔗 Linked with next · tap to unlink":"🔗 Superset with next exercise");
@@ -2963,8 +2978,7 @@ function renderLive(){
   persistLive();
 }
 
-/* a compact, scannable set list: done rows collapse, the current set expands,
-   upcoming sets sit dimmed, and completing one auto-advances to the next. */
+/* ── set list: compact done rows, one expanded active card, dimmed upcoming ── */
 function buildSetList(ex,xi){
   const wrap=el("div","setlist");
   function activeIdx(){
@@ -2973,54 +2987,98 @@ function buildSetList(ex,xi){
   }
   function paint(){
     wrap.innerHTML="";
-    const hdr=el("div","sl-head"); hdr.innerHTML=`<span>Set</span><span>Weight</span><span>Reps</span><span>✓</span>`; wrap.appendChild(hdr);
     const act=activeIdx();
     const last=lastSetFor(ex.name);
+
     ex.sets.forEach((st,si)=>{
+      /* ── DONE row ── compact single line, tap to undo ── */
       if(st.done){
         const r=el("div","sl-row done");
-        r.innerHTML=`<span class="sn">${st.warmup?"W":si+1}</span><span class="v num">${liftStr(+st.kg||0)}</span><span class="v num">${st.reps||0}</span><span class="chk">✓</span>`;
+        const label=st.warmup?"W":si+1;
+        const kg=(+st.kg>0)?liftStr(+st.kg):"—";
+        const reps=st.reps||"—";
+        const rir=(st.rir&&!st.warmup)?`<span class="sl-rir-badge">RIR ${st.rir==="F"?"Fail":st.rir}</span>`:"";
+        r.innerHTML=`<span class="sl-sn">${label}</span>
+          <span class="sl-val">${kg} × ${reps}</span>
+          ${rir}
+          <span class="sl-chk">✓</span>`;
         r.addEventListener("click",()=>{ st.done=false; ex._active=si; paint(); updateLiveProg(); persistLive(); });
         wrap.appendChild(r);
+
+      /* ── ACTIVE set ── full focus card ── */
       } else if(si===act){
-        const r=el("div","sl-row active");
-        const ah=el("div","sl-ah"); ah.innerHTML=`<span class="sn">${st.warmup?"Warm-up":"Set "+(si+1)}</span><span class="now">· now</span>`; r.appendChild(ah);
-        const steps=el("div","sl-steps");
-        const kgDisp=(st.kg===""||st.kg==null)?"":liftRound(liftFromKg(+st.kg));
-        const kgPh = last&&+last.kg>0 ? String(liftRound(liftFromKg(+last.kg))) : "0";
-        const repPh = last&&+last.reps>0 ? String(last.reps) : "0";
-        steps.appendChild(stepper(liftLbl(), kgDisp, liftStep(), v=>{ st.kg=(v===""||v==null)?"":kgFromLift(+v); }, kgPh));
-        steps.appendChild(stepper("REPS", st.reps, 1, v=>st.reps=v, repPh));
-        r.appendChild(steps);
-        if(!st.warmup){
-          const rir=el("div","sl-rir"); rir.innerHTML=`<span class="rl">Effort · RIR ${infoBtn("rir")}</span>`;
-          [["0","0"],["1","1"],["2","2"],["3","3+"],["F","Fail"]].forEach(([v,lbl])=>{
-            const chip=el("button","rir-chip"+(st.rir===v?" on":""),lbl);
-            chip.addEventListener("click",()=>{ st.rir=(st.rir===v?null:v); rir.querySelectorAll(".rir-chip").forEach(x=>x.classList.remove("on")); if(st.rir===v)chip.classList.add("on"); persistLive(); });
-            rir.appendChild(chip);
-          });
-          r.appendChild(rir); bindInfo(rir);
+        const r=el("div","sl-active");
+
+        /* set label */
+        const lbl=el("div","sla-label");
+        lbl.innerHTML=`<span class="sla-num">${st.warmup?"Warm-up":"Set "+(si+1)}</span><span class="sla-now">Now</span>`;
+        r.appendChild(lbl);
+
+        /* last-time ghost inside active card */
+        if(last&&(+last.kg>0||+last.reps>0)){
+          const g=el("div","sla-ghost");
+          g.textContent=`👻 ${last.kg?liftStr(+last.kg):"—"} × ${last.reps||"—"} last time`;
+          r.appendChild(g);
         }
-        const comp=el("button","sl-complete","✓  Complete set "+(si+1));
+
+        /* big steppers */
+        const kgDisp=(st.kg===""||st.kg==null)?"":liftRound(liftFromKg(+st.kg));
+        const kgPh=last&&+last.kg>0?String(liftRound(liftFromKg(+last.kg))):"0";
+        const repPh=last&&+last.reps>0?String(last.reps):"0";
+        const stepRow=el("div","sla-steps");
+        stepRow.appendChild(stepper(liftLbl(),kgDisp,liftStep(),v=>{ st.kg=(v===""||v==null)?"":kgFromLift(+v); },kgPh));
+        stepRow.appendChild(stepper("Reps",st.reps,1,v=>st.reps=v,repPh));
+        r.appendChild(stepRow);
+
+        /* RIR — collapsed toggle, optional */
+        if(!st.warmup){
+          const rirWrap=el("div","sla-rir-wrap");
+          const rirToggle=el("button","sla-rir-toggle"+(st.rir?" active":""),"Effort · RIR"+(st.rir?` — ${st.rir==="F"?"Fail":st.rir+" left"}`:" ›"));
+          rirWrap.appendChild(rirToggle);
+          const rirRow=el("div","sla-rir-row"+(st.rir?" open":""));
+          [[" i ","info"],["0","0"],["1","1"],["2","2"],["3+","3+"],["Fail","F"]].forEach(([lbl,v])=>{
+            if(v==="info"){ const info=el("button","rir-info-btn","ⓘ"); bindInfo&&bindInfo(info); rirRow.appendChild(info); return; }
+            const chip=el("button","rir-chip"+(st.rir===v?" on":""),lbl);
+            chip.addEventListener("click",()=>{
+              st.rir=(st.rir===v?null:v);
+              rirRow.querySelectorAll(".rir-chip").forEach(x=>x.classList.remove("on"));
+              if(st.rir===v)chip.classList.add("on");
+              rirToggle.textContent="Effort · RIR"+(st.rir?` — ${st.rir==="F"?"Fail":st.rir+" left"}`:" ›");
+              rirToggle.classList.toggle("active",!!st.rir);
+              persistLive();
+            });
+            rirRow.appendChild(chip);
+          });
+          rirToggle.addEventListener("click",()=>rirRow.classList.toggle("open"));
+          rirWrap.appendChild(rirRow);
+          r.appendChild(rirWrap);
+        }
+
+        /* ── BIG complete button ── */
+        const comp=el("button","sla-complete","✓  Complete set "+(si+1));
         comp.addEventListener("click",()=>{
           const hasKg=!(st.kg===""||st.kg==null)&&+st.kg>0;
           const hasReps=!(st.reps===""||st.reps==null)&&+st.reps>0;
           if(!hasKg&&!hasReps){ toast("Add a weight or some reps first"); return; }
-          if(st.reps===""||st.reps==null||+st.reps===0){ st.reps = last&&last.reps?last.reps:(+st.reps||0); }
+          if(st.reps===""||st.reps==null||+st.reps===0){ st.reps=last&&last.reps?last.reps:(+st.reps||0); }
           st.done=true;
           const ssm=ssMembers(xi); const rsec=(ex.restSec!=null?ex.restSec:liveSession.restSec);
-          const skip = ssm && !ssm.isLast;
-          if(!skip && rsec>0) startRest(rsec);
+          const skip=ssm&&!ssm.isLast;
+          if(!skip&&rsec>0) startRest(rsec);
           if(navigator.vibrate) try{navigator.vibrate(12);}catch(e){}
-          const nxt=ex.sets.findIndex((s,i)=>i>si && !s.done); ex._active = nxt>=0?nxt:null;
+          const nxt=ex.sets.findIndex((s,i)=>i>si&&!s.done); ex._active=nxt>=0?nxt:null;
           paint(); updateLiveProg(); persistLive();
         });
         r.appendChild(comp);
         wrap.appendChild(r);
+
+      /* ── TODO row ── dimmed, tap to jump to ── */
       } else {
         const r=el("div","sl-row todo");
-        const tgt = (st.reps&&+st.reps>0) ? st.reps : (last&&last.reps?("target "+last.reps):"—");
-        r.innerHTML=`<span class="sn">${st.warmup?"W":si+1}</span><span class="v num">${(+st.kg>0)?liftStr(+st.kg):"—"}</span><span class="v num">${tgt}</span><span class="chk"></span>`;
+        const label=st.warmup?"W":si+1;
+        const kg=(+st.kg>0)?liftStr(+st.kg):"—";
+        const tgt=(st.reps&&+st.reps>0)?st.reps:(last&&last.reps?last.reps:"—");
+        r.innerHTML=`<span class="sl-sn">${label}</span><span class="sl-val">${kg} × ${tgt}</span><span class="sl-chk"></span>`;
         r.addEventListener("click",()=>{ ex._active=si; paint(); });
         wrap.appendChild(r);
       }
@@ -3030,7 +3088,7 @@ function buildSetList(ex,xi){
   return wrap;
 }
 
-/* per-exercise actions, consolidated into one ⋯ menu instead of a crowded tools row */
+/* per-exercise actions ⋯ menu — now includes rest + notes shortcut */
 function openExerciseMenu(ex,xi){
   const isFW=FW_BY_NAME[ex.name];
   openModal(`<h3 style="margin-bottom:14px">${esc(ex.name)}</h3>
@@ -3041,7 +3099,8 @@ function openExerciseMenu(ex,xi){
       <button class="menu-item" data-a="warm">🔥 Add warm-up sets</button>
       <button class="menu-item" data-a="usual">📌 Set usual weight &amp; reps${usualFor(ex.name)?" · saved":""}</button>
       ${isFW?`<button class="menu-item" data-a="plates">⚖️ Plate calculator</button>`:""}
-      <button class="menu-item" data-a="rest">⏱️ Rest for this exercise${ex.restSec!=null?` · ${ex.restSec===0?"off":ex.restSec+"s"}`:""}</button>
+      <button class="menu-item" data-a="rest">⏱️ Rest timer${ex.restSec!=null?` · ${ex.restSec===0?"off":ex.restSec+"s"}`:` · ${liveSession.restSec===0?"off":liveSession.restSec+"s"} (session)`}</button>
+      <button class="menu-item" data-a="notes">📝 Workout notes${liveSession.notes?" · added":""}</button>
       <button class="menu-item danger" data-a="remove">× Remove exercise</button>
     </div>`);
   const act=(a)=>{
@@ -3052,18 +3111,19 @@ function openExerciseMenu(ex,xi){
     if(a==="usual"){ closeModal(); openSetUsual(ex); return; }
     if(a==="plates"){ closeModal(); openPlateCalc(ex); return; }
     if(a==="rest"){ closeModal(); openExerciseRest(ex); return; }
+    if(a==="notes"){ closeModal(); openSessionNotes(); return; }
     if(a==="remove"){ closeModal(); removeLiveExercise(xi); return; }
   };
   $("#modal").querySelectorAll("[data-a]").forEach(btn=>btn.addEventListener("click",()=>act(btn.dataset.a)));
 }
 
-/* editor: save your "usual" weight & reps for an exercise (pre-fills future workouts) */
+/* editor: save your "usual" weight & reps for an exercise */
 function openSetUsual(ex){
   const u=usualFor(ex.name)||{kg:"",reps:""};
   const unit=(typeof liftUnit==="function" && liftUnit()==="lb")?"lb":"kg";
   const kgShown=(u.kg!==""&&u.kg!=null)?(typeof liftFromKg==="function"?liftRound(liftFromKg(+u.kg)):u.kg):"";
   openModal(`<h3>Usual for ${esc(ex.name)}</h3>
-    <p class="muted tiny" style="line-height:1.5;margin-bottom:14px">Set the weight &amp; reps you usually aim for. Future workouts with this exercise will start pre-filled with these — your most recent logged set takes priority if it's different. You still tap each set to log it.</p>
+    <p class="muted tiny" style="line-height:1.5;margin-bottom:14px">Set the weight &amp; reps you usually aim for. Future workouts with this exercise will start pre-filled with these — your most recent logged set takes priority if it's different.</p>
     <div class="row" style="gap:10px">
       <div class="field" style="flex:1"><label>Usual weight (${unit})</label><input class="input" id="usual_kg" type="number" inputmode="decimal" placeholder="—" value="${kgShown}"></div>
       <div class="field" style="flex:1"><label>Usual reps</label><input class="input" id="usual_reps" type="number" inputmode="numeric" placeholder="—" value="${(u.reps!==""&&u.reps!=null)?u.reps:""}"></div>
@@ -3073,9 +3133,8 @@ function openSetUsual(ex){
   $("#usual_save").addEventListener("click",()=>{
     const rawKg=$("#usual_kg").value.trim(), reps=$("#usual_reps").value.trim();
     let kg=rawKg;
-    if(rawKg!=="" && typeof kgFromLift==="function") kg=kgFromLift(+rawKg); /* convert displayed unit → kg for storage */
-    setUsual(ex.name, kg===""?"":kg, reps===""?"":reps);
-    /* apply immediately to the current exercise's not-yet-done sets that are still empty */
+    if(rawKg!==""&&typeof kgFromLift==="function") kg=kgFromLift(+rawKg);
+    setUsual(ex.name,kg===""?"":kg,reps===""?"":reps);
     (ex.sets||[]).forEach(s=>{ if(!s.done){ const v=prefillValues(ex.name); if(s.kg===""||s.kg==null)s.kg=v.kg; if(s.reps===""||s.reps==null)s.reps=v.reps; } });
     persistLive(); closeModal(); toast("Usual saved"); renderLive();
   });
@@ -3085,16 +3144,17 @@ function openSetUsual(ex){
 /* remove an exercise from the live session, with confirmation */
 function removeLiveExercise(xi){
   const ex=liveSession.exercises[xi]; if(!ex)return;
-  const nm = ex.cardio ? (ex.name||"this cardio") : (ex.name||"this exercise");
-  const logged = !ex.cardio && (ex.sets||[]).some(s=>s.done);
+  const nm=ex.cardio?(ex.name||"this cardio"):(ex.name||"this exercise");
+  const logged=!ex.cardio&&(ex.sets||[]).some(s=>s.done);
   confirmModal({title:"Remove exercise?",danger:true,confirmText:"Remove",
     body:`Remove ${nm} from this workout?${logged?" Any sets you've ticked off for it will be lost.":""}`,
     onConfirm:()=>{ liveSession.exercises.splice(xi,1); renderLive(); toast("Removed"); }});
 }
-/* a single roomy set block with KG / REPS steppers + RIR (updates in place) */
+
+/* set summary helper */
 function setSummary(ex,st){
-  const kg = (st.kg!==""&&st.kg!=null) ? liftStr(+st.kg) : "";
-  const reps = (st.reps!==""&&st.reps!=null&&+st.reps>0) ? (+st.reps) : "";
+  const kg=(st.kg!==""&&st.kg!=null)?liftStr(+st.kg):"";
+  const reps=(st.reps!==""&&st.reps!=null&&+st.reps>0)?(+st.reps):"";
   if(kg&&reps!=="") return `${kg} × ${reps}`;
   if(kg) return kg;
   if(reps!=="") return `${reps} reps`;
@@ -3108,58 +3168,6 @@ function buildSetBlock(ex,st,si){
     const head=el("div","sb-top");
     head.innerHTML=`<span class="sl">${st.warmup?"WARM-UP":"SET "+(si+1)}${st.warmup?'<span class="warm-tag">prep</span>':""}</span>`;
     block.appendChild(head);
-
-    if(st.done){
-      /* compact, tidy summary once logged */
-      const sum=el("div","sb-summary");
-      const s=setSummary(ex,st);
-      sum.innerHTML=`<span class="sv">${s||"Completed ✓"}</span>${(st.rir&&!st.warmup)?`<span class="sb-rir">RIR ${st.rir==="F"?"Failure":st.rir}</span>`:""}`;
-      block.appendChild(sum);
-      const btn=el("button","sb-complete done","✓  Done · tap to edit");
-      btn.addEventListener("click",()=>{ st.done=false; paint(); updateLiveProg(); persistLive(); });
-      block.appendChild(btn);
-      return;
-    }
-
-    /* edit view: weight → reps → effort → complete (natural top-to-bottom flow) */
-    const grid=el("div","sb-grid");
-    const kgDisp = (st.kg===""||st.kg==null) ? "" : liftRound(liftFromKg(+st.kg));
-    const last=lastSetFor(ex.name);
-    const kgPh = last&&+last.kg>0 ? String(liftRound(liftFromKg(+last.kg))) : "0";
-    const repPh = last&&+last.reps>0 ? String(last.reps) : "0";
-    grid.appendChild(stepper(liftLbl(), kgDisp, liftStep(), v=>{ st.kg = (v===""||v==null||v==="") ? "" : kgFromLift(+v); }, kgPh));
-    grid.appendChild(stepper("REPS", st.reps, 1, v=>st.reps=v, repPh));
-    block.appendChild(grid);
-
-    if(!st.warmup){
-      const rir=el("div","rir-row");
-      rir.innerHTML=`<span class="rl">EFFORT · RIR ${infoBtn("rir")}</span>`;
-      [["0","0"],["1","1"],["2","2"],["3","3+"],["F","Fail"]].forEach(([v,lbl])=>{
-        const chip=el("button","rir-chip"+(st.rir===v?" on":""),lbl);
-        chip.addEventListener("click",()=>{ st.rir=(st.rir===v?null:v); rir.querySelectorAll(".rir-chip").forEach(x=>x.classList.remove("on")); if(st.rir===v)chip.classList.add("on"); });
-        rir.appendChild(chip);
-      });
-      block.appendChild(rir); bindInfo(rir);
-    }
-
-    const btn=el("button","sb-complete","◯  Complete set");
-    btn.addEventListener("click",()=>{
-      const hasKg=!(st.kg===""||st.kg==null)&&+st.kg>0;
-      const hasReps=!(st.reps===""||st.reps==null)&&+st.reps>0;
-      if(!hasKg&&!hasReps){ toast("Add a weight or some reps first"); return; }
-      st.done=true;
-      const ss=ssMembers(liveSession.exercises.indexOf(ex));
-      const rsec=(ex.restSec!=null?ex.restSec:liveSession.restSec);
-      const skip = ss && !ss.isLast; /* superset: rest only after last member */
-      if(!skip && rsec>0) startRest(rsec);
-      if(navigator.vibrate) try{navigator.vibrate(12);}catch(e){}
-      paint(); updateLiveProg(); persistLive();
-    });
-    block.appendChild(btn);
-  }
-  paint();
-  return block;
-}
 function stepper(cap,val,step,onset,ph){
   const wrap=el("div","stepper");
   wrap.innerHTML=`<div class="cap">${cap}</div>`;
