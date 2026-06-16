@@ -12,6 +12,18 @@
 
 ---
 
+## 🔐 Test build hardening
+
+This rebuild includes a **security-hardening test pass** over the app shell.
+
+- Added a **Content Security Policy** and a `no-referrer` policy to the runtime page.
+- Tightened **backup/import/restore validation** so malformed or hand-edited payloads can be rejected instead of being merged blindly.
+- Added a **session-only AI Coach key** option (safer) alongside device storage.
+- Tightened **service-worker caching** so only the app shell and Google Fonts are cached.
+- Hardened **food-pack manifest and pack validation** before anything is stored on-device.
+
+Because this is a test build, it is intentionally stricter than the 1.0 release. Some broken or hand-edited backup codes that used to import may now be rejected on purpose.
+
 ## 🌟 What is Evolve?
 
 Evolve is a personal **fitness Progressive Web App (PWA)** — a full gym and nutrition tracker that runs in your browser and installs to your home screen like a native app. No accounts, no sign-ups, no ads, no servers. Everything you log stays **on your device**.
@@ -129,7 +141,8 @@ Once installed it runs full-screen and works **offline**.
 | `food-db/` | Generated per-shop food packs + manifest (built by the Action) |
 | `tools/` | Open Food Facts build & validation scripts |
 | `.github/workflows/` | Food-database update workflow (monthly + on demand); optional Pages deploy |
-| `Evolve-v1.0-preview.html` | Single-file build for quick testing |
+| `Evolve-v1.0-preview.html` | Single-file build regenerated from the current app shell |
+| `tools/validate-app-shell.js` | Sanity-checks core files, syntax and required hardening markers |
 
 ---
 

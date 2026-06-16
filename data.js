@@ -1,4 +1,5 @@
 /* ===== Evolve data — exercise & food database (rarely changes) =====
+   Security-hardening test build note: this file is reference data only.
    Loaded BEFORE app.js. Pure reference data + the tiny lookup maps. */
 "use strict";
 

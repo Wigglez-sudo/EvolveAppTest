@@ -111,6 +111,13 @@ const KEY="evolve_v1";
 const PROFILE_PHOTO_KEY="evolve_profile_photo_v1"; /* separate local-only photo; deliberately not included in backup codes */
 const PROGRESS_PHOTOS_KEY="evolve_progress_photos_v1"; /* v3.31: local-only progress gallery; never in backups */
 const COACH_KEY_KEY="evolve_coach_key_v1"; /* v3.31: OpenRouter API key — local-only, never in any backup, never sent anywhere except OpenRouter */
+const COACH_KEY_MODE_KEY="evolve_coach_key_mode_v1"; /* device|session */
+const COACH_KEY_SESSION_KEY="evolve_coach_key_session_v1"; /* session-only storage for the Coach key */
+const MAX_STATE_BYTES=4.5*1024*1024;
+const MAX_IMPORT_BYTES=4*1024*1024;
+const MAX_IMAGE_FILE_BYTES=15*1024*1024;
+const MAX_PROGRESS_PHOTOS=60;
+const SECURITY_NOTICE_VERSION="2026-06-security-test-2";
 const DEFAULT_DATA = {
   profile:null, /* {name,sex,age,heightCm,weightKg,activity,goal,goalWeightKg} */
   targets:null, /* {calories,protein,carbs,fat,water} */
@@ -133,10 +140,52 @@ const DEFAULT_DATA = {
   statResets:{}, /* per-stat user resets: key -> {start, since} (prs: {since}) */
   meta:{lastBackup:null, created:null, backupReminder:"weekly", backupNotifications:false, backupNotifyLast:null, driveEnabled:false, driveClientId:"", driveFileId:null, lastDriveBackup:null}
 };
+function isPlainObject(v){ return !!v && typeof v==="object" && !Array.isArray(v) && Object.getPrototypeOf(v)===Object.prototype; }
+function safeJsonValue(v, depth){
+  if(depth>40) throw new Error("Data nesting is too deep");
+  if(Array.isArray(v)) return v.slice(0,50000).map(x=>safeJsonValue(x,depth+1));
+  if(isPlainObject(v)){
+    const out={};
+    Object.keys(v).forEach(k=>{
+      if(k==="__proto__" || k==="prototype" || k==="constructor") return;
+      out[k]=safeJsonValue(v[k],depth+1);
+    });
+    return out;
+  }
+  return v;
+}
+function safeParseJsonText(raw, maxBytes, label){
+  if(typeof raw!=="string" || !raw) throw new Error((label||"JSON")+" is empty");
+  if(raw.length>maxBytes) throw new Error((label||"JSON")+" is too large");
+  return safeJsonValue(JSON.parse(raw),0);
+}
+function blankData(){ const d=JSON.parse(JSON.stringify(DEFAULT_DATA)); d.meta.created=todayISO(); return d; }
+function mergeKnownDataKeys(clean){
+  if(!isPlainObject(clean)) throw new Error("Bad data root");
+  const out=JSON.parse(JSON.stringify(DEFAULT_DATA));
+  Object.keys(out).forEach(k=>{ if(Object.prototype.hasOwnProperty.call(clean,k)) out[k]=clean[k]; });
+  return out;
+}
+function normalizeStoredData(obj){
+  const d=mergeKnownDataKeys(safeJsonValue(obj,0));
+  migrate(d);
+  if(!d.meta.created) d.meta.created=todayISO();
+  return d;
+}
+function safeInlineImageSrc(src, fallback){
+  const s=String(src||"").trim();
+  if(!s) return fallback||"";
+  if(/^(?:\.\/)?(?:icon-192\.png|icon-512\.png|apple-touch-icon\.png)$/i.test(s)) return s.replace(/^\.\//,"");
+  if(/^data:image\/(?:png|jpeg|jpg|webp);base64,[a-z0-9+/=\s]+$/i.test(s) && s.length<=2500000) return s;
+  return fallback||"";
+}
 let DATA = load();
 function load(){
-  try{const raw=localStorage.getItem(KEY); if(raw){const d=Object.assign(JSON.parse(JSON.stringify(DEFAULT_DATA)),JSON.parse(raw)); migrate(d); return d;}}catch(e){}
-  const d=JSON.parse(JSON.stringify(DEFAULT_DATA)); d.meta.created=todayISO(); return d;
+  try{
+    const raw=localStorage.getItem(KEY);
+    if(raw) return normalizeStoredData(safeParseJsonText(raw,MAX_STATE_BYTES,"Stored app data"));
+  }catch(e){}
+  return blankData();
 }
 function migrate(d){
   if(!Array.isArray(d.favExercises)) d.favExercises=[];
@@ -182,9 +231,15 @@ function migrate(d){
   if(typeof d.meta.driveClientId!=="string") d.meta.driveClientId="";
   if(typeof d.meta.driveFileId!=="string") d.meta.driveFileId=null;
   if(typeof d.meta.lastDriveBackup!=="string") d.meta.lastDriveBackup=null;
+  if(typeof d.meta.securityNoticeSeen!=="string") d.meta.securityNoticeSeen="";
 }
 
-function save(){try{localStorage.setItem(KEY,JSON.stringify(DATA));}catch(e){toast("Storage full or blocked");}}
+function save(){
+  try{
+    DATA=normalizeStoredData(DATA);
+    localStorage.setItem(KEY,JSON.stringify(DATA));
+  }catch(e){toast("Storage full, blocked, or data was invalid");}
+}
 
 /* ===================== THEMES ===================== */
 const THEMES={
@@ -365,14 +420,15 @@ function getProfilePhoto(){
   try{return localStorage.getItem(PROFILE_PHOTO_KEY)||"";}catch(e){return "";}
 }
 function setProfilePhoto(v){
-  try{localStorage.setItem(PROFILE_PHOTO_KEY,v);return true;}catch(e){return false;}
+  try{ const safe=safeInlineImageSrc(v,""); if(!safe) return false; localStorage.setItem(PROFILE_PHOTO_KEY,safe); return true; }catch(e){return false;}
 }
 function clearProfilePhoto(){
   try{localStorage.removeItem(PROFILE_PHOTO_KEY);}catch(e){}
 }
 function profileAvatarHTML(){
-  const src=getProfilePhoto()||"icon-192.png";
-  return `<img src="${esc(src)}" alt="${getProfilePhoto()?"Profile photo":"Evolve logo"}">`;
+  const raw=getProfilePhoto();
+  const src=safeInlineImageSrc(raw,"icon-192.png")||"icon-192.png";
+  return `<img src="${esc(src)}" alt="${raw?"Profile photo":"Evolve logo"}">`;
 }
 function openProfilePhotoPrivacy(){
   openModal(`<h3>Profile picture privacy</h3>
@@ -391,6 +447,7 @@ function chooseProfilePhoto(){
     const file=input.files&&input.files[0]; input.remove();
     if(!file)return;
     if(!/^image\//.test(file.type||"")){toast("Choose an image file");return;}
+    if(file.size && file.size>MAX_IMAGE_FILE_BYTES){toast("That image is too large");return;}
     resizeAndSaveProfilePhoto(file);
   },{once:true});
   input.click();
@@ -422,12 +479,31 @@ function resizeAndSaveProfilePhoto(file){
 
 /* v3.31 — progress photos: local-only, never backed up, like the profile photo */
 function getProgressPhotos(){
-  try{const raw=localStorage.getItem(PROGRESS_PHOTOS_KEY); return raw?JSON.parse(raw):[];}catch(e){return [];}
+  try{
+    const raw=localStorage.getItem(PROGRESS_PHOTOS_KEY);
+    const arr=raw?safeParseJsonText(raw,MAX_STATE_BYTES/2,"Progress photos"):[];
+    if(!Array.isArray(arr)) return [];
+    return arr.map(p=>({
+      id:+p.id||Date.now(),
+      date:typeof p.date==="string"?p.date:todayISO(),
+      img:safeInlineImageSrc(p.img,"")
+    })).filter(p=>p.img).slice(0,MAX_PROGRESS_PHOTOS);
+  }catch(e){return [];}
 }
 function setProgressPhotos(arr){
-  try{localStorage.setItem(PROGRESS_PHOTOS_KEY,JSON.stringify(arr)); return true;}catch(e){return false;}
+  try{
+    const safe=(Array.isArray(arr)?arr:[]).map(p=>({
+      id:+(p&&p.id)||Date.now(),
+      date:(p&&typeof p.date==="string")?p.date:todayISO(),
+      img:safeInlineImageSrc(p&&p.img,"")
+    })).filter(p=>p.img).slice(0,MAX_PROGRESS_PHOTOS);
+    localStorage.setItem(PROGRESS_PHOTOS_KEY,JSON.stringify(safe));
+    return true;
+  }catch(e){return false;}
 }
 function addProgressPhotoFromFile(file, after){
+  if(!file || !/^image\//.test(file.type||"")){ toast("Choose an image file"); return; }
+  if(file.size && file.size>MAX_IMAGE_FILE_BYTES){ toast("That image is too large"); return; }
   const reader=new FileReader();
   reader.onerror=()=>toast("Couldn't read that photo");
   reader.onload=()=>{
@@ -1858,7 +1934,7 @@ function openRoutineDayExercises(dayIdx){
 }
 
 /* ===================== AI COACH (OpenRouter, user's own key) — v3.31 =====================
-   Privacy: the API key lives ONLY in localStorage on this device (COACH_KEY_KEY),
+   Privacy: the API key can be kept for this session only or remembered on this device,
    is never written to any backup (encrypted or CSV) and is never sent anywhere except
    OpenRouter. A summary of the user's training/nutrition is sent to OpenRouter ONLY when
    the user actively asks the Coach something, and only after they've given consent. */
@@ -1876,7 +1952,7 @@ const COACH_MODELS=[
 let coachLiveModels=null;
 async function fetchCoachModels(){
   try{
-    const res=await fetch("https://openrouter.ai/api/v1/models");
+    const res=await fetch("https://openrouter.ai/api/v1/models",{cache:"no-store",credentials:"omit",referrerPolicy:"no-referrer"});
     if(!res.ok) throw new Error("models fetch failed");
     const data=await res.json();
     const free=(data.data||[]).filter(m=>{
@@ -1897,8 +1973,43 @@ async function fetchCoachModels(){
   }catch(e){ return null; }
 }
 function coachModelList(){ return coachLiveModels||COACH_MODELS; }
-function getCoachKey(){ try{return localStorage.getItem(COACH_KEY_KEY)||"";}catch(e){return "";} }
-function setCoachKey(k){ try{ if(k)localStorage.setItem(COACH_KEY_KEY,k); else localStorage.removeItem(COACH_KEY_KEY); return true;}catch(e){return false;} }
+function getCoachKeyMode(){
+  try{
+    const mode=localStorage.getItem(COACH_KEY_MODE_KEY);
+    if(mode==="device" || mode==="session") return mode;
+    if(localStorage.getItem(COACH_KEY_KEY)) return "device";
+  }catch(e){}
+  return "session";
+}
+function setCoachKeyMode(mode){
+  try{ localStorage.setItem(COACH_KEY_MODE_KEY, mode==="device"?"device":"session"); return true; }catch(e){ return false; }
+}
+function getCoachKey(){
+  try{
+    if(getCoachKeyMode()==="device") return localStorage.getItem(COACH_KEY_KEY)||"";
+    return sessionStorage.getItem(COACH_KEY_SESSION_KEY)||"";
+  }catch(e){
+    try{return localStorage.getItem(COACH_KEY_KEY)||"";}catch(_){return "";}
+  }
+}
+function setCoachKey(k, mode){
+  try{
+    const m=(mode||getCoachKeyMode())==="device"?"device":"session";
+    if(m==="device"){
+      if(k)localStorage.setItem(COACH_KEY_KEY,k); else localStorage.removeItem(COACH_KEY_KEY);
+      try{sessionStorage.removeItem(COACH_KEY_SESSION_KEY);}catch(e){}
+    }else{
+      if(k)sessionStorage.setItem(COACH_KEY_SESSION_KEY,k); else sessionStorage.removeItem(COACH_KEY_SESSION_KEY);
+      try{localStorage.removeItem(COACH_KEY_KEY);}catch(e){}
+    }
+    setCoachKeyMode(m);
+    return true;
+  }catch(e){return false;}
+}
+function clearCoachKeyEverywhere(){
+  try{localStorage.removeItem(COACH_KEY_KEY);}catch(e){}
+  try{sessionStorage.removeItem(COACH_KEY_SESSION_KEY);}catch(e){}
+}
 function coachReady(){ return DATA.prefs.coachConsent===true && !!getCoachKey(); }
 
 /* build a compact, on-device summary of the user's training to give the model context */
@@ -1928,6 +2039,9 @@ async function coachAsk(messages){
   const key=getCoachKey(); if(!key) throw new Error("No API key set");
   const res=await fetch("https://openrouter.ai/api/v1/chat/completions",{
     method:"POST",
+    cache:"no-store",
+    credentials:"omit",
+    referrerPolicy:"no-referrer",
     headers:{ "Authorization":"Bearer "+key, "Content-Type":"application/json",
       "HTTP-Referer":"https://wigglez-sudo.github.io/", "X-Title":"Evolve" },
     body:JSON.stringify({ model:DATA.prefs.coachModel||"deepseek/deepseek-chat-v3-0324:free", messages })
@@ -1971,31 +2085,53 @@ function openCoachConsent(onAgree){
 function openCoachKeySetup(onDone){
   function modelOptions(){
     const list=coachModelList().slice();
-    /* make sure the currently-selected model is always an option */
     if(!list.some(m=>m.id===DATA.prefs.coachModel)) list.unshift({id:DATA.prefs.coachModel,name:DATA.prefs.coachModel});
     return list.map(m=>`<option value="${esc(m.id)}" ${DATA.prefs.coachModel===m.id?"selected":""}>${esc(m.name)}</option>`).join("");
   }
+  function modeNote(mode){
+    return mode==="device"
+      ? "Convenient, but less strict: the key stays in browser storage on this device until you delete it."
+      : "Safer: the key lives only for this browser session and is cleared when the session ends.";
+  }
   function paint(){
+    const mode=getCoachKeyMode();
     openModal(`<h3>Connect OpenRouter</h3>
-      <p class="muted tiny" style="line-height:1.5;margin-bottom:12px">The Coach uses <b>OpenRouter</b>, which gives access to many AI models with one key — including free ones. Create a free key at <b>openrouter.ai/keys</b>, then paste it below. It's stored only on this device.</p>
+      <p class="muted tiny" style="line-height:1.5;margin-bottom:12px">The Coach uses <b>OpenRouter</b>, which gives access to many AI models with one key — including free ones. Create a free key at <b>openrouter.ai/keys</b>, then paste it below.</p>
+      <div class="notice-card notice-amber" style="margin-bottom:12px"><div class="notice-title">🔐 Test-build privacy hardening</div><div class="notice-body">Choose whether your key is kept <b>for this session only</b> or remembered <b>on this device</b>. Session-only is the safer option.</div></div>
       <div class="field"><label>OpenRouter API key</label><input class="input" id="coach_key" type="password" placeholder="sk-or-..." value="${esc(getCoachKey())}" autocomplete="off"></div>
+      <div class="field"><label>Key storage</label>
+        <div class="seg scroll" id="coach_key_mode">
+          <button data-v="session" class="${mode==="session"?"on":""}">This session only</button>
+          <button data-v="device" class="${mode==="device"?"on":""}">Remember on this device</button>
+        </div>
+        <div class="tiny muted" id="coach_key_mode_note" style="margin-top:8px;line-height:1.5">${modeNote(mode)}</div>
+      </div>
       <div class="field"><label>Model</label><select class="input" id="coach_model">${modelOptions()}</select>
         <div class="tiny muted" style="margin-top:6px">Free models change often. <button class="linklike" id="coach_refresh" style="font-size:12px">↻ Load current free models</button></div>
         <div class="tiny muted" style="margin-top:4px">Tip: “Auto” always works but uses a little credit. If a free model says it's unavailable, refresh and pick another.</div></div>
       <button class="btn str block" id="coach_savekey">Save</button>
-      ${getCoachKey()?`<button class="btn ghost block" id="coach_delkey" style="margin-top:10px">Delete key from this device</button>`:""}`);
+      ${getCoachKey()?`<button class="btn ghost block" id="coach_delkey" style="margin-top:10px">Delete key</button>`:""}`);
+    $("#coach_key_mode").querySelectorAll("button").forEach(btn=>btn.addEventListener("click",()=>{
+      $("#coach_key_mode").querySelectorAll("button").forEach(b=>b.classList.toggle("on", b===btn));
+      $("#coach_key_mode_note").textContent=modeNote(btn.dataset.v);
+    }));
     $("#coach_refresh").addEventListener("click",async ()=>{
       const r=$("#coach_refresh"); r.textContent="Loading…";
-      DATA.prefs.coachModel=$("#coach_model").value; /* keep current pick */
+      DATA.prefs.coachModel=$("#coach_model").value;
       const got=await fetchCoachModels();
       if(got){ paint(); toast("Loaded "+(got.length)+" models"); } else { r.textContent="Couldn't load — try again"; }
     });
     $("#coach_savekey").addEventListener("click",()=>{
-      const k=$("#coach_key").value.trim(); DATA.prefs.coachModel=$("#coach_model").value; save();
-      if(!setCoachKey(k)){toast("Couldn't save key");return;}
-      closeModal(); toast(k?"Coach connected":"Key cleared"); if(onDone)onDone();
+      const k=$("#coach_key").value.trim();
+      const modeBtn=$("#coach_key_mode .on");
+      const mode=modeBtn?modeBtn.dataset.v:"session";
+      DATA.prefs.coachModel=$("#coach_model").value; save();
+      if(!setCoachKey(k, mode)){toast("Couldn't save key");return;}
+      closeModal();
+      toast(k?(mode==="device"?"Coach key saved on this device":"Coach key saved for this session"):"Key cleared");
+      if(onDone)onDone();
     });
-    const del=$("#coach_delkey"); if(del)del.addEventListener("click",()=>{ setCoachKey(""); closeModal(); toast("Key deleted"); if(onDone)onDone(); });
+    const del=$("#coach_delkey"); if(del)del.addEventListener("click",()=>{ clearCoachKeyEverywhere(); closeModal(); toast("Key deleted"); if(onDone)onDone(); });
   }
   paint();
 }
@@ -2583,9 +2719,9 @@ function openMegaBuilder(){
 /* ===================== LIVE TRACKER ===================== */
 let liveSession=null; /* {title,type,exercises,restSec,startedAt} */
 const LIVE_KEY="evolve_live_v1";
-function persistLive(){ try{ if(liveSession&&liveSession.exercises&&liveSession.exercises.length){ localStorage.setItem(LIVE_KEY, JSON.stringify(liveSession)); } }catch(e){} }
+function persistLive(){ try{ if(liveSession&&liveSession.exercises&&liveSession.exercises.length){ localStorage.setItem(LIVE_KEY, JSON.stringify(safeJsonValue(liveSession,0))); } }catch(e){} }
 function clearLive(){ try{ localStorage.removeItem(LIVE_KEY); }catch(e){} }
-function loadLive(){ try{ const s=localStorage.getItem(LIVE_KEY); return s?JSON.parse(s):null; }catch(e){ return null; } }
+function loadLive(){ try{ const s=localStorage.getItem(LIVE_KEY); return s?safeJsonValue(safeParseJsonText(s,MAX_STATE_BYTES/3,"Live session"),0):null; }catch(e){ return null; } }
 function resumeLive(saved){
   buildState=null; liveSession=saved; stopRest();
   $("#live").classList.add("on");
@@ -4399,8 +4535,10 @@ function renderStats(){
       if(!photos.length){ host.appendChild(el("div","empty","No photos yet — add one to start a private visual timeline.")); body.appendChild(host); return; }
       const grid=el("div","photo-grid");
       photos.forEach(p=>{
+        const safeSrc=safeInlineImageSrc(p.img,"");
+        if(!safeSrc) return;
         const cell=el("div","photo-cell");
-        cell.innerHTML=`<img src="${p.img}" alt="Progress ${shortDate(p.date)}"><div class="photo-date">${shortDate(p.date)}</div><button class="photo-del" data-del="${p.id}" title="Delete">✕</button>`;
+        cell.innerHTML=`<img src="${esc(safeSrc)}" alt="Progress ${shortDate(p.date)}"><div class="photo-date">${shortDate(p.date)}</div><button class="photo-del" data-del="${p.id}" title="Delete">✕</button>`;
         grid.appendChild(cell);
       });
       host.appendChild(grid);
@@ -4951,6 +5089,11 @@ function renderMore(){
   const photoBtn=$("#profile_photo_card"); if(photoBtn)photoBtn.addEventListener("click",openProfilePhotoPrivacy);
   maybeBackupBanner(b);
 
+  const sec=el("div","notice-card notice-amber");
+  sec.innerHTML=`<div class="notice-title">🔐 Security hardening test build</div><div class="notice-body">Restore/import is stricter in this build, and the AI Coach key can now be kept for this session only.</div>`;
+  sec.style.marginBottom="16px";
+  b.appendChild(sec);
+
   /* ---- PROFILE ---- */
   function buildProfile(body){
     const pc=el("div");
@@ -5290,7 +5433,8 @@ function renderMore(){
         onConfirm:()=>{
           try{localStorage.removeItem(KEY);}catch(e){}
           try{localStorage.clear();}catch(e){}
-          DATA=JSON.parse(JSON.stringify(DEFAULT_DATA)); DATA.meta.created=todayISO();
+          try{sessionStorage.removeItem(COACH_KEY_SESSION_KEY);}catch(e){}
+          DATA=blankData();
           location.reload();
         }});
     });
@@ -5336,13 +5480,14 @@ function renderMore(){
 }
 
 function cleanBackupData(){
-  const copy=JSON.parse(JSON.stringify(DATA));
+  const copy=normalizeStoredData(JSON.parse(JSON.stringify(DATA)));
   if(copy.meta){
     delete copy.meta.driveClientId; delete copy.meta.driveFileId; delete copy.meta.driveEnabled; delete copy.meta.lastDriveBackup; delete copy.meta.backupNotifyLast; delete copy.meta.backupNotifications;
   }
   return copy;
 }
-function backupCode(){return "EVOLVE1:"+btoa(unescape(encodeURIComponent(JSON.stringify(cleanBackupData()))));}
+function decodeB64Utf8(raw){ return new TextDecoder().decode(b64ToBytes(raw)); }
+function backupCode(){ return "EVOLVE1:"+bytesToB64(new TextEncoder().encode(JSON.stringify(cleanBackupData()))); }
 function bytesToB64(bytes){let bin=""; const chunk=0x8000; for(let i=0;i<bytes.length;i+=chunk){bin+=String.fromCharCode.apply(null,bytes.subarray(i,i+chunk));} return btoa(bin);}
 function b64ToBytes(b64){const bin=atob(b64); const out=new Uint8Array(bin.length); for(let i=0;i<bin.length;i++)out[i]=bin.charCodeAt(i); return out;}
 function backupCryptoReady(){return !!(window.crypto&&crypto.subtle&&window.TextEncoder&&window.TextDecoder);}
@@ -5360,11 +5505,12 @@ async function makeEncryptedBackupText(password){
   return JSON.stringify({type:"EVOLVE_ENCRYPTED_BACKUP",version:1,app:"Evolve",created:new Date().toISOString(),kdf:"PBKDF2-SHA256",iterations:210000,cipher:"AES-GCM",salt:bytesToB64(salt),iv:bytesToB64(iv),data:bytesToB64(cipher)},null,2);
 }
 async function decryptEncryptedBackupText(text,password){
-  const box=JSON.parse(text);
+  const box=safeParseJsonText(text,MAX_IMPORT_BYTES,"Encrypted backup");
   if(!box||box.type!=="EVOLVE_ENCRYPTED_BACKUP") throw new Error("not-evolve-encrypted");
+  if(typeof box.salt!=="string" || typeof box.iv!=="string" || typeof box.data!=="string") throw new Error("bad-backup");
   const key=await deriveBackupKey(password,b64ToBytes(box.salt));
   const plain=await crypto.subtle.decrypt({name:"AES-GCM",iv:b64ToBytes(box.iv)},key,b64ToBytes(box.data));
-  const obj=JSON.parse(new TextDecoder().decode(plain));
+  const obj=normalizeStoredData(safeParseJsonText(new TextDecoder().decode(plain),MAX_IMPORT_BYTES,"Decrypted backup"));
   if(!obj||typeof obj!=="object"||!("workouts" in obj)) throw new Error("bad-backup");
   return obj;
 }
@@ -5443,7 +5589,7 @@ function openEncryptedRestoreText(text){
     <div class="field"><label>Password</label><input class="input" id="dec_pw" type="password" autocomplete="current-password"></div>
     <button class="btn danger-solid block" id="dec_go">Decrypt & restore</button>`);
   $("#dec_go").addEventListener("click",async()=>{
-    try{const obj=await decryptEncryptedBackupText(text,$("#dec_pw").value); DATA=Object.assign(JSON.parse(JSON.stringify(DEFAULT_DATA)),obj); migrate(DATA); save(); closeModal(); updateHeader(); switchTab("stats"); toast("Encrypted backup restored ✓");}
+    try{const obj=await decryptEncryptedBackupText(text,$("#dec_pw").value); DATA=normalizeStoredData(obj); save(); closeModal(); updateHeader(); switchTab("stats"); toast("Encrypted backup restored ✓");}
     catch(e){toast("Couldn't decrypt — check the password/file");}
   });
 }
@@ -5543,8 +5689,22 @@ function renderSplashNews(){
   document.getElementById("newsFull").addEventListener("click",openChangelog);
 }
 renderSplashNews();
+function maybeShowSecurityNotice(){
+  if((DATA.meta&&DATA.meta.securityNoticeSeen)===SECURITY_NOTICE_VERSION) return;
+  openModal(`<h3>Security hardening test build</h3>
+    <div class="notice-card notice-amber" style="margin-bottom:12px"><div class="notice-title">Heads up</div><div class="notice-body">This test build is intentionally stricter than the 1.0 release.</div></div>
+    <ul class="coach-priv-list" style="margin-top:0">
+      <li>Backup/import/restore validation is stricter. Broken or hand-edited payloads can now be rejected on purpose.</li>
+      <li>The AI Coach key can be stored <b>for this session only</b> or remembered on this device.</li>
+      <li>Service-worker caching is tighter, so stale cross-origin files are less likely to linger.</li>
+    </ul>
+    <button class="btn str block" id="sec_notice_ok">Got it</button>`, {mandatory:false});
+  const btn=$("#sec_notice_ok");
+  if(btn) btn.addEventListener("click",()=>{ DATA.meta.securityNoticeSeen=SECURITY_NOTICE_VERSION; save(); closeModal(); });
+}
 updateHeader();
 checkBackupReminderOnOpen();
+setTimeout(maybeShowSecurityNotice, 900);
 
 /* ---- PWA: install prompt (Android/Chrome) + offline service worker ---- */
 let deferredInstall=null;
