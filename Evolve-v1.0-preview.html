@@ -591,7 +591,7 @@ svg.chart{width:100%;height:auto;display:block}
 .mini-chip .mc-plus{color:var(--fuel);font-weight:800;font-size:14px}
 /* ===== live tracker — full redesign ===== */
 
-/* sticky header: progress bar + current exercise label */
+/* sticky header: slim progress bar + exercise label */
 .live-sticky{position:sticky;top:0;z-index:20;background:var(--ink);
   padding:10px 16px 12px;margin:0 -16px 4px;border-bottom:1px solid var(--line)}
 .lp-bar-wrap{display:flex;flex-direction:column;gap:6px}
@@ -616,15 +616,13 @@ svg.chart{width:100%;height:auto;display:block}
 .eh-actions{display:flex;align-items:center;gap:6px;flex:none}
 .eh .more{width:34px;height:34px;border-radius:10px;border:1px solid var(--line2);background:var(--ink2);
   color:var(--muted);font-size:18px;font-weight:700;display:grid;place-items:center;flex:none}
-
-/* notes pill in header */
 .live-note-btn{width:34px;height:34px;border-radius:10px;border:1px solid var(--line2);
   background:var(--ink2);color:var(--muted);font-size:15px;display:grid;place-items:center;flex:none;cursor:pointer}
 .live-note-btn.has-notes{border-color:var(--strength);color:var(--strength);background:rgba(255,106,44,.08)}
 
-/* done row — compact single line */
+/* done / todo compact rows */
 .sl-row{display:flex;align-items:center;gap:10px;border:1px solid var(--line);background:var(--ink2);
-  border-radius:12px;padding:11px 14px;margin-bottom:8px;cursor:pointer;transition:opacity .15s}
+  border-radius:12px;padding:11px 14px;margin-bottom:8px;cursor:pointer}
 .sl-row.done{border-color:rgba(47,230,168,.35);background:rgba(47,230,168,.06)}
 .sl-row.todo{opacity:.45}
 .sl-row.todo:hover{opacity:.7}
@@ -640,7 +638,7 @@ svg.chart{width:100%;height:auto;display:block}
 .sl-row.done .sl-chk{background:var(--fuel);color:#062018;font-size:13px;font-weight:800}
 .sl-row.todo .sl-chk{border:1.5px solid var(--line2)}
 
-/* active set — full focus card */
+/* active set full-focus card */
 .sl-active{border:2px solid var(--strength);border-radius:16px;padding:18px 16px 16px;
   margin-bottom:8px;background:rgba(255,106,44,.04)}
 .sla-label{display:flex;align-items:baseline;gap:10px;margin-bottom:10px}
@@ -650,11 +648,11 @@ svg.chart{width:100%;height:auto;display:block}
 .sla-ghost{font-size:11.5px;color:var(--muted2);margin-bottom:12px}
 .sla-steps{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:14px}
 
-/* RIR — collapsed by default */
+/* RIR collapsed toggle */
 .sla-rir-wrap{margin-bottom:14px}
 .sla-rir-toggle{display:flex;align-items:center;gap:6px;background:transparent;border:1px solid var(--line2);
   border-radius:10px;padding:8px 12px;font-size:12px;font-weight:700;color:var(--muted);
-  font-family:inherit;cursor:pointer;width:100%;text-align:left;transition:border-color .15s,color .15s}
+  font-family:inherit;cursor:pointer;width:100%;text-align:left}
 .sla-rir-toggle.active{border-color:var(--strength);color:var(--strength)}
 .sla-rir-row{display:none;flex-wrap:wrap;gap:7px;padding:10px 2px 2px}
 .sla-rir-row.open{display:flex}
@@ -664,24 +662,48 @@ svg.chart{width:100%;height:auto;display:block}
 .rir-info-btn{padding:7px 10px;border-radius:9px;border:1px solid var(--line2);background:transparent;
   font-size:13px;color:var(--muted);font-family:inherit;cursor:pointer}
 
-/* complete button — full width, prominent */
+/* complete button */
 .sla-complete{width:100%;padding:17px;border-radius:14px;border:0;
   background:var(--grad-str);color:#fff;font-weight:800;font-size:16px;
   font-family:inherit;letter-spacing:.01em;display:flex;align-items:center;
-  justify-content:center;gap:8px;transition:transform .12s,opacity .15s;cursor:pointer}
+  justify-content:center;gap:8px;cursor:pointer;transition:transform .12s,opacity .15s}
 .sla-complete:active{transform:scale(.98);opacity:.92}
 
-/* superset footer + ghost hint */
+/* superset + ghost hint */
 .ss-foot{margin-top:12px;padding-top:12px;border-top:1px solid var(--line);display:flex;justify-content:center}
 .ss-foot button{font-size:12px;font-weight:700;color:var(--blue);background:transparent;border:0;font-family:inherit;cursor:pointer}
 .ghost-hint{font-size:11px;color:var(--muted2);margin:2px 0 10px}
 
-/* rest timer chips still used in openExerciseRest modal */
+/* rest chips still used in openExerciseRest modal */
 .rest-pick{display:flex;flex-direction:column;gap:8px;margin-bottom:18px}
 .rest-pick .rp-lab{font-size:11px;letter-spacing:.14em;color:var(--muted);font-weight:600}
 .rp-chips{display:flex;gap:7px;overflow-x:auto}
-.rp-chip{flex:1;min-width:52px;padding:11px 6px;border-radius:11px;background:var(--surface2);border:1px solid var(--line2);font-weight:700;font-size:14px;color:var(--muted);cursor:pointer}
+.rp-chip{flex:1;min-width:52px;padding:11px 6px;border-radius:11px;background:var(--surface2);border:1px solid var(--line2);font-weight:700;font-size:14px;color:var(--muted);cursor:pointer;font-family:inherit}
 .rp-chip.on{background:var(--strength);border-color:var(--strength);color:#1a0c04}
+
+/* keep old set-block styles — used by buildSetBlock which remains unchanged */
+.sets-wrap{display:flex;flex-direction:column;gap:12px;margin-bottom:12px}
+.set-block{background:var(--ink2);border:1px solid var(--line);border-radius:16px;padding:14px}
+.set-block.done{border-color:rgba(47,230,168,.45);background:rgba(47,230,168,.06)}
+.set-block.warmup{opacity:.92;border-style:dashed}
+.set-block .sb-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px}
+.set-block .sb-top .sl{font-family:var(--font-disp),sans-serif;font-size:21px;letter-spacing:.06em;color:var(--muted)}
+.set-block.done .sb-top .sl{color:var(--fuel)}
+.sb-done{width:44px;height:44px;border-radius:12px;background:var(--surface2);border:1px solid var(--line2);
+  display:flex;align-items:center;justify-content:center;font-size:20px;color:var(--muted)}
+.set-block.done .sb-done{background:var(--fuel);border-color:var(--fuel);color:#062018}
+.sb-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.sb-complete{width:100%;margin-top:14px;padding:15px;border-radius:13px;border:1px solid var(--line2);
+  background:var(--surface2);color:var(--text);font-weight:700;font-size:15.5px;font-family:inherit;
+  display:flex;align-items:center;justify-content:center;gap:8px;transition:transform .1s,background .2s;cursor:pointer}
+.sb-complete:active{transform:scale(.98)}
+.sb-complete.done{background:var(--grad-fuel);border-color:transparent;color:#062018}
+.sb-summary{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:2px 2px 0}
+.sb-summary .sv{font-family:var(--font-disp),sans-serif;font-size:30px;letter-spacing:.02em;color:var(--fuel);line-height:1}
+.sb-summary .sb-rir{font-size:11px;font-weight:700;letter-spacing:.05em;text-transform:uppercase;color:var(--muted);
+  background:var(--ink2);border:1px solid var(--line2);border-radius:8px;padding:5px 9px}
+.rir-row{display:flex;align-items:center;gap:6px;margin-top:8px;flex-wrap:wrap}
+.rir-row .rl{font-size:10px;letter-spacing:.07em;text-transform:uppercase;color:var(--muted)}
 
 /* bottom nav — floating glass pill */
 #nav{position:fixed;left:14px;right:14px;bottom:calc(12px + var(--safe-b));max-width:560px;margin:0 auto;z-index:120;
@@ -5206,7 +5228,7 @@ function genWarmups(ex){
 function renderLive(){
   const body=$("#liveBody"); body.innerHTML="";
 
-  /* sticky header: just progress + current exercise name */
+  /* sticky header: slim progress + current exercise name */
   const sticky=el("div","live-sticky");
   const prog=el("div","lp-bar-wrap");
   prog.innerHTML=`<div class="lp-row"><span class="lp-label" id="lp_exname"></span><span class="lp-count" id="lp_num"></span></div>
@@ -5227,10 +5249,8 @@ function renderLive(){
     const c=el("div","ex-card"+(ss?" ss":""));
     strengthI++;
 
-    /* exercise index label */
     c.appendChild(el("div","exi",`Exercise ${strengthI} of ${strengthN}${ex.group?" · "+esc(ex.group):""}`));
 
-    /* header row: name | notes btn | ⋯ */
     const head=el("div","eh");
     const nm=el("div","nm tap-history");
     nm.textContent=esc(ex.name);
@@ -5239,7 +5259,8 @@ function renderLive(){
     head.appendChild(nm);
 
     const hact=el("div","eh-actions");
-    const nb=el("button","live-note-btn"+(liveSession.notes?" has-notes":""),liveSession.notes?"📝":"📝");
+    const nb=el("button","live-note-btn"+(liveSession.notes?" has-notes":""));
+    nb.textContent="📝";
     nb.title=liveSession.notes?"Edit workout notes":"Add workout notes";
     nb.addEventListener("click",openSessionNotes);
     hact.appendChild(nb);
@@ -5249,7 +5270,6 @@ function renderLive(){
     head.appendChild(hact);
     c.appendChild(head);
 
-    /* ghost hint */
     const last=lastSetFor(ex.name);
     if(last&&(+last.kg>0||+last.reps>0)){
       const gh=el("div","ghost-hint");
@@ -5302,20 +5322,15 @@ function buildSetList(ex,xi){
     const last=lastSetFor(ex.name);
     ex.sets.forEach((st,si)=>{
 
-      /* ── DONE row ── tap to undo ── */
       if(st.done){
         const r=el("div","sl-row done");
         const kg=(+st.kg>0)?liftStr(+st.kg):"—";
         const reps=st.reps||"—";
         const rirBadge=(st.rir&&!st.warmup)?`<span class="sl-rir-badge">RIR ${st.rir==="F"?"Fail":st.rir}</span>`:"";
-        r.innerHTML=`<span class="sl-sn">${st.warmup?"W":si+1}</span>
-          <span class="sl-val">${kg} × ${reps}</span>
-          ${rirBadge}
-          <span class="sl-chk">✓</span>`;
+        r.innerHTML=`<span class="sl-sn">${st.warmup?"W":si+1}</span><span class="sl-val">${kg} × ${reps}</span>${rirBadge}<span class="sl-chk">✓</span>`;
         r.addEventListener("click",()=>{ st.done=false; ex._active=si; paint(); updateLiveProg(); persistLive(); });
         wrap.appendChild(r);
 
-      /* ── ACTIVE set ── full focus card ── */
       } else if(si===act){
         const r=el("div","sl-active");
 
@@ -5337,7 +5352,6 @@ function buildSetList(ex,xi){
         stepRow.appendChild(stepper("Reps",st.reps,1,v=>st.reps=v,repPh));
         r.appendChild(stepRow);
 
-        /* RIR collapsed toggle */
         if(!st.warmup){
           const rirWrap=el("div","sla-rir-wrap");
           const rirToggle=el("button","sla-rir-toggle"+(st.rir?" active":""),
@@ -5366,7 +5380,6 @@ function buildSetList(ex,xi){
           r.appendChild(rirWrap);
         }
 
-        /* big complete button */
         const comp=el("button","sla-complete","✓  Complete set "+(si+1));
         comp.addEventListener("click",()=>{
           const hasKg=!(st.kg===""||st.kg==null)&&+st.kg>0;
@@ -5384,7 +5397,6 @@ function buildSetList(ex,xi){
         r.appendChild(comp);
         wrap.appendChild(r);
 
-      /* ── TODO row ── dimmed, tap to jump ── */
       } else {
         const r=el("div","sl-row todo");
         const kg=(+st.kg>0)?liftStr(+st.kg):"—";
@@ -5399,7 +5411,7 @@ function buildSetList(ex,xi){
   return wrap;
 }
 
-/* ⋯ menu — now includes rest + notes */
+/* ⋯ menu — rest + notes now inside */
 function openExerciseMenu(ex,xi){
   const isFW=FW_BY_NAME[ex.name];
   openModal(`<h3 style="margin-bottom:14px">${esc(ex.name)}</h3>
@@ -5428,7 +5440,6 @@ function openExerciseMenu(ex,xi){
   $("#modal").querySelectorAll("[data-a]").forEach(btn=>btn.addEventListener("click",()=>act(btn.dataset.a)));
 }
 
-/* usual weight & reps editor */
 function openSetUsual(ex){
   const u=usualFor(ex.name)||{kg:"",reps:""};
   const unit=(typeof liftUnit==="function"&&liftUnit()==="lb")?"lb":"kg";
@@ -5452,7 +5463,6 @@ function openSetUsual(ex){
   const clr=$("#usual_clear"); if(clr)clr.addEventListener("click",()=>{ setUsual(ex.name,"",""); closeModal(); toast("Usual cleared"); renderLive(); });
 }
 
-/* remove exercise with confirmation */
 function removeLiveExercise(xi){
   const ex=liveSession.exercises[xi]; if(!ex)return;
   const nm=ex.cardio?(ex.name||"this cardio"):(ex.name||"this exercise");
@@ -5478,6 +5488,56 @@ function buildSetBlock(ex,st,si){
     const head=el("div","sb-top");
     head.innerHTML=`<span class="sl">${st.warmup?"WARM-UP":"SET "+(si+1)}${st.warmup?'<span class="warm-tag">prep</span>':""}</span>`;
     block.appendChild(head);
+
+    if(st.done){
+      const sum=el("div","sb-summary");
+      const s=setSummary(ex,st);
+      sum.innerHTML=`<span class="sv">${s||"Completed ✓"}</span>${(st.rir&&!st.warmup)?`<span class="sb-rir">RIR ${st.rir==="F"?"Failure":st.rir}</span>`:""}`;
+      block.appendChild(sum);
+      const btn=el("button","sb-complete done","✓  Done · tap to edit");
+      btn.addEventListener("click",()=>{ st.done=false; paint(); updateLiveProg(); persistLive(); });
+      block.appendChild(btn);
+      return;
+    }
+
+    const grid=el("div","sb-grid");
+    const kgDisp=(st.kg===""||st.kg==null)?"":liftRound(liftFromKg(+st.kg));
+    const last=lastSetFor(ex.name);
+    const kgPh=last&&+last.kg>0?String(liftRound(liftFromKg(+last.kg))):"0";
+    const repPh=last&&+last.reps>0?String(last.reps):"0";
+    grid.appendChild(stepper(liftLbl(),kgDisp,liftStep(),v=>{ st.kg=(v===""||v==null||v==="")?"":kgFromLift(+v); },kgPh));
+    grid.appendChild(stepper("REPS",st.reps,1,v=>st.reps=v,repPh));
+    block.appendChild(grid);
+
+    if(!st.warmup){
+      const rir=el("div","rir-row");
+      rir.innerHTML=`<span class="rl">EFFORT · RIR ${infoBtn("rir")}</span>`;
+      [["0","0"],["1","1"],["2","2"],["3","3+"],["F","Fail"]].forEach(([v,lbl])=>{
+        const chip=el("button","rir-chip"+(st.rir===v?" on":""),lbl);
+        chip.addEventListener("click",()=>{ st.rir=(st.rir===v?null:v); rir.querySelectorAll(".rir-chip").forEach(x=>x.classList.remove("on")); if(st.rir===v)chip.classList.add("on"); });
+        rir.appendChild(chip);
+      });
+      block.appendChild(rir); bindInfo(rir);
+    }
+
+    const btn=el("button","sb-complete","◯  Complete set");
+    btn.addEventListener("click",()=>{
+      const hasKg=!(st.kg===""||st.kg==null)&&+st.kg>0;
+      const hasReps=!(st.reps===""||st.reps==null)&&+st.reps>0;
+      if(!hasKg&&!hasReps){ toast("Add a weight or some reps first"); return; }
+      st.done=true;
+      const ss=ssMembers(liveSession.exercises.indexOf(ex));
+      const rsec=(ex.restSec!=null?ex.restSec:liveSession.restSec);
+      const skip=ss&&!ss.isLast;
+      if(!skip&&rsec>0) startRest(rsec);
+      if(navigator.vibrate) try{navigator.vibrate(12);}catch(e){}
+      paint(); updateLiveProg(); persistLive();
+    });
+    block.appendChild(btn);
+  }
+  paint();
+  return block;
+}
 
 function stepper(cap,val,step,onset,ph){
   const wrap=el("div","stepper");
