@@ -23,9 +23,9 @@
   /* ── BRUTAL SYSTEM ── pure black / bone white / zero compromise */
   --font-disp:"Playfair Display",Georgia,"Times New Roman",serif;
   --font-disp-spacing:-0.02em;
-  --ink:#080808; --ink2:#0E0E0E; --surface:#111111; --surface2:#161616; --surface3:#1C1C1C;
-  --line:#1E1E1E; --line2:#242424;
-  --text:#F0EDE8; --muted:#5A5A5A; --muted2:#333333;
+  --ink:#080808; --ink2:#111111; --surface:#141414; --surface2:#1A1A1A; --surface3:#202020;
+  --line:#282828; --line2:#303030;
+  --text:#F0EDE8; --muted:#909090; --muted2:#555555;
   /* Single accent: bone white. Used ONLY for primary actions & critical highlights */
   --strength:#F0EDE8; --strength2:#D8D4CE;
   /* Secondary functional colours — muted, never competing */
@@ -39,7 +39,6 @@
   --safe-b:env(safe-area-inset-bottom,0px);
   --safe-t:env(safe-area-inset-top,0px);
 }
-@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;800;900&display=swap');
 *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
 html,body{margin:0;padding:0;background:var(--ink);color:var(--text);
   font-family:Inter,-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;
@@ -84,7 +83,7 @@ a{color:var(--text)}
 .splash-feats{display:flex;flex-direction:column;gap:0;width:100%;margin:48px 0 40px;border-top:1px solid var(--line)}
 .sf{display:flex;align-items:center;gap:16px;text-align:left;font-size:13px;font-weight:600;color:var(--muted);
   border-bottom:1px solid var(--line);padding:14px 0}
-.sf span{font-size:14px;width:20px;text-align:center;filter:grayscale(1)}
+.sf span{font-size:14px;width:20px;text-align:center}
 .splash-enter{font-family:var(--font-disp);font-size:18px;letter-spacing:.08em;width:100%;
   padding:20px 0;background:var(--text);color:var(--ink);font-weight:900;
   border:none;text-transform:uppercase;transition:transform .1s,opacity .15s}
@@ -350,7 +349,7 @@ select.input{appearance:none;background-image:url("data:image/svg+xml;utf8,<svg 
 .qa-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;margin-top:1px}
 .qa{display:flex;flex-direction:column;align-items:center;gap:7px;background:var(--surface);border:1px solid var(--line);
   border-radius:0;padding:14px 4px 12px;font-size:9px;font-weight:700;color:var(--muted);letter-spacing:.08em;text-transform:uppercase}
-.qa .qi{font-size:20px;line-height:1;filter:grayscale(1)}
+.qa .qi{font-size:20px;line-height:1}
 .qa .ql{transition:color .15s}
 .qa:active{transform:scale(.96)}
 .qa.qa-str,.qa.qa-gold,.qa.qa-blue,.qa.qa-fuel{background:var(--surface);border-color:var(--line)}
@@ -371,11 +370,11 @@ select.input{appearance:none;background-image:url("data:image/svg+xml;utf8,<svg 
 .mg{min-height:112px}
 .mg .go{position:absolute;top:12px;right:14px;z-index:2;font-size:16px;color:var(--muted2)}
 .train-sub{color:var(--muted);font-size:12px;margin:-6px 0 14px;letter-spacing:.08em;text-transform:uppercase}
-.mg .gi{position:absolute;top:12px;left:14px;z-index:2;font-size:18px;filter:grayscale(1)}
+.mg .gi{position:absolute;top:12px;left:14px;z-index:2;font-size:20px}
 .preset-scroll{display:flex;gap:1px;overflow-x:auto;-webkit-overflow-scrolling:touch;padding:2px 0 6px;margin:0}
 .preset-card{flex:0 0 auto;width:120px;text-align:left;background:var(--surface);border:1px solid var(--line);
   border-radius:0;padding:14px 12px}
-.preset-card .pi{font-size:18px;margin-bottom:8px;filter:grayscale(1)}
+.preset-card .pi{font-size:18px;margin-bottom:8px}
 .preset-card .pn{font-family:var(--font-disp);font-size:20px;letter-spacing:-.02em;line-height:1;font-weight:900}
 .preset-card .ps{font-size:9px;color:var(--muted);margin-top:4px;font-weight:700;letter-spacing:.1em;text-transform:uppercase}
 .preset-card .pg{font-size:10px;color:var(--muted2);margin-top:5px;line-height:1.35}
@@ -392,7 +391,7 @@ select.input{appearance:none;background-image:url("data:image/svg+xml;utf8,<svg 
 .cardio-grid{display:grid;grid-template-columns:1fr 1fr;gap:1px}
 .cardio-tile{text-align:left;background:var(--surface);border:1px solid var(--line);border-radius:0;padding:14px;position:relative;overflow:hidden}
 .cardio-tile::after{display:none}
-.cardio-tile .cti{font-size:20px;margin-bottom:8px;filter:grayscale(1)}
+.cardio-tile .cti{font-size:20px;margin-bottom:8px}
 .cardio-tile .ctn{font-weight:700;font-size:13px;line-height:1.25;letter-spacing:.04em}
 .cardio-tile .cts{font-size:10px;color:var(--muted);margin-top:5px;letter-spacing:.06em;text-transform:uppercase}
 .cardio-tile .per{color:var(--muted2)}
@@ -492,9 +491,11 @@ select.input{appearance:none;background-image:url("data:image/svg+xml;utf8,<svg 
 .ex-wrap.linked .ex-card{border-color:var(--line2)}
 .ex-wrap.linked::before{content:"";position:absolute;left:-3px;top:16px;bottom:-16px;width:2px;background:var(--muted);opacity:.5}
 .ex-wrap.linked-prev::before{top:-16px}
-.ss-connector{display:flex;align-items:center;justify-content:center;gap:8px;margin:-6px 0 10px;
-  font-size:9px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);font-weight:700}
-.ss-connector .ln{height:1px;flex:1;background:var(--line);max-width:60px}
+.ss-connector{display:flex;align-items:center;justify-content:center;gap:8px;
+  margin:0 0 1px;padding:9px 0;background:var(--surface2);
+  font-size:8px;letter-spacing:.18em;text-transform:uppercase;color:var(--muted);font-weight:800;
+  white-space:nowrap;overflow:hidden}
+.ss-connector .ln{height:1px;flex:0 0 30px;background:var(--line2)}
 .ex-card{background:var(--surface);border:1px solid var(--line);border-radius:0;padding:18px;margin-bottom:0}
 .ex-card.ss{border-color:var(--line2)}
 .ex-card .eh{display:flex;align-items:center;gap:8px;margin-bottom:12px}
@@ -545,8 +546,11 @@ select.input{appearance:none;background-image:url("data:image/svg+xml;utf8,<svg 
   letter-spacing:.06em;text-transform:uppercase;display:flex;align-items:center;
   justify-content:center;gap:8px;cursor:pointer;transition:transform .1s,opacity .12s}
 .sla-complete:active{transform:scale(.99);opacity:.9}
-.ss-foot{margin-top:12px;padding-top:12px;border-top:1px solid var(--line);display:flex;justify-content:center}
-.ss-foot button{font-size:10px;font-weight:700;color:var(--muted);background:transparent;border:0;font-family:inherit;cursor:pointer;letter-spacing:.1em;text-transform:uppercase}
+.ss-foot{margin-top:10px;padding:10px 0 2px;border-top:1px solid var(--line);
+  display:flex;justify-content:center;overflow:hidden}
+.ss-foot button{font-size:9px;font-weight:800;color:var(--muted);background:transparent;border:0;
+  font-family:inherit;cursor:pointer;letter-spacing:.12em;text-transform:uppercase;
+  white-space:nowrap;max-width:100%;overflow:hidden;text-overflow:ellipsis;padding:0 4px}
 .ghost-hint{font-size:10px;color:var(--muted2);margin:2px 0 10px;letter-spacing:.06em;text-transform:uppercase}
 
 /* flash overlay */
@@ -817,6 +821,220 @@ hr{border:none;border-top:1px solid var(--line);margin:16px 0}
 .menu-item:active{background:var(--surface3)}
 .menu-item.danger{color:var(--danger)}
 
+/* ══════════════════════════════════════════════════════════════
+   BRUTAL TRAIN SCREEN & EXERCISE PICKER
+   ══════════════════════════════════════════════════════════════ */
+
+/* Section headers */
+.b-sec-hdr{display:flex;align-items:baseline;justify-content:space-between;
+  padding:28px 0 10px;border-bottom:1px solid var(--line);margin-top:8px}
+.b-sec-hdr:first-child{margin-top:0;padding-top:16px}
+.b-sec-lbl{font-size:9px;letter-spacing:.28em;font-weight:800;color:var(--muted);text-transform:uppercase}
+.b-sec-sub{font-size:9px;letter-spacing:.18em;font-weight:700;color:var(--muted2);text-transform:uppercase}
+
+/* Muscle group rows */
+.b-group-list{display:flex;flex-direction:column;gap:0;margin-bottom:0}
+.b-group-row{display:flex;align-items:center;justify-content:space-between;
+  padding:20px 0;border-bottom:1px solid var(--line);background:transparent;
+  width:100%;text-align:left;cursor:pointer;transition:background .1s}
+.b-group-row:active{background:var(--surface)}
+.bgr-left{flex:1}
+.bgr-name{font-family:var(--font-disp);font-size:28px;letter-spacing:-.02em;
+  font-weight:900;color:var(--text);line-height:1;display:flex;align-items:center;gap:12px}
+.bgr-icon{display:inline-block;font-size:22px}
+.bgr-count{font-size:9px;letter-spacing:.18em;color:var(--muted);font-weight:700;
+  margin-top:4px;text-transform:uppercase}
+.bgr-arrow{font-size:20px;color:var(--muted);font-weight:300;padding-left:16px}
+.bgr-dot{width:3px;align-self:stretch;margin-right:8px;flex:0 0 3px;
+  background:var(--bgr-color,var(--line));border-radius:0}
+
+/* Action rows (mega, cardio, preset sessions) */
+.b-action-list{display:flex;flex-direction:column;gap:0}
+.b-action-row{display:flex;align-items:center;justify-content:space-between;
+  padding:15px 0;border-bottom:1px solid var(--line2);background:transparent;
+  width:100%;text-align:left;cursor:pointer;transition:background .1s}
+.b-action-row:active{background:var(--surface)}
+.bar-left{flex:1}
+.bar-name{font-size:12px;font-weight:800;color:var(--muted);letter-spacing:.08em;text-transform:uppercase}
+.bar-sub{font-size:11px;color:var(--muted2);margin-top:2px;letter-spacing:.02em}
+.bar-arrow{font-size:18px;color:var(--muted);padding-left:14px}
+.bar-count-badge{font-family:var(--font-disp);font-size:22px;font-weight:900;
+  color:var(--muted);padding-left:14px;min-width:32px;text-align:right}
+
+/* Preset list */
+.b-preset-list{display:flex;flex-direction:column;gap:0}
+.b-preset-row{display:flex;align-items:center;padding:16px 0;border-bottom:1px solid var(--line);
+  background:transparent;width:100%;text-align:left;cursor:pointer}
+.bpr-left{flex:1}
+.bpr-name{font-size:13px;font-weight:800;color:var(--text);letter-spacing:.06em;text-transform:uppercase}
+.bpr-sub{font-size:10px;color:var(--muted);margin-top:3px;letter-spacing:.1em;text-transform:uppercase}
+.bpr-right{display:flex;align-items:center;gap:10px}
+.bpr-count{font-family:var(--font-disp);font-size:20px;font-weight:900;color:var(--muted)}
+.bpr-arrow{font-size:16px;color:var(--muted2)}
+
+/* Exercise picker modal */
+.b-search-input{font-size:14px;letter-spacing:.06em;text-transform:uppercase}
+.b-search-input::placeholder{letter-spacing:.12em;font-size:12px}
+
+.b-filter-scroll{display:flex;gap:1px;overflow-x:auto;-webkit-overflow-scrolling:touch;scrollbar-width:none}
+.b-filter-scroll::-webkit-scrollbar{display:none}
+.b-filter-btn{flex:0 0 auto;padding:8px 14px;border:1px solid var(--line2);background:transparent;
+  color:var(--muted);font-size:10px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;
+  font-family:inherit;cursor:pointer;white-space:nowrap;transition:background .1s,color .1s,border-color .1s}
+.b-filter-btn.on{background:var(--text);color:var(--ink);border-color:var(--text)}
+
+.b-ex-list{max-height:50vh;overflow-y:auto}
+.b-ex-row{display:flex;align-items:center;gap:12px;padding:13px 0;border-bottom:1px solid var(--line);
+  width:100%;text-align:left}
+.b-ex-info{flex:1;min-width:0}
+.b-ex-name{font-size:13px;font-weight:700;color:var(--text);letter-spacing:.03em;
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.b-ex-group{font-size:9px;color:var(--muted);letter-spacing:.12em;margin-top:2px}
+.b-ex-btns{display:flex;align-items:center;gap:2px;flex:0 0 auto}
+.b-ex-guide{width:28px;height:28px;border:1px solid var(--line2);background:transparent;
+  color:var(--muted);font-size:11px;font-weight:800;display:grid;place-items:center;cursor:pointer}
+.b-ex-star{width:28px;height:28px;border:1px solid var(--line2);background:transparent;
+  color:var(--muted);font-size:13px;display:grid;place-items:center;cursor:pointer}
+.b-ex-star.on{color:var(--text);border-color:var(--text)}
+.b-ex-add{width:36px;height:28px;border:1px solid var(--text);background:var(--text);
+  color:var(--ink);font-size:18px;font-weight:900;display:grid;place-items:center;cursor:pointer;
+  transition:opacity .1s}
+.b-ex-add:active{opacity:.7}
+
+/* Live workout — exercise card header */
+.live-ex-card{background:var(--surface);border-top:1px solid var(--line);border-bottom:1px solid var(--line);
+  padding:16px;margin:0 -16px 0;border-left:none;border-right:none}
+.live-ex-card+.live-ex-card{border-top:none;margin-top:-1px}
+.b-ex-hdr{display:flex;align-items:flex-start;justify-content:space-between;gap:10px;margin-bottom:4px}
+.b-ex-ordinal{font-size:9px;letter-spacing:.2em;color:var(--muted);font-weight:700;text-transform:uppercase;margin-bottom:4px}
+.b-ex-title{font-family:var(--font-disp);font-size:22px;font-weight:900;letter-spacing:-.01em;
+  color:var(--text);line-height:1.05;cursor:pointer}
+.b-ex-hdr-actions{display:flex;gap:2px;flex:0 0 auto;padding-top:2px}
+.b-more-btn{width:30px;height:30px;border:1px solid var(--line2);background:transparent;
+  color:var(--muted);font-size:15px;display:grid;place-items:center;cursor:pointer}
+.b-note-btn{width:30px;height:30px;border:1px solid var(--line2);background:transparent;
+  color:var(--muted);font-size:13px;display:grid;place-items:center;cursor:pointer}
+.b-note-btn.has-notes{border-color:var(--text);color:var(--text)}
+
+/* Set rows */
+.b-set-done{display:flex;align-items:center;gap:12px;padding:10px 0;
+  border-bottom:1px solid var(--line);cursor:pointer}
+.b-set-done-num{font-family:var(--font-disp);font-size:14px;font-weight:900;
+  color:var(--muted);min-width:18px}
+.b-set-done-val{flex:1;font-size:13px;font-weight:600;color:var(--muted);letter-spacing:.02em}
+.b-set-done-rir{font-size:8px;font-weight:800;letter-spacing:.1em;color:var(--muted2);text-transform:uppercase}
+.b-set-done-chk{width:18px;height:18px;border:1px solid var(--text);background:var(--text);
+  color:var(--ink);font-size:9px;font-weight:900;display:grid;place-items:center;flex:none}
+
+.b-set-todo{display:flex;align-items:center;gap:12px;padding:10px 0;
+  border-bottom:1px solid var(--line);opacity:.3;cursor:pointer}
+.b-set-todo-num{font-family:var(--font-disp);font-size:14px;font-weight:900;color:var(--muted);min-width:18px}
+.b-set-todo-val{flex:1;font-size:12px;color:var(--muted);letter-spacing:.02em}
+.b-set-todo-chk{width:18px;height:18px;border:1px solid var(--line2);flex:none}
+
+/* Active set */
+.b-active-set{padding:16px 0;border-bottom:2px solid var(--text);margin-bottom:12px}
+.b-active-label{display:flex;align-items:center;gap:12px;margin-bottom:12px}
+.b-active-num{font-family:var(--font-disp);font-size:20px;font-weight:900;color:var(--text)}
+.b-active-badge{font-size:8px;letter-spacing:.2em;font-weight:800;color:var(--ink);
+  background:var(--text);padding:3px 8px;text-transform:uppercase}
+.b-active-ghost{font-size:9px;letter-spacing:.1em;color:var(--muted2);text-transform:uppercase;
+  margin-bottom:12px;font-weight:700}
+.b-active-steps{display:grid;grid-template-columns:1fr 1fr;gap:1px;margin-bottom:12px}
+
+/* RIR toggle */
+.b-rir-toggle{width:100%;padding:9px 12px;border:1px solid var(--line2);background:transparent;
+  font-size:9px;font-weight:800;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);
+  font-family:inherit;cursor:pointer;text-align:left;margin-bottom:10px;transition:border-color .1s,color .1s}
+.b-rir-toggle.active{border-color:var(--text);color:var(--text)}
+.b-rir-chips{display:none;flex-wrap:wrap;gap:1px;margin-bottom:12px}
+.b-rir-chips.open{display:flex}
+
+/* LOG SET button — the most important button in the app */
+.b-log-btn{width:100%;padding:19px;border:1px solid var(--text);background:var(--text);
+  color:var(--ink);font-family:var(--font-disp);font-size:17px;font-weight:900;
+  letter-spacing:.04em;text-transform:uppercase;cursor:pointer;
+  display:flex;align-items:center;justify-content:center;gap:10px;
+  transition:transform .1s,opacity .12s;margin-top:4px}
+.b-log-btn:active{transform:scale(.99);opacity:.9}
+
+/* Add set / add exercise row buttons */
+.b-add-row{display:flex;align-items:center;gap:1px;padding:12px 0;border-bottom:1px solid var(--line)}
+.b-add-btn{flex:1;padding:11px;border:1px solid var(--line2);background:transparent;
+  color:var(--muted);font-size:10px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;
+  font-family:inherit;cursor:pointer;transition:border-color .1s,color .1s}
+.b-add-btn:active{border-color:var(--text);color:var(--text)}
+
+/* Session header strip */
+.b-session-hdr{display:flex;align-items:center;justify-content:space-between;
+  padding:10px 16px;background:var(--ink);border-bottom:2px solid var(--text)}
+.b-session-title{font-family:var(--font-disp);font-size:18px;font-weight:900;
+  letter-spacing:.02em;text-transform:uppercase;color:var(--text)}
+.b-session-prog{font-size:9px;letter-spacing:.16em;font-weight:800;color:var(--muted);text-transform:uppercase}
+
+/* Superset connector */
+.b-ss-connector{text-align:center;font-size:8px;letter-spacing:.18em;font-weight:800;
+  color:var(--muted);text-transform:uppercase;padding:8px 0;border-left:1px solid var(--line2);
+  margin:0 0 0 16px}
+
+/* ══════════════════════════════════════════════════════════════
+   SESSION CLOCK
+   ══════════════════════════════════════════════════════════════ */
+.lp-right{display:flex;align-items:center;gap:10px;flex:0 0 auto}
+.lp-clock{font-size:12px;font-weight:800;color:var(--text);
+  font-variant-numeric:tabular-nums;letter-spacing:.06em;
+  font-family:var(--font-disp),monospace}
+.lp-count{font-size:10px;color:var(--muted);font-weight:700;white-space:nowrap;letter-spacing:.1em}
+
+/* ══════════════════════════════════════════════════════════════
+   PR BADGE
+   ══════════════════════════════════════════════════════════════ */
+.b-pr-badge{display:inline-block;font-size:8px;font-weight:900;letter-spacing:.12em;
+  text-transform:uppercase;background:var(--text);color:var(--ink);
+  padding:2px 6px;border-radius:0;vertical-align:middle;margin-left:4px;
+  animation:prPop .3s cubic-bezier(.34,1.56,.64,1)}
+@keyframes prPop{from{transform:scale(.6);opacity:0}to{transform:scale(1);opacity:1}}
+
+/* ══════════════════════════════════════════════════════════════
+   FINISH SUMMARY SCREEN
+   ══════════════════════════════════════════════════════════════ */
+.sum-hero{text-align:center;padding:8px 0 20px;border-bottom:1px solid var(--line)}
+.sum-check{width:48px;height:48px;background:var(--text);color:var(--ink);
+  display:flex;align-items:center;justify-content:center;font-size:22px;font-weight:900;
+  margin:0 auto 12px;animation:prPop .35s cubic-bezier(.34,1.56,.64,1)}
+.sum-title{font-family:var(--font-disp);font-size:36px;font-weight:900;
+  letter-spacing:-.02em;line-height:1}
+.sum-sub{font-size:10px;letter-spacing:.2em;color:var(--muted);margin-top:6px;
+  text-transform:uppercase;font-weight:700}
+
+.sum-stats{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;
+  margin:0;border-bottom:1px solid var(--line)}
+.sum-stat{padding:14px 8px;text-align:center;background:var(--surface)}
+.sum-stat-v{font-family:var(--font-disp);font-size:22px;font-weight:900;
+  color:var(--text);line-height:1}
+.sum-stat-k{font-size:7px;letter-spacing:.14em;color:var(--muted);font-weight:800;
+  text-transform:uppercase;margin-top:4px}
+
+.sum-pr-row{padding:12px 0;border-bottom:1px solid var(--line)}
+.sum-pr-item{font-size:12px;font-weight:700;color:var(--text);padding:3px 0;letter-spacing:.02em}
+.sum-pr-prev{color:var(--muted);font-weight:600}
+
+.sum-streak{font-size:9px;letter-spacing:.18em;font-weight:800;color:var(--muted);
+  text-transform:uppercase;padding:10px 0;border-bottom:1px solid var(--line)}
+
+.sum-breakdown{padding:0}
+.sum-breakdown-hdr{font-size:8px;letter-spacing:.24em;font-weight:800;color:var(--muted);
+  text-transform:uppercase;padding:12px 0 8px;border-bottom:1px solid var(--line)}
+.sum-ex{border-bottom:1px solid var(--line);padding:10px 0}
+.sum-ex-head{display:flex;align-items:center;gap:8px;margin-bottom:6px}
+.sum-ex-name{font-size:11px;font-weight:800;color:var(--text);letter-spacing:.06em}
+.sum-set-row{display:flex;align-items:center;gap:10px;padding:4px 0}
+.sum-set-n{font-size:9px;font-weight:700;color:var(--muted2);min-width:14px;letter-spacing:.04em}
+.sum-set-val{font-size:13px;font-weight:600;color:var(--muted);flex:1}
+.sum-set-rir{font-size:8px;font-weight:800;letter-spacing:.1em;color:var(--muted2);text-transform:uppercase}
+
+.sum-actions{padding:16px 0 0;display:flex;flex-direction:column;gap:0}
+
 </style>
 </head>
 <body>
@@ -828,18 +1046,18 @@ hr{border:none;border-top:1px solid var(--line);margin:16px 0}
   <div class="splash-inner">
     <img class="splash-logo-img" src="icon-512.png" alt="Evolve app logo">
     <div class="splash-mark disp">EVOLVE</div>
-    <div class="splash-tag">NO EXCUSES. NO SHORTCUTS.</div>
+    <div class="splash-tag">TRAIN. FUEL. DOMINATE.</div>
     <div class="splash-feats">
-      <div class="sf"><span>🏋️</span>Lift heavier. Every session.</div>
-      <div class="sf"><span>🗓️</span>Your training. Your rules.</div>
-      <div class="sf"><span>🍎</span>Fuel like you mean it.</div>
-      <div class="sf"><span>📈</span>The numbers don't lie.</div>
+      <div class="sf"><span>🏋️</span>Guided workouts & live tracking</div>
+      <div class="sf"><span>🗓️</span>A week planned around your days</div>
+      <div class="sf"><span>🍎</span>Food, macros & water in one place</div>
+      <div class="sf"><span>📈</span>PRs, streaks & progress charts</div>
     </div>
-    <button class="splash-enter" id="enterBtn">ENTER THE ARENA</button>
+    <button class="splash-enter" id="enterBtn">START</button>
     <button class="splash-news" id="newsToggle" style="margin-top:16px">📜 What's new<span class="news-chev" id="newsChev">▾</span></button>
     <div class="splash-news-body" id="newsBody"></div>
   </div>
-  <div class="splash-foot">EVOLVE · V1.0 · NO MERCY</div>
+  <div class="splash-foot">EVOLVE · V1.0</div>
 </div>
 
 <!-- APP -->
@@ -883,8 +1101,8 @@ hr{border:none;border-top:1px solid var(--line);margin:16px 0}
     <button class="iconbtn" id="liveClose">✕</button>
     <div class="ttl" id="liveTitle">SESSION</div>
     <div class="row" style="gap:8px">
-      <button class="iconbtn star" id="liveFav" title="SAVE SESSION">☆</button>
-      <button class="btn str sm" id="liveEND SESSION">END SESSION</button>
+      <button class="iconbtn star" id="liveFav" title="Save as favourite">☆</button>
+      <button class="btn str sm" id="liveFinish">END SESSION</button>
     </div>
   </div>
   <div class="live-body" id="liveBody"></div>
@@ -3247,9 +3465,9 @@ const TAB_HELP={
     <p class="help-lead">Track any cardio and log it to your day.</p>
     <div class="help-row"><b>Activity tiles</b><span>Tap one to set it up; each shows a rough calories &amp; distance estimate per 30 min.</span></div>
     <div class="help-row"><b>Ready, then Start</b><span>A fresh cardio opens on a Ready screen — the timer doesn't begin until you tap ▶ Start, so you can get set up first.</span></div>
-    <div class="help-row"><b>Stopwatch / timer</b><span>Counts up once started; Pause and Resume any time, then END SESSION to log it.</span></div>
+    <div class="help-row"><b>Stopwatch / timer</b><span>Counts up once started; Pause and Resume any time, then Finish to log it.</span></div>
     <div class="help-row"><b>Estimates</b><span>Calories burned, plus distance if you set your stride length in setup.</span></div>
-    <div class="help-row"><b>Resume</b><span>LEAVE mid-session and it picks up where you left off.</span></div>
+    <div class="help-row"><b>Resume</b><span>Leave mid-session and it picks up where you left off.</span></div>
     <div class="help-row"><b>Back</b><span>Tap ‹ at the top to return to Train.</span></div></div>`},
   fuel:{t:"Fuel",b:`<div class="help-body">
     <p class="help-lead">Your nutrition for the day — calories, macros and water.</p>
@@ -3318,7 +3536,7 @@ function renderHome(){
   else if(td && td.type==="strength"){ heroTitle="Today: "+td.label+" day"; heroSub="Your planned session is ready — one tap to start."; heroBtn="▶ Start "+td.label+" day"; heroAct=()=>startPlannedDay(todayName); }
   else if(td && td.type==="cardio"){ heroTitle="Today: Cardio 🏃"; heroSub="A scheduled cardio day — pick any activity."; heroBtn="▶ Start cardio"; heroAct=()=>switchTab("cardio"); }
   else if(plan){ heroTitle="Rest day 🧘"; heroSub="Recovery is where the growth happens. Hit your protein and water."; heroBtn="＋ Bonus session anyway"; heroAct=()=>openBonusDay(todayName); }
-  else { heroTitle="Ready to move?"; heroSub="Start a quick workout, or plan your week and let Evolve coach you."; heroBtn="⚡ Quick start"; heroAct=openQuickStart; }
+  else { heroTitle="GET TO WORK."; heroSub="Pick a muscle. Start a session."; heroBtn="⚡ Quick start"; heroAct=openQuickStart; }
   hero.innerHTML=`<div class="hero-eyebrow">${prettyDate(todayISO())}</div>
     <div class="hero-title">${heroTitle}</div>
     <div class="hero-sub">${heroSub}</div>`;
@@ -3345,7 +3563,7 @@ function renderHome(){
   const qa=el("div","qa-grid"); qa.style.marginTop="0";
   const actions=[
     ["⚡","Quick start",openQuickStart,"str"],
-    ["★","Favourites",openFavHub,"gold"],
+    ["★","STARRED",openFavHub,"gold"],
     ["🏃","Cardio",()=>switchTab("cardio"),"blue"],
     ["🍎","Log food",()=>{viewDate=todayISO();switchTab("fuel");setTimeout(()=>{try{openFoodSearch();}catch(e){}},80);},"fuel"]
   ];
@@ -3496,63 +3714,63 @@ function cardioEntryCard(){
   return cc;
 }
 function renderGymZone(b){
-  const sh=el("div","sect-h",`<h3>Target a muscle group</h3>`); b.appendChild(sh);
-  const grid=el("div","mg-grid");
+  const hdr=el("div","b-sec-hdr"); hdr.innerHTML=`<span class="b-sec-lbl">SELECT MUSCLE GROUP</span>`; b.appendChild(hdr);
+  const groupList=el("div","b-group-list");
   GROUPS.forEach(g=>{
-    const card=el("button","mg");
+    const row=el("button","b-group-row");
     const n=gymExercisesIn(g).length;
-    card.innerHTML=`<div class="glow" style="background:radial-gradient(135% 120% at 82% 8%, ${GROUP_GLOW[g]}, transparent 62%)"></div>
-      <div class="go">›</div><div class="gi">${GICON[g]||"🏋️"}</div>
-      <div class="ct">${n} ${fwEnabled()?"exercises":"machines"}</div><div class="nm">${g}</div>`;
-    card.addEventListener("click",()=>openGroupBuilder(g));
-    grid.appendChild(card);
+    const gColor=GROUP_GLOW[g]||"var(--line)";
+    row.innerHTML=`<div class="bgr-dot" style="background:${gColor}"></div>
+      <div class="bgr-left">
+        <div class="bgr-name"><span class="bgr-icon">${GICON[g]||""}</span>${g.toUpperCase()}</div>
+        <div class="bgr-count">${n} EXERCISES</div>
+      </div><div class="bgr-arrow">→</div>`;
+    row.addEventListener("click",()=>openGroupBuilder(g));
+    groupList.appendChild(row);
   });
-  b.appendChild(grid);
-  const mega=el("button","mega-card");
-  mega.innerHTML=`<div class="mega-glow"></div><div style="position:relative;z-index:2"><div class="nm disp">MEGA WORKOUT 💥</div>
-    <div class="ct">Muscle groups + cardio in one — random or your choice</div></div>`;
-  mega.addEventListener("click",openMegaBuilder); b.appendChild(mega);
-  b.appendChild(cardioEntryCard());
-  const sh2=el("div","sect-h",`<h3>Preset days</h3>`); b.appendChild(sh2);
-  b.appendChild(el("div","muted tiny","Ready-made one-tap sessions — tap one to start straight away.")).style.cssText="margin:-6px 0 10px";
-  const PICON={Push:"🫷",Pull:"🪢",Legs:"🦵",Upper:"🙆",["Full Body"]:"🔥"};
-  const days=el("div","preset-scroll");
+  b.appendChild(groupList);
+  const qhdr=el("div","b-sec-hdr"); qhdr.innerHTML=`<span class="b-sec-lbl">QUICK START</span>`; b.appendChild(qhdr);
+  const actList=el("div","b-action-list");
+  const megaRow=el("button","b-action-row");
+  megaRow.innerHTML=`<div class="bar-left"><div class="bar-name">MEGA SESSION</div><div class="bar-sub">Multiple muscle groups + cardio</div></div><div class="bar-arrow">→</div>`;
+  megaRow.addEventListener("click",openMegaBuilder); actList.appendChild(megaRow);
+  const cardioRow=el("button","b-action-row");
+  cardioRow.innerHTML=`<div class="bar-left"><div class="bar-name">CARDIO</div><div class="bar-sub">${CARDIO.length} activities — timers & calorie tracking</div></div><div class="bar-arrow">→</div>`;
+  cardioRow.addEventListener("click",()=>switchTab("cardio")); actList.appendChild(cardioRow);
+  b.appendChild(actList);
+  const phdr=el("div","b-sec-hdr"); phdr.innerHTML=`<span class="b-sec-lbl">PRESET SESSIONS</span><span class="b-sec-sub">TAP TO START</span>`; b.appendChild(phdr);
+  const presetList=el("div","b-action-list");
+  const DAY_DESC={Push:"CHEST · SHOULDERS · TRICEPS",Pull:"BACK · BICEPS · REAR DELTS",Legs:"QUADS · HAMSTRINGS · GLUTES","Full Body":"EVERY MUSCLE GROUP",Upper:"CHEST · BACK · SHOULDERS · ARMS",Lower:"LEGS · GLUTES · CORE"};
   Object.keys(PRESET_DAYS).forEach(d=>{
     const list=PRESET_DAYS[d];
-    const groups=[...new Set(list.map(n=>EX_BY_NAME[n]?.g).filter(Boolean))];
-    const c=el("button","preset-card");
-    c.innerHTML=`<div class="pi">${PICON[d]||"🏋️"}</div><div class="pn">${d}</div>
-      <div class="ps">${list.length} exercise${list.length===1?"":"s"}</div><div class="pg">${groups.slice(0,3).join(" · ")}</div>`;
-    c.addEventListener("click",()=>startSession(d+" Day","preset",PRESET_DAYS[d].map(n=>mkExercise(n))));
-    days.appendChild(c);
+    const row=el("button","b-action-row");
+    row.innerHTML=`<div class="bar-left"><div class="bar-name">${d.toUpperCase()}</div><div class="bar-sub">${DAY_DESC[d]||list.length+" exercises"}</div></div><div class="bar-count-badge">${list.length}</div>`;
+    row.addEventListener("click",()=>startSession(d,"preset",PRESET_DAYS[d].map(n=>mkExercise(n))));
+    presetList.appendChild(row);
   });
-  b.appendChild(days);
+  b.appendChild(presetList);
 }
 function renderHomeZone(b){
-  const sh3=el("div","sect-h",`<h3>At home</h3>`); b.appendChild(sh3);
-  const home=el("div","card");
-  home.innerHTML=`<div class="lrow" style="padding-top:0"><div class="ico">🏠</div>
-    <div class="main"><div class="t">No machines? No problem.</div><div class="s">Pick your equipment — we'll build the routine.</div></div></div>`;
-  const hb=el("button","btn block","Build a home routine"); hb.style.marginTop="6px";
-  hb.addEventListener("click",openHomeBuilder); home.appendChild(hb); b.appendChild(home);
-  /* quick bodyweight */
-  const qc=el("div","card");
-  qc.innerHTML=`<div class="lrow" style="padding-top:0"><div class="ico">⚡</div>
-    <div class="main"><div class="t">Quick bodyweight circuit</div><div class="s">A fast no-equipment session, built instantly.</div></div></div>`;
-  const qb=el("button","btn str block","Start 15-min circuit"); qb.style.marginTop="6px";
-  qb.addEventListener("click",()=>{
+  const hdr=el("div","b-sec-hdr"); hdr.innerHTML=`<span class="b-sec-lbl">HOME TRAINING</span>`; b.appendChild(hdr);
+  const list=el("div","b-action-list");
+  const buildRow=el("button","b-action-row");
+  buildRow.innerHTML=`<div class="bar-left"><div class="bar-name">BUILD A SESSION</div><div class="bar-sub">Choose your equipment — we pick the best moves</div></div><div class="bar-arrow">→</div>`;
+  buildRow.addEventListener("click",openHomeBuilder); list.appendChild(buildRow);
+  const bwRow=el("button","b-action-row");
+  bwRow.innerHTML=`<div class="bar-left"><div class="bar-name">BODYWEIGHT CIRCUIT</div><div class="bar-sub">6 moves, no equipment, built in seconds</div></div><div class="bar-arrow">→</div>`;
+  bwRow.addEventListener("click",()=>{
     const pool=HOME.filter(h=>h.eq.includes("none"));
     const ex=shuffle(pool.slice()).slice(0,6).map(h=>({name:h.n,group:h.t,home:h,sets:[prefilledSet(h.n)]}));
     if(!ex.length){toast("No bodyweight moves found");return;}
-    startSession("Quick circuit","home",ex);
-  });
-  qc.appendChild(qb); b.appendChild(qc);
-  /* home mega */
-  const mega=el("button","mega-card");
-  mega.innerHTML=`<div class="mega-glow"></div><div style="position:relative;z-index:2"><div class="nm disp">HOME MEGA 💥</div>
-    <div class="ct">Full-body home session + cardio finisher</div></div>`;
-  mega.addEventListener("click",()=>{DATA.prefs.env="home";openMegaBuilder();}); b.appendChild(mega);
-  b.appendChild(cardioEntryCard());
+    startSession("BODYWEIGHT CIRCUIT","home",ex);
+  }); list.appendChild(bwRow);
+  const megaRow=el("button","b-action-row");
+  megaRow.innerHTML=`<div class="bar-left"><div class="bar-name">HOME MEGA</div><div class="bar-sub">Full body + cardio finisher</div></div><div class="bar-arrow">→</div>`;
+  megaRow.addEventListener("click",()=>{DATA.prefs.env="home";openMegaBuilder();}); list.appendChild(megaRow);
+  const cardioRow=el("button","b-action-row");
+  cardioRow.innerHTML=`<div class="bar-left"><div class="bar-name">CARDIO</div><div class="bar-sub">${CARDIO.length} activities</div></div><div class="bar-arrow">→</div>`;
+  cardioRow.addEventListener("click",()=>switchTab("cardio")); list.appendChild(cardioRow);
+  b.appendChild(list);
 }
 
 /* ===================== WEEKLY PLANNER ===================== */
@@ -3747,7 +3965,7 @@ function openLiveCardioTimer(ex, onDone){
     const clk=$("#lct_clock"); if(clk)clk.textContent=fmtClock(st.elapsedMs);
     const burn=$("#lct_burn"); if(burn)burn.innerHTML=`~${eVal(kcal)} ${eUnit()}${dist!=null?` · ~${dist.toFixed(2)} km <span class="muted" style="font-weight:400">(est.)</span>`:""}`;
   }
-  function doEND SESSION(){
+  function doFinish(){
     stop(); const secs=Math.max(0,Math.round(st.elapsedMs/1000));
     const kcal=Math.round(cardioKcal(act.met,secs)), dist=cardioDistanceKm(act.name,secs);
     DATA.cardio.push({id:Date.now(),date:todayISO(),name:act.name,type:act.met>=8?"intense":"steady",seconds:secs,kcal,distanceKm:dist!=null?+dist.toFixed(2):null});
@@ -3782,7 +4000,7 @@ function openLiveCardioTimer(ex, onDone){
       st.running=!st.running; st.lastTs=Date.now(); if(st.running)startTick();
       const t=$("#lct_toggle"); t.textContent=st.running?"Pause":"Resume"; t.className="btn"+(st.running?"":" str"); t.style.flex="1";
     });
-    $("#lct_done").addEventListener("click",doEND SESSION);
+    $("#lct_done").addEventListener("click",doFinish);
     $("#lct_cancel").addEventListener("click",()=>{ st.elapsedMs=0; ex.progressMs=0; stop(); closeModal(); });
     upd();
   }
@@ -3858,7 +4076,7 @@ function favKind(n){
   return {kind:"other", group:"", env:"gym", ic:"⭐"};
 }
 function saveFavWorkout(exercises, cardio, cardioPos, defaultName){
-  openModal(`<h3>SAVE SESSION</h3>
+  openModal(`<h3>Save as favourite</h3>
     <p class="muted tiny" style="margin-bottom:6px">${exercises.filter(e=>!e.cardio).length} exercise${exercises.filter(e=>!e.cardio).length===1?"":"s"}${cardio?` + ${cardio.name}`:""} — give it a name to reuse any time.</p>
     <div class="tiny muted" style="margin-bottom:12px;line-height:1.55">${exercises.filter(e=>!e.cardio).map(e=>esc(e.name)).join(" · ")}${cardio?` · <span style="color:var(--fuel)">${esc(cardio.name)}</span>`:""}</div>
     <div class="field"><label>Name</label><input class="input" id="fw_n" value="${esc(defaultName||"")}" placeholder="e.g. My push day"></div>
@@ -4108,7 +4326,7 @@ function paintRoutineEditor(){
     const exs=d.exercises||[];
     const exHTML = exs.length
       ? `<div class="rt-ex-chips">${exs.map((e,j)=>`<span class="rt-ex-chip">${esc(e.name)}<button class="rt-ex-x" data-exrm="${i}:${j}" title="Remove">✕</button></span>`).join("")}</div>`
-      : `<div class="rt-ex-empty">No exercises yet — tap “＋ ADD MOVEs” below.</div>`;
+      : `<div class="rt-ex-empty">No exercises yet — tap “＋ Add exercises” below.</div>`;
     return `<div class="rt-edit-day">
       <div class="row" style="gap:8px;align-items:center;margin-bottom:8px">
         <input class="input" data-dayname="${i}" value="${esc(d.label||"")}" placeholder="Day ${i+1} name (e.g. Push)" style="flex:1">
@@ -4116,7 +4334,7 @@ function paintRoutineEditor(){
       </div>
       <div class="rt-ex-head">${exs.length} exercise${exs.length===1?"":"s"}</div>
       ${exHTML}
-      <button class="btn sm fuel block" data-dayex="${i}" style="margin-top:8px">＋ ADD MOVEs</button>
+      <button class="btn sm fuel block" data-dayex="${i}" style="margin-top:8px">＋ Add exercises</button>
     </div>`;
   }).join("");
   openModal(`<h3>${(DATA.routines||[]).some(x=>x.id===r.id)?"Edit routine":"New routine"}</h3>
@@ -4685,11 +4903,11 @@ function renderBuilder(){
    </div>
    <div class="row" style="gap:8px;margin:12px 0">
      <button class="btn sm" id="gb_roll" style="flex:1">🎲 Re-roll</button>
-     <button class="btn sm" id="gb_add" style="flex:1">＋ ADD MOVE</button>
+     <button class="btn sm" id="gb_add" style="flex:1">＋ Add exercise</button>
    </div>
    <div id="gb_list"></div>
    <button class="btn str block" id="gb_start" style="margin-top:14px">Start ${g} workout</button>
-   <button class="btn ghost block" id="gb_fav" style="margin-top:10px">★ SAVE SESSION</button>
+   <button class="btn ghost block" id="gb_fav" style="margin-top:10px">★ Save as favourite</button>
   `);
   paintBuilderList();
   if(subs.length>1) $("#gb_sub").querySelectorAll("button").forEach(btn=>btn.addEventListener("click",()=>{
@@ -4743,29 +4961,30 @@ function paintBuilderList(){
 function openMachinePicker(group){
   const inLive = !!liveSession && !buildState;
   const showFW = fwEnabled();
-  openModal(`<h3>Add exercise</h3>
-    <input class="input" id="mp_search" placeholder="Search…" style="margin:8px 0 4px">
-    <div class="row wrap" style="gap:6px;margin-bottom:8px">
-      <button class="chip sm gold-chip" data-g="FAV">★ Favourites</button>
-      ${showFW?`<button class="chip sm" data-g="FW">🏋️ Free weights</button>`:""}
-      ${inLive?`<button class="chip sm" data-g="CARDIO">🏃 Cardio</button>`:""}
-      ${GROUPS.map(g=>`<button class="chip sm ${g===group?"on":""}" data-g="${g}">${g}</button>`).join("")}
+  openModal(`<h3>ADD EXERCISE</h3>
+    <input class="input b-search-input" id="mp_search" placeholder="SEARCH..." style="margin:8px 0 10px">
+    <div class="b-filter-scroll" style="margin-bottom:12px">
+      ${GROUPS.map(g=>`<button class="b-filter-btn ${g===group?"on":""}\" data-g="${g}">${g.toUpperCase()}</button>`).join("")}
+      <button class="b-filter-btn" data-g="FAV">★ STARRED</button>
+      ${showFW?`<button class="b-filter-btn" data-g="FW">FREE WEIGHTS</button>`:""}
+      ${inLive?`<button class="b-filter-btn" data-g="CARDIO">CARDIO</button>`:""}
     </div>
-    <div class="search-list" id="mp_list"></div>`);
+    <div class="b-ex-list" id="mp_list"></div>`);
   let curG=group;
   function addStrength(n){
-    if(buildState){ if(!buildState.picked.includes(n))buildState.picked.push(n); if($("#gb_list"))paintBuilderList(); toast("Added "+n); }
-    else if(liveSession){ liveSession.exercises.push(mkExercise(n)); renderLive(); toast("Added "+n); }
+    if(buildState){ if(!buildState.picked.includes(n))buildState.picked.push(n); if($("#gb_list"))paintBuilderList(); toast("ADDED — "+n); }
+    else if(liveSession){ liveSession.exercises.push(mkExercise(n)); renderLive(); toast("ADDED."); }
   }
   function paint(){
     const q=$("#mp_search").value.toLowerCase();
     if(curG==="CARDIO"){
       const list=CARDIO.filter(c=>c.n.toLowerCase().includes(q));
-      $("#mp_list").innerHTML=list.map(c=>`<div class="food-opt"><div><div class="fn">${c.ic} ${esc(c.n)}</div><div class="fm">${c.t==="machine"?"Machine cardio":"At-home cardio"}</div></div>
-        <button class="btn sm fuel" data-cardio="${esc(c.n)}">Add</button></div>`).join("")||`<div class="empty">No matches</div>`;
+      $("#mp_list").innerHTML=list.map(c=>`<div class="b-ex-row">
+        <div class="b-ex-info"><div class="b-ex-name">${esc(c.n).toUpperCase()}</div><div class="b-ex-group">${c.t==="machine"?"MACHINE CARDIO":"HOME CARDIO"}</div></div>
+        <button class="b-ex-add" data-cardio="${esc(c.n)}">+</button></div>`).join("")||`<div class="empty">NO MATCHES</div>`;
       $("#mp_list").querySelectorAll("[data-cardio]").forEach(btn=>btn.addEventListener("click",()=>{
         const c=CARDIO.find(x=>x.n===btn.getAttribute("data-cardio"));
-        if(liveSession){ liveSession.exercises.push(mkCardioCard(c)); renderLive(); toast("Added "+c.n); }
+        if(liveSession){ liveSession.exercises.push(mkCardioCard(c)); renderLive(); toast("ADDED."); }
       }));
       return;
     }
@@ -4774,12 +4993,16 @@ function openMachinePicker(group){
     else if(curG==="FW") pool=FREEWEIGHTS;
     else pool=(showFW?gymExercisesIn(curG):machinesIn(curG));
     const list=pool.filter(m=>m.n.toLowerCase().includes(q));
-    $("#mp_list").innerHTML=list.map(m=>`<div class="food-opt" data-n="${esc(m.n)}">
-      <div><div class="fn">${esc(m.n)}${m.fw?' <span class="tiny" style="color:var(--gold)">· free weight</span>':''}</div><div class="fm">${m.g}</div></div>
-      <div class="row" style="gap:6px">
-        <button class="iconbtn info" data-info="${esc(m.n)}">ⓘ</button>
-        <button class="iconbtn star ${isFavMachine(m.n)?"on":""}" data-fav="${esc(m.n)}">${isFavMachine(m.n)?"★":"☆"}</button>
-        <button class="btn sm str" data-add="${esc(m.n)}">Add</button></div></div>`).join("")||`<div class="empty">${curG==="FAV"?"No favourites yet — tap ☆ to add some.":"No matches"}</div>`;
+    $("#mp_list").innerHTML=list.map(m=>`<div class="b-ex-row" data-n="${esc(m.n)}">
+      <div class="b-ex-info">
+        <div class="b-ex-name">${esc(m.n).toUpperCase()}</div>
+        <div class="b-ex-group">${m.g.toUpperCase()}${m.fw?" · FREE WEIGHT":""}</div>
+      </div>
+      <div class="b-ex-btns">
+        <button class="b-ex-guide" data-info="${esc(m.n)}">?</button>
+        <button class="b-ex-star ${isFavMachine(m.n)?"on":""}" data-fav="${esc(m.n)}">${isFavMachine(m.n)?"★":"☆"}</button>
+        <button class="b-ex-add" data-add="${esc(m.n)}">+</button>
+      </div></div>`).join("")||`<div class="empty">${curG==="FAV"?"NOTHING STARRED YET.":"NO MATCHES"}</div>`;
     $("#mp_list").querySelectorAll("[data-add]").forEach(btn=>btn.addEventListener("click",()=>addStrength(btn.getAttribute("data-add"))));
     $("#mp_list").querySelectorAll("[data-fav]").forEach(btn=>btn.addEventListener("click",()=>{toggleFavMachine(btn.getAttribute("data-fav"));paint();}));
     $("#mp_list").querySelectorAll("[data-info]").forEach(btn=>btn.addEventListener("click",()=>showHowTo(btn.getAttribute("data-info"))));
@@ -4883,7 +5106,7 @@ function openMegaBuilder(){
           ${cp.map(c=>`<option value="${esc(c.n)}" ${st.cardioName===c.n?"selected":""}>${c.ic} ${esc(c.n)}</option>`).join("")}
         </select></div>
       <div class="field" style="margin-bottom:0"><label>When?</label>
-        <div class="seg" id="mg_pos"><button data-v="start" class="${st.cardioPos==="start"?"on":""}">Warm-up (start)</button><button data-v="end" class="${st.cardioPos==="end"?"on":""}">END SESSIONer (end)</button></div></div>`;
+        <div class="seg" id="mg_pos"><button data-v="start" class="${st.cardioPos==="start"?"on":""}">Warm-up (start)</button><button data-v="end" class="${st.cardioPos==="end"?"on":""}">Finisher (end)</button></div></div>`;
     $("#mg_cardio").addEventListener("change",e=>{st.cardioName=e.target.value;paintPreview();});
     $("#mg_pos").querySelectorAll("button").forEach(b=>b.addEventListener("click",()=>{
       $("#mg_pos").querySelectorAll("button").forEach(x=>x.classList.remove("on"));b.classList.add("on");st.cardioPos=b.dataset.v;paintPreview();}));
@@ -5004,11 +5227,11 @@ function startSession(title,type,exercises){
 $("#liveClose").addEventListener("click",()=>{
   if(!liveSession){ stopRest(); $("#live").classList.remove("on"); return; }
   const hasData = liveSession.exercises.some(ex=>ex.cardio || (ex.sets||[]).some(s=>s.done||+s.kg>0||+s.reps>0));
-  confirmModal({title:"LEAVE SESSION?",danger:true,confirmText:"LEAVE",
-    body:hasData?"Anything you've logged won't be saved. Tap “END SESSION” instead to keep it.":"You'll lose this session. Tap “END SESSION” to save it instead.",
+  confirmModal({title:"Leave this workout?",danger:true,confirmText:"Leave",
+    body:hasData?"Anything you've logged won't be saved. Tap “Finish” instead to keep it.":"You'll lose this session. Tap “Finish” to save it instead.",
     onConfirm:()=>{ stopRest(); $("#live").classList.remove("on"); liveSession=null; clearLive(); }});
 });
-$("#liveEND SESSION").addEventListener("click",finishWorkout);
+$("#liveFinish").addEventListener("click",finishWorkout);
 $("#liveFav").addEventListener("click",()=>{
   if(!liveSession){return;}
   const cardioCard=liveSession.exercises.find(e=>e.cardio);
@@ -5050,7 +5273,7 @@ function swapExercise(xi){
   const alts=(fwEnabled()?gymPoolNames(g):machinesIn(g).map(m=>m.n)).filter(n=>n!==ex.name);
   if(!alts.length){toast("No alternatives for this muscle");return;}
   const list=shuffle(alts).slice(0,6);
-  openModal(`<h3>SWAP MOVE ${infoBtn("swap")}</h3>
+  openModal(`<h3>Swap exercise ${infoBtn("swap")}</h3>
     <p class="muted tiny" style="margin-bottom:12px">Machine taken? Pick a ${g} alternative — your sets so far stay.</p>
     <div class="search-list">${list.map(n=>`<div class="food-opt"><div><div class="fn">${esc(n)}</div><div class="fm">${EX_BY_NAME[n]?.g||g}</div></div><button class="btn sm str" data-sw="${esc(n)}">Swap in</button></div>`).join("")}</div>`);
   bindInfo($("#modal"));
@@ -5060,7 +5283,7 @@ function swapExercise(xi){
   }));
 }
 function openExerciseRest(ex){
-  openModal(`<h3>REST TIMER ${infoBtn("exrest")}</h3>
+  openModal(`<h3>Rest for this exercise ${infoBtn("exrest")}</h3>
     <p class="muted tiny" style="margin-bottom:12px">Override your default rest just for ${esc(ex.name)}.</p>
     <div class="seg" id="er_seg" style="flex-wrap:wrap">${[0,45,60,90,120,150,180,240].map(s=>`<button data-v="${s}" class="${(ex.restSec!=null?ex.restSec:'')===s?'on':''}">${s===0?"Off":s+"s"}</button>`).join("")}</div>
     <button class="btn ghost block" id="er_clear" style="margin-top:12px">Use default (${liveSession.restSec}s)</button>`);
@@ -5077,7 +5300,7 @@ function openPlateCalc(ex){
     let rem=perSide; plates.forEach(p=>{ while(rem>=p-1e-9){used.push(p);rem=Math.round((rem-p)*100)/100;} });
     const colors={25:"#e23b3b",20:"#2f7de2",15:"#e2a52f",10:"#2fb84a","5":"#dcdce2","2.5":"#9aa0ad","1.25":"#6b7280"};
     const vis=used.length?used.map(p=>`<span class="plate" style="background:${colors[p]||'#888'};height:${34+p*1.4}px">${p}</span>`).join(""):`<span class="muted tiny">Just the bar</span>`;
-    openModal(`<h3>PLATES ${infoBtn("plates")}</h3>
+    openModal(`<h3>Plate calculator ${infoBtn("plates")}</h3>
       <div class="field"><label>Target weight (total, kg)</label>
         <input class="input num" id="pc_t" type="number" inputmode="decimal" value="${target}"></div>
       <div class="muted tiny">Olympic bar ${bar}kg · load each side:</div>
@@ -5093,11 +5316,11 @@ function openPlateCalc(ex){
 }
 function openSessionNotes(){
   if(!liveSession)return;
-  openModal(`<h3>SESSION NOTES</h3>
+  openModal(`<h3>Workout notes</h3>
     <p class="muted tiny" style="margin-bottom:10px">Add anything useful for next time — niggles, form cues, what to try next, or how the session felt.</p>
     <textarea class="input" id="sn_text" rows="6" placeholder="e.g. Left knee felt tight on squats; try 62.5kg on bench next time." style="resize:none">${esc(liveSession.notes||"")}</textarea>
     <button class="btn str block" id="sn_save" style="margin-top:12px">Save notes</button>`);
-  $("#sn_save").addEventListener("click",()=>{ liveSession.notes=$("#sn_text").value.trim(); persistLive(); closeModal(); renderLive(); toast(liveSession.notes?"NOTES SAVED.":"NOTES CLEARED."); });
+  $("#sn_save").addEventListener("click",()=>{ liveSession.notes=$("#sn_text").value.trim(); persistLive(); closeModal(); renderLive(); toast(liveSession.notes?"Notes saved":"Notes cleared"); });
 }
 function exerciseHistoryFor(name){
   const hist=[];
@@ -5174,7 +5397,7 @@ function renderLive(){
     const hact=el("div","eh-actions");
     const nb=el("button","live-note-btn"+(liveSession.notes?" has-notes":""));
     nb.textContent="📝";
-    nb.title=liveSession.notes?"EDIT NOTES":"ADD NOTES";
+    nb.title=liveSession.notes?"Edit workout notes":"Add workout notes";
     nb.addEventListener("click",openSessionNotes);
     hact.appendChild(nb);
     const more=el("button","more","⋯"); more.title="More";
@@ -5186,14 +5409,14 @@ function renderLive(){
     const last=lastSetFor(ex.name);
     if(last&&(+last.kg>0||+last.reps>0)){
       const gh=el("div","ghost-hint");
-      gh.textContent=`👻 LAST TIME: ${last.kg?liftStr(+last.kg):"—"} × ${last.reps||"—"} reps`;
+      gh.textContent=`👻 Last time: ${last.kg?liftStr(+last.kg):"—"} × ${last.reps||"—"} reps`;
       c.appendChild(gh);
     }
     if(ex.home){ const tip=el("div","ex-tip"); tip.textContent="Suggested: "+ex.home.reps; c.appendChild(tip); }
 
     c.appendChild(buildSetList(ex,xi));
 
-    const add=el("button","btn ghost add-set","＋ ADD SET");
+    const add=el("button","btn ghost add-set","＋ Add set");
     add.addEventListener("click",()=>{
       const ns=blankSet(ex.sets[ex.sets.length-1]); ex.sets.push(ns); ex._active=ex.sets.length-1;
       renderLive();
@@ -5202,19 +5425,19 @@ function renderLive(){
 
     if(nx&&!nx.cardio){
       const foot=el("div","ss-foot");
-      const lb=el("button","",linkedNext?"🔗 LINKED — TAP TO UNLINK":"🔗 SUPERSET WITH NEXT");
+      const lb=el("button","",linkedNext?"🔗 Linked with next · tap to unlink":"🔗 Superset with next exercise");
       lb.addEventListener("click",()=>toggleSuperset(xi));
       foot.appendChild(lb); c.appendChild(foot);
     }
     wrap.appendChild(c); body.appendChild(wrap);
     if(linkedNext){
       const conn=el("div","ss-connector");
-      conn.innerHTML=`<span class="ln"></span>🔗 SUPERSET — NO REST<span class="ln"></span>`;
+      conn.innerHTML=`<span class="ln"></span>🔗 superset · no rest between<span class="ln"></span>`;
       body.appendChild(conn);
     }
   });
 
-  const addEx=el("button","btn block add-ex","＋ ADD MOVE");
+  const addEx=el("button","btn block add-ex","＋ Add exercise");
   addEx.addEventListener("click",()=>{
     const g=liveSession.exercises.find(e=>!e.cardio)?.group||"Chest";
     openMachinePicker(GROUPS.includes(g)?g:"Chest");
@@ -5268,7 +5491,7 @@ function buildSetList(ex,xi){
         if(!st.warmup){
           const rirWrap=el("div","sla-rir-wrap");
           const rirToggle=el("button","sla-rir-toggle"+(st.rir?" active":""),
-            "EFFORT"+(st.rir?` — ${st.rir==="F"?"Fail":st.rir+" left"}`:" ›"));
+            "Effort · RIR"+(st.rir?` — ${st.rir==="F"?"Fail":st.rir+" left"}`:" ›"));
           rirWrap.appendChild(rirToggle);
           const rirRow=el("div","sla-rir-row"+(st.rir?" open":""));
           [[" ⓘ ","info"],["0","0"],["1","1"],["2","2"],["3+","3+"],["Fail","F"]].forEach(([lbl,v])=>{
@@ -5282,7 +5505,7 @@ function buildSetList(ex,xi){
               st.rir=(st.rir===v?null:v);
               rirRow.querySelectorAll(".rir-chip").forEach(x=>x.classList.remove("on"));
               if(st.rir===v)chip.classList.add("on");
-              rirToggle.textContent="EFFORT"+(st.rir?` — ${st.rir==="F"?"Fail":st.rir+" left"}`:" ›");
+              rirToggle.textContent="Effort · RIR"+(st.rir?` — ${st.rir==="F"?"Fail":st.rir+" left"}`:" ›");
               rirToggle.classList.toggle("active",!!st.rir);
               persistLive();
             });
@@ -5293,11 +5516,11 @@ function buildSetList(ex,xi){
           r.appendChild(rirWrap);
         }
 
-        const comp=el("button","sla-complete","✓  LOG SET "+(si+1));
+        const comp=el("button","sla-complete","✓  Complete set "+(si+1));
         comp.addEventListener("click",()=>{
           const hasKg=!(st.kg===""||st.kg==null)&&+st.kg>0;
           const hasReps=!(st.reps===""||st.reps==null)&&+st.reps>0;
-          if(!hasKg&&!hasReps){ toast("ENTER WEIGHT OR REPS FIRST."); return; }
+          if(!hasKg&&!hasReps){ toast("Add a weight or some reps first"); return; }
           if(st.reps===""||st.reps==null||+st.reps===0){ st.reps=last&&last.reps?last.reps:(+st.reps||0); }
           st.done=true;
           const ssm=ssMembers(xi); const rsec=(ex.restSec!=null?ex.restSec:liveSession.restSec);
@@ -5329,15 +5552,15 @@ function openExerciseMenu(ex,xi){
   const isFW=FW_BY_NAME[ex.name];
   openModal(`<h3 style="margin-bottom:14px">${esc(ex.name)}</h3>
     <div class="menu-list">
-      <button class="menu-item" data-a="fav">${isFav(ex.name)?"★ Remove from favourites":"☆ SAVE SESSION"}</button>
-      <button class="menu-item" data-a="info">ⓘ FORM GUIDE</button>
-      ${!ex.home?`<button class="menu-item" data-a="swap">🔄 SWAP MOVE</button>`:""}
-      <button class="menu-item" data-a="warm">🔥 ADD WARM-UP</button>
+      <button class="menu-item" data-a="fav">${isFav(ex.name)?"★ Remove from favourites":"☆ Save as favourite"}</button>
+      <button class="menu-item" data-a="info">ⓘ How to perform</button>
+      ${!ex.home?`<button class="menu-item" data-a="swap">🔄 Swap exercise</button>`:""}
+      <button class="menu-item" data-a="warm">🔥 Add warm-up sets</button>
       <button class="menu-item" data-a="usual">📌 Set usual weight &amp; reps${usualFor(ex.name)?" · saved":""}</button>
-      ${isFW?`<button class="menu-item" data-a="plates">⚖️ PLATES</button>`:""}
+      ${isFW?`<button class="menu-item" data-a="plates">⚖️ Plate calculator</button>`:""}
       <button class="menu-item" data-a="rest">⏱️ Rest timer${ex.restSec!=null?` · ${ex.restSec===0?"off":ex.restSec+"s"}`:` · ${liveSession.restSec===0?"off":liveSession.restSec+"s"} (session)`}</button>
-      <button class="menu-item" data-a="notes">📝 SESSION NOTES${liveSession.notes?" · added":""}</button>
-      <button class="menu-item danger" data-a="remove">× REMOVE MOVE</button>
+      <button class="menu-item" data-a="notes">📝 Workout notes${liveSession.notes?" · added":""}</button>
+      <button class="menu-item danger" data-a="remove">× Remove exercise</button>
     </div>`);
   const act=(a)=>{
     if(a==="fav"){ toggleFav(ex.name); closeModal(); renderLive(); return; }
@@ -5371,16 +5594,16 @@ function openSetUsual(ex){
     if(rawKg!==""&&typeof kgFromLift==="function") kg=kgFromLift(+rawKg);
     setUsual(ex.name,kg===""?"":kg,reps===""?"":reps);
     (ex.sets||[]).forEach(s=>{ if(!s.done){ const v=prefillValues(ex.name); if(s.kg===""||s.kg==null)s.kg=v.kg; if(s.reps===""||s.reps==null)s.reps=v.reps; } });
-    persistLive(); closeModal(); toast("DEFAULTS SAVED."); renderLive();
+    persistLive(); closeModal(); toast("Usual saved"); renderLive();
   });
-  const clr=$("#usual_clear"); if(clr)clr.addEventListener("click",()=>{ setUsual(ex.name,"",""); closeModal(); toast("DEFAULTS CLEARED."); renderLive(); });
+  const clr=$("#usual_clear"); if(clr)clr.addEventListener("click",()=>{ setUsual(ex.name,"",""); closeModal(); toast("Usual cleared"); renderLive(); });
 }
 
 function removeLiveExercise(xi){
   const ex=liveSession.exercises[xi]; if(!ex)return;
   const nm=ex.cardio?(ex.name||"this cardio"):(ex.name||"this exercise");
   const logged=!ex.cardio&&(ex.sets||[]).some(s=>s.done);
-  confirmModal({title:"REMOVE THIS MOVE?",danger:true,confirmText:"Remove",
+  confirmModal({title:"Remove exercise?",danger:true,confirmText:"Remove",
     body:`Remove ${nm} from this workout?${logged?" Any sets you've ticked off for it will be lost.":""}`,
     onConfirm:()=>{ liveSession.exercises.splice(xi,1); renderLive(); toast("Removed"); }});
 }
@@ -5424,7 +5647,7 @@ function buildSetBlock(ex,st,si){
 
     if(!st.warmup){
       const rir=el("div","rir-row");
-      rir.innerHTML=`<span class="rl">EFFORT ${infoBtn("rir")}</span>`;
+      rir.innerHTML=`<span class="rl">EFFORT · RIR ${infoBtn("rir")}</span>`;
       [["0","0"],["1","1"],["2","2"],["3","3+"],["F","Fail"]].forEach(([v,lbl])=>{
         const chip=el("button","rir-chip"+(st.rir===v?" on":""),lbl);
         chip.addEventListener("click",()=>{ st.rir=(st.rir===v?null:v); rir.querySelectorAll(".rir-chip").forEach(x=>x.classList.remove("on")); if(st.rir===v)chip.classList.add("on"); });
@@ -5437,7 +5660,7 @@ function buildSetBlock(ex,st,si){
     btn.addEventListener("click",()=>{
       const hasKg=!(st.kg===""||st.kg==null)&&+st.kg>0;
       const hasReps=!(st.reps===""||st.reps==null)&&+st.reps>0;
-      if(!hasKg&&!hasReps){ toast("ENTER WEIGHT OR REPS FIRST."); return; }
+      if(!hasKg&&!hasReps){ toast("Add a weight or some reps first"); return; }
       st.done=true;
       const ss=ssMembers(liveSession.exercises.indexOf(ex));
       const rsec=(ex.restSec!=null?ex.restSec:liveSession.restSec);
@@ -5510,7 +5733,7 @@ function stopRest(){ if(restTick)clearInterval(restTick); restTick=null; restSta
 function restAlert(){
   if(DATA.prefs.restFlash!==false) flashScreen();
   if(DATA.prefs.restBeep!==false) beep();
-  toast("REST DONE. MOVE.");
+  toast("Rest over — next set 💪");
 }
 function flashScreen(){const f=$("#flash");f.classList.remove("go");void f.offsetWidth;f.classList.add("go");}
 function beep(){
@@ -5535,7 +5758,7 @@ function finishWorkout(){
   let doneSets=0;
   s.exercises.forEach(ex=>ex.sets.forEach(st=>{ if(st.done && !st.warmup && +st.kg>0 && +st.reps>0) doneSets++; }));
   if(doneSets===0){
-    confirmModal({title:"END SESSION with no sets?",confirmText:"END SESSION anyway",
+    confirmModal({title:"Finish with no sets?",confirmText:"Finish anyway",
       body:"You haven't ticked any sets as done, so this won't count volume or PRs.",
       onConfirm:()=>saveWorkout(s)});
     return;
@@ -5574,7 +5797,7 @@ function saveWorkout(s){
   save();
   stopRest(); $("#live").classList.remove("on"); liveSession=null; clearLive();
   switchTab("home");
-  showEND SESSIONSummary(wk,prs,newBadges);
+  showFinishSummary(wk,prs,newBadges);
 }
 function updateStreak(date){
   const last=DATA.ach.lastWorkoutDate;
@@ -5587,7 +5810,7 @@ function updateStreak(date){
   }
   DATA.ach.bestStreak=Math.max(DATA.ach.bestStreak,DATA.ach.streak);
 }
-function showEND SESSIONSummary(wk,prs,badges){
+function showFinishSummary(wk,prs,badges){
   const showAch=DATA.prefs.showAchievements!==false;
   openModal(`<div class="fin-hero"><div class="fin-check">✓</div>
       <div class="fin-t">Workout complete</div>
@@ -5619,7 +5842,7 @@ function makeFlexCard(wk,prs,badges){
   x.textAlign="left";
   /* brand wordmark in Bebas to match the app */
   x.fillStyle="#fff"; x.font=`96px ${BEBAS}`; x.fillText("EVOLVE", 78, 158);
-  x.fillStyle="rgba(255,255,255,.6)"; x.font=`600 28px ${INTER}`; x.fillText("NO EXCUSES. NO SHORTCUTS.", 82, 202);
+  x.fillStyle="rgba(255,255,255,.6)"; x.font=`600 28px ${INTER}`; x.fillText("TRAIN. FUEL. DOMINATE.", 82, 202);
   x.fillStyle="#fff";
   const title=(wk.title||"Workout").toUpperCase();
   let tsize=108; x.font=`${tsize}px ${BEBAS}`;
@@ -5652,7 +5875,7 @@ function makeFlexCard(wk,prs,badges){
     <button class="btn str block" id="fc_share">⬇️ Save / share image</button>
     <p class="muted tiny center" style="margin:10px 2px 0">Tip: tap above to add it to Photos or share it — or just screenshot this card.</p>
     <button class="btn ghost block" id="fc_close" style="margin-top:12px">Close</button>`);
-  $("#fc_close").addEventListener("click",()=>showEND SESSIONSummary(wk,prs,badges||[]));
+  $("#fc_close").addEventListener("click",()=>showFinishSummary(wk,prs,badges||[]));
   $("#fc_share").addEventListener("click",async()=>{
     try{
       const blob=await (await fetch(url)).blob();
@@ -6527,7 +6750,7 @@ function renderCardioSession(b){
     <div class="num" id="cd_burn" style="margin-top:8px;color:var(--fuel);font-weight:700;font-size:17px"></div>
     <div class="row" style="gap:10px;margin-top:20px">
       <button class="btn" id="cd_toggle" style="flex:1"></button>
-      <button class="btn fuel" id="cd_finish" style="flex:1">END SESSION & log</button>
+      <button class="btn fuel" id="cd_finish" style="flex:1">Finish & log</button>
     </div>
     <button class="btn ghost block" id="cd_cancel" style="margin-top:10px">Discard</button>`;
   b.appendChild(panel);
@@ -6848,7 +7071,7 @@ function renderStats(){
       const pts=vw.map((w,i)=>({x:i,y:Math.round(liftFromKg(w.volume))}));
       vc.innerHTML=lineChart(pts,"#FF6A2C",{h:170});
       vc.innerHTML+=`<div class="row" style="justify-content:space-between;margin-top:6px"><span class="tiny muted">${shortDate(vw[0].date)}</span><span class="tiny muted">${shortDate(vw[vw.length-1].date)}</span></div>`;
-    }else{ vc.innerHTML=`<div class="empty">END SESSION a couple of workouts to track your lifting trend.</div>`; }
+    }else{ vc.innerHTML=`<div class="empty">Finish a couple of workouts to track your lifting trend.</div>`; }
     body.appendChild(vc);
   }
   function buildStrength(body){
@@ -7181,7 +7404,7 @@ function openChangelog(){
       "<b>Less clutter</b> — Goal &amp; activity is now a small link at the bottom, and the <b>Show meal times</b> switch moved to <b>More → Preferences</b> instead of sitting on the Fuel tab every day"
     ])}
     ${v("3.20","Cardio keeps your progress",[
-      "<b>Cardio no longer loses your progress</b> — if you leave a cardio timer mid-workout (✕, Back, or switching away) and come back, it now <b>resumes from where you left off</b> instead of restarting at zero. The card shows your elapsed time with a <b>Resume</b> button, and your progress is even kept if the app closes mid-session. END SESSION and Discard work exactly as before"
+      "<b>Cardio no longer loses your progress</b> — if you leave a cardio timer mid-workout (✕, Back, or switching away) and come back, it now <b>resumes from where you left off</b> instead of restarting at zero. The card shows your elapsed time with a <b>Resume</b> button, and your progress is even kept if the app closes mid-session. Finish and Discard work exactly as before"
     ])}
     ${v("3.19","Macro auto-fill, clearer lists & fixes",[
       "<b>Macros that fill themselves in</b> — in Daily targets → <b>Manual</b>, pick a focus (Build muscle, Lose fat, More energy or Balanced) and your protein, carbs &amp; fat are worked out from your calories. Tweak any number after",
@@ -7298,7 +7521,7 @@ function openChangelog(){
       "New <b>HOME</b> tab: an adaptive Today card (your planned session, rest day, or quick start), week strip, quick actions and a fuel snapshot",
       "Train became a clean workout library · Cardio folded into Train · Stats renamed Progress",
       "Floating Quick Start button removed — it lives on Home now",
-      "END SESSIONing a workout returns you to Home with the day marked done"
+      "Finishing a workout returns you to Home with the day marked done"
     ])}
     ${v("2.5","Install anywhere",[
       "Evolve became an installable app on Android & iPhone (home-screen icon, full screen)",
@@ -7332,8 +7555,8 @@ function openGuide(){
     <div style="max-height:64vh;overflow:auto;margin-top:6px">
     ${sec("🏠","Home tab","Your day at a glance. The big card tells you what's on — your planned session, a rest day, or a quick start — with one tap to begin. Below it: your week strip, quick actions (<b>⚡ Quick start</b>, ★ Favourites, 🏃 Cardio, 🍎 Log food), today's fuel summary, and what you've completed.")}
     ${sec("🏋️","Train tab","Your workout library. Switch between <b>Gym</b> and <b>HOME</b> at the top. Tap a muscle group to build a session — pick a focus like Biceps or Quads, choose how many exercises, then re-roll, add or remove before starting. <b>Mega Workout</b> mixes several groups plus cardio, preset days start with one tap, and the green <b>Cardio</b> card opens all 40 cardio activities.")}
-    ${sec("🗓️","Plan my week","Tap the days you can train and Evolve builds a balanced split (Push/Pull/Legs, Upper/Lower…) with rest and cardio slotted in. Tap <b>today's block</b> to start it. Got unexpected free time? Tap a rest day to add a <b>bonus workout</b> and optionally rebalance the rest of the week. Edit or clear the plan any time.")}
-    ${sec("⭐","Favourites","Tap the ☆ on any exercise, machine or cardio to favourite it. Open the <b>★ Favs</b> hub to see them split by Gym/Home and hit <b>🎲 Build from favourites</b> for an instant session of moves you love.")}
+    ${sec("🗓️","PLAN WEEK","Tap the days you can train and Evolve builds a balanced split (Push/Pull/Legs, Upper/Lower…) with rest and cardio slotted in. Tap <b>today's block</b> to start it. Got unexpected free time? Tap a rest day to add a <b>bonus workout</b> and optionally rebalance the rest of the week. Edit or clear the plan any time.")}
+    ${sec("⭐","STARRED","Tap the ☆ on any exercise, machine or cardio to favourite it. Open the <b>★ Favs</b> hub to see them split by Gym/Home and hit <b>🎲 Build from favourites</b> for an instant session of moves you love.")}
     ${sec("▶️","Live tracker","Log weight & reps with the steppers. New sets come <b>pre-filled</b> with your usual numbers (or your last session if newer) — just tap to confirm each one. Set your <b>📌 usual weight &amp; reps</b> per exercise from the ⋯ menu so future workouts start ready. <b>👻 Last time</b> shows your previous numbers to beat. Tools per exercise: <b>⚖️ Plates</b> (barbell math), <b>🔥 Warm-up</b> (auto prep sets), <b>🔄 Swap</b> (busy machine), <b>⏱️ Rest</b> (custom timer), and <b>🔗 Superset</b> to pair two moves. Log <b>RIR</b> (reps in reserve) to track effort.")}
     ${sec("🍎","Fuel tab","Set targets in your profile, then log food from the 700+ database (or add your own). Track water and see calories, protein, carbs and fat against your daily goal. Burned calories from cardio can roll into your budget (toggle in Preferences).")}
     ${sec("📊","Progress tab","Your <b>Last 30 days</b> summary and key stats stay pinned at the top; everything else sits in tidy <b>drop-down sections</b> you tap to open — weight trend, lifting volume, strength per exercise with an <b>Est. 1RM</b>, the <b>calendar</b> (orange = lifting, green = cardio), streaks, a <b>Mega workouts</b> summary, and your full history. Tap any workout in your history to expand its exercises &amp; weights; long lists page 5 at a time.")}
@@ -7767,7 +7990,7 @@ function renderMore(){
   b.appendChild(made.danger);
   Object.values(made).forEach(s=>s._openIfRemembered());
 
-  b.appendChild(el("div","center muted tiny",`Evolve · EVOLVE · V1.0 · NO MERCY`));
+  b.appendChild(el("div","center muted tiny",`Evolve · EVOLVE · V1.0`));
   b.lastChild.style.padding="18px 0 4px";
 }
 
